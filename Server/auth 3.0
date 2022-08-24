@@ -1,0 +1,18 @@
+LOGIN
+1 type email
+2 send create candidate to back (createCandidate){
+ creates candidate with code,email,expire time;
+delete expired ; sends to code to mail.
+}
+3 type code from email
+4 send to back (login){checks if code is valid and not expired,login}
+AUTH
+1 type email
+2 send create candidate to back (createCandidate){
+ creates candidate with code,email,expire time;
+delete expired ; sends to code to mail.
+}
+3 type code from email
+4 send to back (auth){checks if code is valid and not expired,auth}
+
+

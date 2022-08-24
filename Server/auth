@@ -1,0 +1,13 @@
+LOGIN
+1 type email
+2 send get code to back (getCode)[delete after a min]
+3 back sends code and save it to local store
+4 compare code with one from email
+5 ask back to login (login)
+AUTH
+1 type email
+2 send code to back (getCode)[delete after a min]
+3 back sends code and save it to local store
+4 compare code with one from email
+5 type bio
+6 ask back to auth (auth)

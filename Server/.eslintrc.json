@@ -1,0 +1,28 @@
+{
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es2021": true
+  },
+  "extends": [
+    "airbnb-base",
+    "prettier"
+  ],
+  "overrides": [
+  ],
+  "plugins": [
+    "prettier"
+  ],
+  "parserOptions": {
+    "ecmaVersion": "latest"
+  },
+  "rules": {
+    "prettier/prettier": [
+      "off"
+    ],
+    "no-alert": "warn",
+    "no-debugger": "warn",
+    "no-console": "warn",
+    "@typescript-eslint/no-empty-function": "warn"
+  }
+}

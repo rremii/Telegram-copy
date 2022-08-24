@@ -1,0 +1,9 @@
+*.d.ts
+next.config.js
+.yarn
+.next
+dist
+node_modules
+
+mixins.js
+settings.js
