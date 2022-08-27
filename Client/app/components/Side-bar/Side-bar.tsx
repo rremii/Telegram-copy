@@ -1,8 +1,9 @@
 import React, {Dispatch, FC, SetStateAction} from "react"
 import styled from "styled-components"
 import Image from "next/image"
-import ChatMenu from "./Chat-menu"
-import ProfileMenu from "./Profile-menu"
+import ChatMenu from "./Chat-menu/Chat-menu"
+import ProfileMenu from "./Profile-menu/Profile-menu"
+import SearchMenu from "./Search-menu/Search-menu"
 
 interface SideBarType {
 	setOpen: Dispatch<SetStateAction<boolean>>
@@ -13,6 +14,7 @@ const SideBar: FC<SideBarType> = ({setOpen, isOpen}) => {
 	return <SideBarWrapper onClick={() => setOpen(!isOpen)}>
 		<ChatMenu/>
 		<ProfileMenu/>
+		<SearchMenu/>
 	</SideBarWrapper>
 }
 export default SideBar

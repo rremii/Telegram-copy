@@ -16,5 +16,5 @@ const ProfileMenuWrapper = styled.div`
   top: 0;
   height: 100%;
   background-color: red;
-
+  //transform: translateX(-100%);
 `

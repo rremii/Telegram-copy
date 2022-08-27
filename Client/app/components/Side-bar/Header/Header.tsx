@@ -4,6 +4,8 @@ import Image from "next/image"
 import {Rem} from "../../../../styles/functions/mixins"
 import Burger from "./burger"
 import useRipple from "../../../hooks/useRipple"
+import Ripple from "../../../ui/Ripple"
+import {c} from "msw/lib/glossary-297d38ba"
 
 interface HeaderType {
 
@@ -14,15 +16,15 @@ const Header: FC<HeaderType> = () => {
 
 	const [isSearchActive, setIsSearchActive] = useState(false)
 
-	const {isRipple, SetIsRipple, clientX, clientY} = useRipple()
+	const {clientX, clientY, isRipple, SetIsRipple} = useRipple()
 
-	return <HeaderWrapper isSearch={isSearchActive} clientX={clientX} clientY={clientY}>
+	return <HeaderWrapper isSearch={isSearchActive}>
 		{/*<Burger/>*/}
 		<button onClick={SetIsRipple} className="burger-icon">
 			<span/>
 			<span/>
 			<span/>
-			{isRipple && <div className="ripple"/>}
+			{isRipple && <Ripple clientX={clientX} clientY={clientY}/>}
 		</button>
 		<div className="search-cont">
 			<input onBlur={() => setIsSearchActive(false)} onFocus={() => setIsSearchActive(true)} placeholder="Search"
@@ -36,7 +38,7 @@ const Header: FC<HeaderType> = () => {
 }
 export default Header
 const HeaderWrapper = styled.div<{
-	isSearch: boolean, clientY: number, clientX: number
+	isSearch: boolean
 }>`
   height: 60px;
   display: flex;
@@ -58,39 +60,6 @@ const HeaderWrapper = styled.div<{
 
     &:hover {
       background-color: rgb(43, 43, 43);
-    }
-
-
-    .ripple {
-      position: absolute;
-      top: ${({clientY}) => clientY + "px"};
-      left: ${({clientX}) => clientX + "px"};
-
-      transform: translate(-70%, -60%);
-      background-color: rgb(70, 70, 70);
-      border-radius: 50%;
-      transform-origin: center;
-      animation: ripple .7s ease-in-out;
-    }
-
-
-    @keyframes ripple {
-      0% {
-        width: 80px;
-        height: 80px;
-        transform: translate(-70%, -60%) scale(0);
-
-      }
-
-      50% {
-        opacity: 1;
-      }
-      100% {
-        width: 80px;
-        height: 80px;
-        transform: translate(-70%, -60%) scale(1);
-        opacity: 0;
-      }
     }
 
 
@@ -168,7 +137,7 @@ const HeaderWrapper = styled.div<{
       line-height: 42px;
       color: white;
       font-weight: 500;
-      transition: 0.4s border;
+      transition: 0.4s;
       border: rgb(47, 47, 47) 1px solid;
 
       &::placeholder {
@@ -177,6 +146,7 @@ const HeaderWrapper = styled.div<{
 
       &:hover {
         border: rgb(112, 117, 121) 1px solid;
+        background-color: rgb(29, 29, 29);
       }
 
       &:focus {

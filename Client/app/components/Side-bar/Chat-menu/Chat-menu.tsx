@@ -1,10 +1,10 @@
 import React, {FC} from "react"
 import styled from "styled-components"
-import Burger from "./Header/burger"
+import Burger from "../Header/burger"
 import Image from "next/image"
-import {Rem} from "../../../styles/functions/mixins"
+import {Rem} from "../../../../styles/functions/mixins"
 import ChatList from "./Chat-list/Chat-list"
-import Header from "./Header/Header"
+import Header from "../Header/Header"
 
 interface ChatMenuType {
 
