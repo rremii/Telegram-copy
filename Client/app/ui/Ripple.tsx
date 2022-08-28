@@ -23,7 +23,7 @@ const RippleStyled = styled.div<{
   background-color: rgb(70, 70, 70);
   border-radius: 50%;
   transform-origin: center;
-  animation: ripple .7s ease-in-out;
+  animation: ripple 0.7s ease-in-out;
 
 
   @keyframes ripple {
@@ -38,8 +38,8 @@ const RippleStyled = styled.div<{
       opacity: 1;
     }
     100% {
-      width: 80px;
-      height: 80px;
+      width: 100px;
+      height: 100px;
       transform: translate(-70%, -60%) scale(1);
       opacity: 0;
     }
