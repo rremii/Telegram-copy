@@ -1,108 +1,109 @@
-import React, { ChangeEvent, FC } from "react"
+import React, {ChangeEvent, FC} from "react"
 import styled from "styled-components"
 import Image from "next/image"
-import { Field, Form, Formik, FormikProps } from "formik"
-import { useRouter } from "next/router"
-import { Rem } from "../../styles/functions/mixins"
+import {Field, Form, Formik, FormikProps} from "formik"
+import {useRouter} from "next/router"
+import {Rem} from "../../styles/functions/mixins"
 import useIsLoginPage from "../hooks/useIsLoginPage"
-import { useAppDispatch, useTypedSelector } from "../store/ReduxStore"
-import { fetchLogin, fetchRegistration } from "../store/AuthSlice"
-import { useClearErrors } from "../hooks/useClearErrors"
-import { FormikHelpers } from "formik/dist/types"
+import {useAppDispatch, useTypedSelector} from "../store/ReduxStore"
+import {fetchLogin, fetchRegistration} from "../store/AuthSlice"
+import {useClearErrors} from "../hooks/useClearErrors"
+import {FormikHelpers} from "formik/dist/types"
 
 interface FormValues {
-    code: string
+	code: string
 }
 
-interface Auth2Type {}
+interface Auth2Type {
+}
 
 const AuthCode: FC<Auth2Type> = () => {
-    const router = useRouter()
-    const dispatch = useAppDispatch()
+	const router = useRouter()
+	const dispatch = useAppDispatch()
 
-    const { firstName } = useTypedSelector((state) => state.Auth.userBio)
-    const { lastName } = useTypedSelector((state) => state.Auth.userBio)
-    const { email } = useTypedSelector((state) => state.Auth.user)
-    const { profilePic } = useTypedSelector((state) => state.Auth.userBio)
-    const { codeError } = useTypedSelector((state) => state.Auth)
+	const {firstName} = useTypedSelector((state) => state.Auth.userBio)
+	const {lastName} = useTypedSelector((state) => state.Auth.userBio)
+	const {email} = useTypedSelector((state) => state.Auth.user)
+	const {profilePic} = useTypedSelector((state) => state.Auth.userBio)
+	const {codeError} = useTypedSelector((state) => state.Auth)
 
-    useClearErrors()
-    /////////TODO gotta check if its upduting twice
-    const { isLoginPage, mainColor } = useIsLoginPage()
+	useClearErrors()
+	/////////TODO gotta check if its upduting twice
+	const {isLoginPage, mainColor} = useIsLoginPage()
 
-    const HandleSubmit = async (
-        { code }: FormValues,
-        { resetForm }: FormikHelpers<FormValues>
-    ) => {
-        let response: any
+	const HandleSubmit = async (
+		{code}: FormValues,
+		{resetForm}: FormikHelpers<FormValues>
+	) => {
+		let response: any
 
-        if (isLoginPage) response = await dispatch(fetchLogin(code))
-        else
-            response = await dispatch(
-                fetchRegistration({
-                    code,
-                    firstName,
-                    lastName,
-                    profilePic,
-                })
-            )
+		if (isLoginPage) response = await dispatch(fetchLogin(code))
+		else
+			response = await dispatch(
+				fetchRegistration({
+					code,
+					firstName,
+					lastName,
+					profilePic,
+				})
+			)
 
-        if (response.error) resetForm()
+		if (response.error) resetForm()
 
-        if (!response.error) await router.push("/")
-    }
+		if (!response.error) await router.push("/")
+	}
 
-    const HandleOnChange = (
-        e: ChangeEvent<HTMLInputElement>,
-        { handleChange, isValid, submitForm }: FormikProps<FormValues>
-    ) => {
-        handleChange(e)
-        if (isValid && e.currentTarget.value.length === 6) submitForm()
-    }
+	const HandleOnChange = (
+		e: ChangeEvent<HTMLInputElement>,
+		{handleChange, isValid, submitForm}: FormikProps<FormValues>
+	) => {
+		handleChange(e)
+		if (isValid && e.currentTarget.value.length === 6) submitForm()
+	}
 
-    return (
-        <Auth2Wrapper mainColor={mainColor} className="Auth2__wrapper">
-            <div className="Auth2__container">
-                <div className="form-icon">
-                    <Image
-                        alt=""
-                        src="/dog-icon.png"
-                        width={180}
-                        height={180}
-                    />
-                </div>
-                <h1 className="form-title">{email}</h1>
-                <h2 className="form-sub-title">
-                    We&apos;ve sent the code to your email.
-                </h2>
-                <Formik
-                    initialValues={{
-                        code: "" as string,
-                    }}
-                    onSubmit={HandleSubmit}
-                >
-                    {(helpers) => (
-                        <Form autoComplete="off">
-                            <div className="form-field-cont">
-                                <Field
-                                    onChange={(
-                                        e: ChangeEvent<HTMLInputElement>
-                                    ) => HandleOnChange(e, helpers)}
-                                    type="text"
-                                    autoComplete="off"
-                                    className="form-field"
-                                    name="code"
-                                />
-                                <label htmlFor="Code">
-                                    {codeError || "Code"}
-                                </label>
-                            </div>
-                        </Form>
-                    )}
-                </Formik>
-            </div>
-        </Auth2Wrapper>
-    )
+	return (
+		<Auth2Wrapper mainColor={mainColor} className="Auth2__wrapper">
+			<div className="Auth2__container">
+				<div className="form-icon">
+					<Image
+						alt=""
+						src="/dog-icon.png"
+						width={180}
+						height={180}
+					/>
+				</div>
+				<h1 className="form-title">{email}</h1>
+				<h2 className="form-sub-title">
+					We&apos;ve sent the code to your email.
+				</h2>
+				<Formik
+					initialValues={{
+						code: "" as string,
+					}}
+					onSubmit={HandleSubmit}
+				>
+					{(helpers) => (
+						<Form autoComplete="off">
+							<div className="form-field-cont">
+								<Field
+									onChange={(
+										e: ChangeEvent<HTMLInputElement>
+									) => HandleOnChange(e, helpers)}
+									type="text"
+									autoComplete="off"
+									className="form-field"
+									name="code"
+								/>
+								<label htmlFor="Code">
+									{codeError || "Code"}
+								</label>
+							</div>
+						</Form>
+					)}
+				</Formik>
+			</div>
+		</Auth2Wrapper>
+	)
 }
 export default AuthCode
 const Auth2Wrapper = styled.div<{ mainColor: string }>`
@@ -160,7 +161,7 @@ const Auth2Wrapper = styled.div<{ mainColor: string }>`
       outline: none;
 
       &:hover input {
-        border: ${({ mainColor }) => mainColor} 1px solid;
+        border: ${({mainColor}) => mainColor} 1px solid;
         color: white;
       }
 
@@ -177,7 +178,7 @@ const Auth2Wrapper = styled.div<{ mainColor: string }>`
 
         &:hover {
           top: 0;
-          color: ${({ mainColor }) => mainColor};
+          color: ${({mainColor}) => mainColor};
           background-color: rgb(33, 33, 33);
           left: 5px;
           padding: 5px;
@@ -200,7 +201,7 @@ const Auth2Wrapper = styled.div<{ mainColor: string }>`
 
         &:hover,
         &:focus {
-          border: 1px solid ${({ mainColor }) => mainColor};
+          border: 1px solid ${({mainColor}) => mainColor};
           color: white;
 
         }
@@ -208,7 +209,7 @@ const Auth2Wrapper = styled.div<{ mainColor: string }>`
 
       .form-field:hover + label {
         top: 0;
-        color: ${({ mainColor }) => mainColor};
+        color: ${({mainColor}) => mainColor};
         background-color: rgb(33, 33, 33);
         left: 5px;
         padding: 5px;
@@ -217,7 +218,7 @@ const Auth2Wrapper = styled.div<{ mainColor: string }>`
 
       .form-field:focus + label {
         top: 0;
-        color: ${({ mainColor }) => mainColor};
+        color: ${({mainColor}) => mainColor};
         background-color: rgb(33, 33, 33);
         left: 5px;
         padding: 5px;
@@ -269,7 +270,7 @@ const Auth2Wrapper = styled.div<{ mainColor: string }>`
         }
 
         input:checked + span {
-          background-color: ${({ mainColor }) => mainColor};
+          background-color: ${({mainColor}) => mainColor};
           border-radius: 4px;
 
           &::after {
@@ -305,7 +306,7 @@ const Auth2Wrapper = styled.div<{ mainColor: string }>`
 
     .submit-active {
       pointer-events: initial;
-      background-color: ${({ mainColor }) => mainColor};
+      background-color: ${({mainColor}) => mainColor};
       color: white;
 
     }

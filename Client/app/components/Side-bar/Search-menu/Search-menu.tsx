@@ -1,12 +1,9 @@
-import React, {FC} from "react"
+import React, {useContext} from "react"
 import styled from "styled-components"
-import Image from "next/image"
 import {Rem} from "../../../../styles/functions/mixins"
 import SearchCell from "./Search-cell"
+import {SideBarContext} from "../../../hooks/useSideBarContext"
 
-interface SearchMenuType {
-	isSearchOn: boolean
-}
 
 const Users = [
 	{
@@ -16,7 +13,10 @@ const Users = [
 	}
 ]
 
-const SearchMenu: FC<SearchMenuType> = ({isSearchOn}) => {
+const SearchMenu = () => {
+
+	const {isSearchOn} = useContext(SideBarContext)
+
 	return <SearchMenuWrapper isSearchOn={isSearchOn} className="searchMenu__wrapper">
 		<nav>
 			<button className="btn-active">
@@ -84,7 +84,7 @@ const SearchMenuWrapper = styled.div<{
         font-size: ${Rem(16)};
         font-weight: 600;
         letter-spacing: 0.5px;
-        font-family: Roboto;
+        font-family: Roboto, sans-serif;
         color: rgb(170, 170, 170);
       }
     }

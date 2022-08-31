@@ -1,18 +1,35 @@
-import React, {Dispatch, FC, SetStateAction} from "react"
+import React, {FC, useContext, useState} from "react"
 import styled from "styled-components"
 import Image from "next/image"
 import {Rem} from "../../../../styles/functions/mixins"
+import Toggle from "../../../ui/Toggle"
+import {SideBarContext} from "../../../hooks/useSideBarContext"
 
-interface BurgerMenuType {
-	ref: any
-	isBurger: boolean
-	setIsBurger: Dispatch<SetStateAction<boolean>>
+interface IBurgerMenu {
 }
 
 
-const Burger: FC<BurgerMenuType> = ({isBurger, setIsBurger}) => {
+const Burger: FC<IBurgerMenu> = () => {
+
+
+	const {
+		SetIsProfile,
+		SetIsBurger,
+		isBurger,
+		SetDarkMode,
+		isDarkMode
+	} = useContext(SideBarContext)
+
+	const handleSettings = () => {
+		SetIsProfile(true)
+		SetIsBurger(false)
+	}
+	const HandleDarkMode = () => {
+		SetDarkMode(!isDarkMode)
+	}
+
 	return <BurgerWrapper isBurger={isBurger}>
-		<div className="burger-overlay" onClick={() => setIsBurger(false)}/>
+		<div className="burger-overlay" onClick={() => SetIsBurger(false)}/>
 
 		<div className="row">
 			<div className="icon">
@@ -30,7 +47,7 @@ const Burger: FC<BurgerMenuType> = ({isBurger, setIsBurger}) => {
 				<span>Contacts</span>
 			</div>
 		</div>
-		<div className="row">
+		<div onClick={handleSettings} className="row">
 			<div className="icon">
 				<Image width={21} height={21} src="/setting.svg"/>
 			</div>
@@ -38,15 +55,15 @@ const Burger: FC<BurgerMenuType> = ({isBurger, setIsBurger}) => {
 				<span>Settings</span>
 			</div>
 		</div>
-		<div className="row">
+		<button onClick={HandleDarkMode} className="row">
 			<div className="icon">
 				<Image width={21} height={21} src="/night-mode.svg"/>
 			</div>
 			<div className="setting-text with-toggle">
 				<span>Dark mode</span>
-				<div className="toggle">toggle</div>
+				<Toggle isDarkMode={isDarkMode}/>
 			</div>
-		</div>
+		</button>
 		<div className="label">
 			<span>Telegram Web Copy</span>
 		</div>
@@ -61,8 +78,8 @@ const BurgerWrapper = styled.div<{
   left: 0;
   transition: .3s;
   transform-origin: left top;
-  transform: ${({isBurger}) => isBurger ? "scale(1)" : "scale(0)"};
-  opacity: ${({isBurger}) => isBurger ? 1 : 0.7};
+  transform: ${({isBurger}) => isBurger ? "scale(1)" : "scale(0.5)"};
+  opacity: ${({isBurger}) => isBurger ? 1 : 0};
   z-index: 21;
   padding: 10px;
   border-radius: 8px;
@@ -82,6 +99,7 @@ const BurgerWrapper = styled.div<{
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#272C2B", endColorstr="#272727", GradientType=1);
 
   .burger-overlay {
+    display: ${({isBurger}) => isBurger ? "initial" : "none"};
     position: fixed;
     top: -60px;
     left: -100px;
@@ -99,6 +117,11 @@ const BurgerWrapper = styled.div<{
     align-items: center;
     padding: 8px 20px;
     border-radius: 12px;
+    transition: 0.3s;
+
+    &:active {
+      transform: scale(0.95);
+    }
 
     &:hover {
       background-color: rgba(171, 171, 171, 0.08);
@@ -112,7 +135,7 @@ const BurgerWrapper = styled.div<{
       font-weight: 600;
       letter-spacing: 1px;
       font-size: ${Rem(16)};
-      font-family: Roboto;
+      font-family: Roboto, sans-serif;
       flex: 1 1 auto;
     }
 
@@ -130,7 +153,7 @@ const BurgerWrapper = styled.div<{
     align-items: center;
     justify-content: center;
     margin-top: 5px;
-    font-family: Roboto;
+    font-family: Roboto, sans-serif;
     color: rgba(255, 255, 255, 0.65);
   }
 `

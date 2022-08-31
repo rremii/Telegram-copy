@@ -4,14 +4,14 @@ import Image from "next/image"
 import {Rem} from "../../../../styles/functions/mixins"
 import {cutStringToLength} from "../../../utils/cutStringToLength"
 
-interface ChatListType {
+interface IChatList {
 	avatar: string
 	title: string
 	subTitle: string
 }
 
 
-const ChatCell: FC<ChatListType> = ({subTitle, title, avatar}) => {
+const ChatCell: FC<IChatList> = ({subTitle, title, avatar}) => {
 
 	return <ChatCellWrapper className="cell">
 		<div className="avatar">
@@ -80,7 +80,7 @@ const ChatCellWrapper = styled.div`
       justify-content: space-between;
 
       h1 {
-        font-family: Roboto;
+        font-family: Roboto, sans-serif;
         font-size: ${Rem(18)};
         font-weight: 600;
         letter-spacing: 1px;
@@ -99,7 +99,7 @@ const ChatCellWrapper = styled.div`
         .date {
           font-weight: 500;
           font-size: ${Rem(14)};
-          font-family: Roboto;
+          font-family: Roboto, sans-serif;
         }
       }
     }
@@ -111,14 +111,14 @@ const ChatCellWrapper = styled.div`
 
 
       h2 {
-        font-family: Roboto;
+        font-family: Roboto, sans-serif;
         font-weight: 400;
         font-size: ${Rem(17)};
         flex: 1 1 auto;
       }
 
       .unseen-messages {
-        font-family: Roboto;
+        font-family: Roboto, sans-serif;
         font-weight: 600;
         font-size: ${Rem(16)};
         background-color: rgb(131, 131, 131);

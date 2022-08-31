@@ -1,4 +1,4 @@
-import {useState, useEffect, useRef, Dispatch, SetStateAction} from 'react'
+import {Dispatch, SetStateAction, useEffect, useRef, useState} from "react"
 
 type TypeOut = {
     ref: any
@@ -7,7 +7,7 @@ type TypeOut = {
     refBtn: any
 }
 
-/* 
+/*
 	Personal Hook
 	Hide element when click outside
 */

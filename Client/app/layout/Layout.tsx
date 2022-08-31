@@ -1,12 +1,12 @@
-import React, { FC } from "react"
+import React, {FC} from "react"
 
 interface LayoutType {
-    children: React.ReactNode
+	children: React.ReactNode
 }
 
-const Layout: FC<LayoutType> = ({ children }) => {
-  return <>
-        {children}
-    </>
+const Layout: FC<LayoutType> = ({children}) => {
+	return <>
+		{children}
+	</>
 }
 export default Layout

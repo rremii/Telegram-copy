@@ -1,7 +1,7 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit"
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux"
+import {combineReducers, configureStore} from "@reduxjs/toolkit"
+import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux"
 import AuthSlice from "./AuthSlice"
-import { PreloadedState } from "redux"
+import {PreloadedState} from "redux"
 
 // export const store = configureStore({
 //     reducer: {
@@ -13,13 +13,13 @@ import { PreloadedState } from "redux"
 // })
 
 const rootReducer = combineReducers({
-    Auth: AuthSlice,
+	Auth: AuthSlice,
 })
 export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
-    return configureStore({
-        reducer: rootReducer,
-        preloadedState,
-    })
+	return configureStore({
+		reducer: rootReducer,
+		preloadedState,
+	})
 }
 
 export type RootState = ReturnType<typeof rootReducer>

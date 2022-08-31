@@ -3,13 +3,13 @@ import React, {FC} from "react"
 import styled from "styled-components"
 import {Rem} from "../../../../styles/functions/mixins"
 
-interface SearchCell {
+interface ISearchCell {
 	avatar: string
 	title: string
 	subTitle: string
 }
 
-const SearchCell: FC<SearchCell> = ({title, subTitle, avatar}) => {
+const SearchCell: FC<ISearchCell> = ({title, subTitle, avatar}) => {
 
 
 	return <CellWrapper>
@@ -60,7 +60,7 @@ const CellWrapper = styled.div`
     height: 100%;
 
     h1 {
-      font-family: Roboto;
+      font-family: Roboto, sans-serif;
       font-size: ${Rem(18)};
       font-weight: 600;
       letter-spacing: 1px;
@@ -69,7 +69,7 @@ const CellWrapper = styled.div`
     }
 
     h2 {
-      font-family: Roboto;
+      font-family: Roboto, sans-serif;
       font-weight: 400;
       font-size: ${Rem(17)};
     }

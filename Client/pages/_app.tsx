@@ -6,7 +6,6 @@ import {Provider} from "react-redux"
 import Layout from "../app/layout/Layout"
 import {store} from "../app/store/ReduxStore"
 import "./../styles/style.scss"
-import {AdaptiveValue, Rem} from "../styles/functions/mixins"
 
 export type NextPageWithLayout<T = { string: unknown }> = NextPage<T> & {
 	getLayout?: (page: ReactElement) => React.ReactNode

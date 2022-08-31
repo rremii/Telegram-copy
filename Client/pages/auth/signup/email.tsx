@@ -1,8 +1,8 @@
 import React from "react"
-import { NextPage } from "next"
+import {NextPage} from "next"
 import AuthEmail from "../../../app/views/auth-email"
 
 const Email: NextPage = () => {
-    return <AuthEmail />
+	return <AuthEmail/>
 }
 export default Email

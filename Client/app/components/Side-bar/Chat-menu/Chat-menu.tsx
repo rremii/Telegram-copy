@@ -1,14 +1,8 @@
-import React, {FC} from "react"
+import React, {useContext} from "react"
 import styled from "styled-components"
-import Burger from "../Header/burger"
-import Image from "next/image"
-import {Rem} from "../../../../styles/functions/mixins"
 import ChatCell from "./Chat-cell"
-import Header from "../Header/Header"
+import {SideBarContext} from "../../../hooks/useSideBarContext"
 
-interface ChatMenuType {
-	isSearchOn: boolean
-}
 
 const chat = [
 	{
@@ -18,7 +12,10 @@ const chat = [
 	}
 ]
 
-const ChatMenu: FC<ChatMenuType> = ({isSearchOn}) => {
+const ChatMenu = () => {
+
+	const {isSearchOn} = useContext(SideBarContext)
+
 	return <ChatMenuWrapper isSearchOn={isSearchOn}>
 		{chat.map(({title, subTitle, avatar}, index) => {
 			return <ChatCell key={index} avatar={avatar} subTitle={subTitle} title={title}/>

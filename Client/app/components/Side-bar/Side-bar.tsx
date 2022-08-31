@@ -1,27 +1,30 @@
-import React, {Dispatch, FC, SetStateAction, useState} from "react"
+import React, {Dispatch, FC, SetStateAction} from "react"
 import styled from "styled-components"
-import Image from "next/image"
 import ChatMenu from "./Chat-menu/Chat-menu"
 import ProfileMenu from "./Profile-menu/Profile-menu"
 import SearchMenu from "./Search-menu/Search-menu"
 import Header from "./Header/Header"
+import useSideBarContext, {SideBarContext} from "../../hooks/useSideBarContext"
 
-interface SideBarType {
+interface ISideBar {
 	setOpen: Dispatch<SetStateAction<boolean>>
 	isOpen: boolean
 }
 
-const SideBar: FC<SideBarType> = ({setOpen, isOpen}) => {
 
-	const [isSearchOn, setIsSearch] = useState(false)
+const SideBar: FC<ISideBar> = ({setOpen, isOpen}) => {
+
+	const contextValues = useSideBarContext()
 
 	return <SideBarWrapper onClick={() => setOpen(!isOpen)}>
-		<ProfileMenu/>
-		<div className="layout">
-			<Header isSearchOn={isSearchOn} setIsSearch={setIsSearch}/>
-			<ChatMenu isSearchOn={isSearchOn}/>
-			<SearchMenu isSearchOn={isSearchOn}/>
-		</div>
+		<SideBarContext.Provider value={contextValues}>
+			<ProfileMenu/>
+			<div className="layout">
+				<Header/>
+				<ChatMenu/>
+				<SearchMenu/>
+			</div>
+		</SideBarContext.Provider>
 	</SideBarWrapper>
 }
 export default SideBar

@@ -1,49 +1,54 @@
-import React, {FC, MouseEventHandler, SetStateAction, useEffect, useState} from "react"
+import React, {useContext, useState} from "react"
 import styled from "styled-components"
 import {Rem} from "../../../../styles/functions/mixins"
 import useRipple from "../../../hooks/useRipple"
 import Ripple from "../../../ui/Ripple"
-import {Dispatch} from "react"
 import Burger from "./burger"
 import {useOutside} from "../../../hooks/useOutside"
-
-interface HeaderType {
-	isSearchOn: boolean
-	setIsSearch: Dispatch<SetStateAction<boolean>>
-}
+import {SideBarContext} from "../../../hooks/useSideBarContext"
 
 
-const Header: FC<HeaderType> = ({isSearchOn, setIsSearch}) => {
+const Header = () => {
 
-	const [isBurger, setIsBurger] = useState(false)
-	const [isSearchLayout, setIsSearchLayout] = useState(false)
-	const {clientX, clientY, isRipple, SetIsRipple} = useRipple()
-	const {ref, refBtn, setIsShow, isShow} = useOutside(false)
+	const {
+		isBurger,
+		SetIsBurger,
+		SetIsSearch,
+		isSearchOn,
+		isSearchLayout,
+		SetIsSearchLayout,
+	} = useContext(SideBarContext)
+
+
+	const {X, Y, isRipple, SetIsRipple} = useRipple()
+	const {ref, refBtn} = useOutside(false)
 
 	const HandleSearchFocus = () => {
-		setIsSearchLayout(true)
-		setIsSearch(true)
+		SetIsSearchLayout(true)
+		SetIsSearch(true)
 	}
 
 	const HandleBurgerClick = (e: React.MouseEvent<HTMLButtonElement>) => {
 		if (!isSearchOn) {
 			SetIsRipple(e)
-			setIsBurger(!isBurger)
+			SetIsBurger(!isBurger)
 		}
-		setIsSearch(false)
+		SetIsSearch(false)
 	}
 
 	return <HeaderWrapper isSearchOn={isSearchOn} isSearchLayout={isSearchLayout}>
-		<Burger ref={ref} setIsBurger={setIsBurger} isBurger={isBurger}/>
+		<div ref={ref} className="burger">
+			<Burger/>
+		</div>
 		<button ref={refBtn} onClick={HandleBurgerClick} className="burger-icon">
 			<img className="arrow" src="/arrow-left-icon.svg"/>
 			<span/>
 			<span/>
 			<span/>
-			{isRipple && <Ripple clientX={clientX} clientY={clientY}/>}
+			{isRipple && <Ripple X={X} Y={Y}/>}
 		</button>
 		<div className="search-cont">
-			<input onBlur={() => setIsSearchLayout(false)}
+			<input onBlur={() => SetIsSearchLayout(false)}
 				   onFocus={HandleSearchFocus} placeholder="Search"
 				   type="text" autoComplete="false"/>
 			<div className="search-icon">
@@ -55,6 +60,8 @@ const Header: FC<HeaderType> = ({isSearchOn, setIsSearch}) => {
 }
 export default Header
 const HeaderWrapper = styled.div<{
+
+	//TODO add it to context
 	isSearchLayout: boolean
 	isSearchOn: boolean
 }>`
@@ -70,6 +77,8 @@ const HeaderWrapper = styled.div<{
     width: 45px;
     height: 45px;
     display: flex;
+    align-items: center;
+    justify-content: center;
     position: relative;
     border-radius: 50%;
     cursor: pointer;
@@ -164,7 +173,7 @@ const HeaderWrapper = styled.div<{
       height: 100%;
       border-radius: inherit;
       background-color: transparent;
-      font-family: Roboto;
+      font-family: Roboto, sans-serif;
       font-size: ${Rem(18)};
       line-height: 42px;
       color: white;

@@ -1,29 +1,30 @@
-import React, { FC } from "react"
+import React, {FC} from "react"
 import styled from "styled-components"
 import Image from "next/image"
-import { Rem } from "../../styles/functions/mixins"
-import { useRouter } from "next/router"
+import {Rem} from "../../styles/functions/mixins"
+import {useRouter} from "next/router"
 import Link from "next/link"
 
-interface AuthHomeType {}
+interface AuthHomeType {
+}
 
 const AuthHome: FC<AuthHomeType> = () => {
-  const router = useRouter()
+	const router = useRouter()
 
-  return <AuthHomeWrapper className='authHome__wrapper'>
-        <div className="authHome__container">
-            <div className='logo-cont'>
-                <Image className='logo' src='/telegram-icon.svg' width={150} height={150}/>
-            </div>
-            <div className="btn-cont">
-                <button onClick={async () => await router.push('./auth/login/email')}>log in</button>
-            </div>
-            <div className='link'>
-                <Link href='./auth/signup/bio'>Dont got an account yet?</Link>
-            </div>
+	return <AuthHomeWrapper className="authHome__wrapper">
+		<div className="authHome__container">
+			<div className="logo-cont">
+				<Image className="logo" src="/telegram-icon.svg" width={150} height={150}/>
+			</div>
+			<div className="btn-cont">
+				<button onClick={async () => await router.push("./auth/login/email")}>log in</button>
+			</div>
+			<div className="link">
+				<Link href="./auth/signup/bio">Dont got an account yet?</Link>
+			</div>
 
-        </div>
-    </AuthHomeWrapper>
+		</div>
+	</AuthHomeWrapper>
 }
 export default AuthHome
 const AuthHomeWrapper = styled.div`
@@ -69,7 +70,7 @@ const AuthHomeWrapper = styled.div`
       margin-top: 50px;
 
       button {
-        font-family: Roboto;
+        font-family: Roboto, sans-serif;
         font-size: ${Rem(18)};
         width: 250px;
         height: 40px;
@@ -104,7 +105,7 @@ const AuthHomeWrapper = styled.div`
 
     .link {
       color: white;
-      font-family: Roboto;
+      font-family: Roboto, sans-serif;
       font-size: ${Rem(16)};
       margin-top: 10px;
     }

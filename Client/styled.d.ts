@@ -2,8 +2,8 @@
 import "styled-components"
 
 // and extend them!
-declare module 'styled-components' {
-  export interface skeletonLoading {
-    isLoading: boolean
-  }
+declare module "styled-components" {
+	export interface skeletonLoading {
+		isLoading: boolean
+	}
 }

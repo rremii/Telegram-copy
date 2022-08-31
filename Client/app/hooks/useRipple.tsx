@@ -3,13 +3,16 @@ import React, {useEffect, useState} from "react"
 const UseRipple = () => {
 
 	const [isRipple, setIsRipple] = useState(false)
-	const [clientX, setClientX] = useState(0)
-	const [clientY, setClientY] = useState(0)
+	const [X, setX] = useState(0)
+	const [Y, setY] = useState(0)
 
 
 	const SetIsRipple = (e: React.MouseEvent<HTMLButtonElement>): void => {
-		setClientX(e.clientX)
-		setClientY(e.clientY)
+		const ElCoordinates = e.currentTarget.getClientRects()
+		const {left, top} = ElCoordinates[0]
+
+		setX(e.clientX - left)
+		setY(e.clientY - top)
 		setIsRipple(true)
 	}
 	useEffect(() => {
@@ -20,7 +23,7 @@ const UseRipple = () => {
 	}, [isRipple])
 
 	return {
-		isRipple, SetIsRipple, clientX, clientY
+		isRipple, SetIsRipple, X, Y
 	}
 
 }
