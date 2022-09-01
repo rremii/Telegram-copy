@@ -43,7 +43,8 @@ const ProfileMenuWrapper = styled.div<{
     transform: ${({isProfile}) => isProfile ? "translateX(-100%)" : "translateX(0)"};
     width: 100%;
     height: 100%;
-    background-color: rgb(33, 33, 33);
+    background-color: rgb(22, 22, 22);
+
     display: flex;
     flex-direction: column;
 

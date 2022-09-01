@@ -41,8 +41,12 @@ const Info: FC<IInfo> = () => {
 				})}
 			</div>
 			<Image src={ArrOfAvatars[currentAvatar]} layout="fill"/>
-			<button onClick={PrevAvatar} className="arrow-left">&lt;</button>
-			<button onClick={NextAvatar} className="arrow-right">&gt;</button>
+			<button onClick={PrevAvatar} className="arrow-left">
+				<Image width={25} height={50} src="/prev.svg"/>
+			</button>
+			<button onClick={NextAvatar} className="arrow-right">
+				<Image width={25} height={50} src="/next.svg"/>
+			</button>
 		</div>
 		<div className="padding-cont">
 			<div className="change-avatar">
@@ -51,7 +55,7 @@ const Info: FC<IInfo> = () => {
 			</div>
 			<div className="email-cont">
 				<div className="icon">
-					<Image src="/phone-icon.svg" width={35} height={35}/>
+					<Image src="/email.svg" width={35} height={35}/>
 				</div>
 				<div className="text-cont">
 					<h1 className="email">noruto2021@gmail.com</h1>
@@ -65,6 +69,7 @@ export default Info
 const InfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  background-color: rgb(33, 33, 33);
 
   .avatar-cont {
     flex: 0 0 240px;
@@ -102,9 +107,7 @@ const InfoWrapper = styled.div`
       color: rgba(255, 255, 255, 0.44);
       transition: .3s;
 
-      &:hover {
-        color: white;
-      }
+
     }
 
     .arrow-right {
@@ -169,6 +172,7 @@ const InfoWrapper = styled.div`
       background-color: rgb(135, 116, 225);
       cursor: pointer;
       overflow: hidden;
+      z-index: 1;
 
       img {
         position: absolute;
