@@ -37,10 +37,10 @@ const Header = () => {
 	}
 
 	return <HeaderWrapper isSearchOn={isSearchOn} isSearchLayout={isSearchLayout}>
-		<div ref={ref} className="burger">
+		<div className="burger">
 			<Burger/>
 		</div>
-		<button ref={refBtn} onClick={HandleBurgerClick} className="burger-icon">
+		<button onClick={HandleBurgerClick} className="burger-icon">
 			<img className="arrow" src="/arrow-left-icon.svg"/>
 			<span/>
 			<span/>

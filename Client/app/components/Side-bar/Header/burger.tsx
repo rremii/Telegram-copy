@@ -28,7 +28,7 @@ const Burger: FC<IBurgerMenu> = () => {
 		SetDarkMode(!isDarkMode)
 	}
 
-	return <BurgerWrapper isBurger={isBurger}>
+	return <BurgerWrapper onMouseLeave={() => SetIsBurger(false)} isBurger={isBurger}>
 		<div className="burger-overlay" onClick={() => SetIsBurger(false)}/>
 
 		<div className="row">
@@ -79,6 +79,7 @@ const BurgerWrapper = styled.div<{
   transition: .3s;
   transform-origin: left top;
   transform: ${({isBurger}) => isBurger ? "scale(1)" : "scale(0.5)"};
+  pointer-events: ${({isBurger}) => isBurger ? "initial" : "none"};
   opacity: ${({isBurger}) => isBurger ? 1 : 0};
   z-index: 21;
   padding: 10px;
@@ -106,7 +107,6 @@ const BurgerWrapper = styled.div<{
     width: 110vw;
     height: 110vh;
     background-color: transparent;
-
     z-index: -1;
   }
 

@@ -11,6 +11,10 @@ export interface ISideBarContext {
 	SetIsSearchLayout: (values: boolean) => void
 	isDarkMode: boolean
 	SetDarkMode: (values: boolean) => void
+	isLogout: boolean
+	SetLogout: (values: boolean) => void
+	isLogoutPopUp: boolean
+	SetLogoutPopUp: (values: boolean) => void
 }
 
 
@@ -20,6 +24,8 @@ export const SideBarContext = createContext<ISideBarContext>({
 	isSearchOn: false,
 	isSearchLayout: false,
 	isDarkMode: false,
+	isLogout: false,
+	isLogoutPopUp: false,
 	SetIsBurger: (values) => {
 	},
 	SetIsProfile: (values) => {
@@ -29,7 +35,11 @@ export const SideBarContext = createContext<ISideBarContext>({
 	SetIsSearchLayout: (values) => {
 	},
 	SetDarkMode: (values) => {
-	}
+	},
+	SetLogout: (values) => {
+	},
+	SetLogoutPopUp: (values) => {
+	},
 })
 
 
@@ -39,6 +49,8 @@ const useSideBarContext = (): ISideBarContext => {
 	const [isSearchOn, setIsSearch] = useState(false)
 	const [isSearchLayout, setIsSearchLayout] = useState(false)
 	const [isDarkMode, setDarkMode] = useState(true)
+	const [isLogout, setLogout] = useState(false)
+	const [isLogoutPopUp, setLogoutPopUp] = useState(false)
 
 
 	const SetIsBurger = (value: boolean) => setIsBurger(value)
@@ -46,6 +58,8 @@ const useSideBarContext = (): ISideBarContext => {
 	const SetIsSearch = (value: boolean) => setIsSearch(value)
 	const SetIsSearchLayout = (value: boolean) => setIsSearchLayout(value)
 	const SetDarkMode = (value: boolean) => setDarkMode(value)
+	const SetLogout = (value: boolean) => setLogout(value)
+	const SetLogoutPopUp = (value: boolean) => setLogoutPopUp(value)
 
 	return {
 		isProfile,
@@ -57,7 +71,11 @@ const useSideBarContext = (): ISideBarContext => {
 		isSearchLayout,
 		SetIsSearchLayout,
 		isDarkMode,
-		SetDarkMode
+		SetDarkMode,
+		isLogout,
+		SetLogout,
+		isLogoutPopUp,
+		SetLogoutPopUp
 	}
 
 }

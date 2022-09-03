@@ -1,14 +1,17 @@
 import styled from "styled-components"
 import Image from "next/image"
-import {Rem} from "../../../../styles/functions/mixins"
-import Ripple from "../../../ui/Ripple"
+import {Rem} from "../../../../../styles/functions/mixins"
+import Ripple from "../../../../ui/Ripple"
 import React, {useContext} from "react"
-import useRipple from "../../../hooks/useRipple"
-import {SideBarContext} from "../../../hooks/useSideBarContext"
+import useRipple from "../../../../hooks/useRipple"
+import {SideBarContext} from "../../../../hooks/useSideBarContext"
+import Logout from "./Logout"
+import {useOutside} from "../../../../hooks/useOutside"
+import LogoutPopUp from "./Logout-pop-up"
 
 const Header = () => {
 
-	const {isProfile, SetIsProfile} = useContext(SideBarContext)
+	const {isProfile, SetIsProfile, SetLogout, isLogout} = useContext(SideBarContext)
 
 
 	const {X: XEdit, Y: YEdit, isRipple: isRippleEdit, SetIsRipple: SetIsRippleEdit} = useRipple()
@@ -16,6 +19,10 @@ const Header = () => {
 
 	const HandleArrowClick = (e: React.MouseEvent<HTMLButtonElement>) => {
 		SetIsProfile(!isProfile)
+	}
+	const HandleMoreClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+		SetLogout(!isLogout)
+		SetIsRippleMore(e)
 	}
 
 
@@ -31,13 +38,15 @@ const Header = () => {
 				<Image width={22} height={22} src="/pencil-icon.svg"/>
 				{isRippleEdit && <Ripple X={XEdit} Y={YEdit}/>}
 			</button>
-			<button onClick={SetIsRippleMore} className="more">
+			<button onClick={HandleMoreClick} className="more">
 				<span/>
 				<span/>
 				<span/>
 				{isRippleMore && <Ripple X={XMore} Y={YMore}/>}
 			</button>
 		</section>
+		<Logout/>
+		{/*<LogoutPopUp/>*/}
 	</HeaderWrapper>
 }
 export default Header
@@ -49,6 +58,8 @@ const HeaderWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 0 16px;
+  position: relative;
+
 
   section {
     display: flex;

@@ -1,7 +1,7 @@
 import React, {FC, useContext} from "react"
 import styled from "styled-components"
 import {SideBarContext} from "../../../hooks/useSideBarContext"
-import Header from "./Header"
+import Header from "./Header/Header"
 import Info from "./Info"
 import Settings from "./Settings"
 
@@ -10,9 +10,9 @@ interface IProfileMenu {
 
 const ProfileMenu: FC<IProfileMenu> = () => {
 
-	const {isProfile} = useContext(SideBarContext)
+	const {isProfile, SetLogout} = useContext(SideBarContext)
 
-	return <ProfileMenuWrapper isProfile={isProfile}>
+	return <ProfileMenuWrapper onMouseLeave={() => SetLogout(false)} isProfile={isProfile}>
 		<div className="profileMenu-cont">
 			<Header/>
 			<Info/>

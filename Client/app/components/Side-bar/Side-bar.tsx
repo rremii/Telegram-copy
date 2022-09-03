@@ -1,10 +1,11 @@
-import React, {Dispatch, FC, SetStateAction} from "react"
+import React, {Dispatch, FC, SetStateAction, useContext} from "react"
 import styled from "styled-components"
 import ChatMenu from "./Chat-menu/Chat-menu"
 import ProfileMenu from "./Profile-menu/Profile-menu"
 import SearchMenu from "./Search-menu/Search-menu"
 import Header from "./Header/Header"
 import useSideBarContext, {SideBarContext} from "../../hooks/useSideBarContext"
+import LogoutPopUp from "./Profile-menu/Header/Logout-pop-up"
 
 interface ISideBar {
 	setOpen: Dispatch<SetStateAction<boolean>>
@@ -16,9 +17,11 @@ const SideBar: FC<ISideBar> = ({setOpen, isOpen}) => {
 
 	const contextValues = useSideBarContext()
 
+
 	return <SideBarWrapper onClick={() => setOpen(!isOpen)}>
 		<SideBarContext.Provider value={contextValues}>
 			<ProfileMenu/>
+			<LogoutPopUp/>
 			<div className="layout">
 				<Header/>
 				<ChatMenu/>
@@ -42,7 +45,7 @@ const SideBarWrapper = styled.div`
     padding: 0 16px;
     width: 100%;
     height: 100%;
-    overflow: visible !important;
+    overflow: hidden;
   }
 
 `

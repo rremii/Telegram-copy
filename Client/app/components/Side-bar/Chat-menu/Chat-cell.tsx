@@ -55,7 +55,6 @@ const ChatCellWrapper = styled.div`
 
   &:hover {
     background-color: rgba(64, 64, 64, 0.3);
-
   }
 
   .avatar {
