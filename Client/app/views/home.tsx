@@ -1,7 +1,7 @@
 import React, {FC, useState} from "react"
 import styled from "styled-components"
 import SideBar from "../components/Side-bar/Side-bar"
-import ChatBox from "../components/Chat-box"
+import ChatBox from "../components/Chat-box/Chat-box"
 import InfoBox from "../components/Info-box"
 
 interface HomeType {

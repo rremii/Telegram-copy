@@ -5,7 +5,7 @@ import ProfileMenu from "./Profile-menu/Profile-menu"
 import SearchMenu from "./Search-menu/Search-menu"
 import Header from "./Header/Header"
 import useSideBarContext, {SideBarContext} from "../../hooks/useSideBarContext"
-import LogoutPopUp from "./Profile-menu/Header/Logout-pop-up"
+import LogoutPopUp from "../Globals/Logout-pop-up"
 
 interface ISideBar {
 	setOpen: Dispatch<SetStateAction<boolean>>
@@ -40,6 +40,12 @@ const SideBarWrapper = styled.div`
   color: white;
   position: relative;
   width: 420px;
+  border-right: 1px black solid;
+  @media screen and (max-width: 920px) {
+    position: absolute;
+    top: 0;
+    left: -420px;
+  }
 
   .layout {
     padding: 0 16px;

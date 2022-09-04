@@ -1,13 +1,15 @@
 import React, {FC} from "react"
 import styled from "styled-components"
+import Header from "./Header/Header"
+import ChatContent from "./Chat-content/Chat-content"
 
 interface ChatBoxType {
 }
 
 const ChatBox: FC<ChatBoxType> = () => {
 	return <ChatBoxWrapper>
-		CHAT BOX
-
+		<Header/>
+		<ChatContent/>
 	</ChatBoxWrapper>
 }
 export default ChatBox
@@ -19,5 +21,8 @@ const ChatBoxWrapper = styled.div`
   //background-repeat: no-repeat;
   background-size: cover;
   flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+
 
 `

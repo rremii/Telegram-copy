@@ -1,7 +1,7 @@
 import React, {FC, useContext, useState} from "react"
 import styled from "styled-components"
-import {Rem} from "../../../../../styles/functions/mixins"
-import {SideBarContext} from "../../../../hooks/useSideBarContext"
+import {Rem} from "../../../styles/functions/mixins"
+import {SideBarContext} from "../../hooks/useSideBarContext"
 
 interface ILogoutPopUp {
 
@@ -38,6 +38,7 @@ const LogoutPopUpWrapper = styled.div<{
   justify-content: center;
   transition: .3s;
   opacity: ${({isLogoutPopUp}) => isLogoutPopUp ? 1 : 0};
+  pointer-events: ${({isLogoutPopUp}) => isLogoutPopUp ? "initial" : "none"};
 
   .pop-up-cont {
     border-radius: 10px;
@@ -53,7 +54,6 @@ const LogoutPopUpWrapper = styled.div<{
     transition: .3s;
     transform: ${({isLogoutPopUp}) => isLogoutPopUp ?
             "translateY(0) scale(1)" : " scale(0.8)translateY(100px)"};
-    pointer-events: ${({isLogoutPopUp}) => isLogoutPopUp ? "initial" : "none"};
 
     h1 {
       font-family: Roboto, sans-serif;
