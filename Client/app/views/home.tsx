@@ -11,6 +11,8 @@ interface HomeType {
 const Home: FC<HomeType> = () => {
 
 	const [isOpen, setOpen] = useState(false)
+
+
 	return (
 		<HomeWrapper isOpen={isOpen} className="home__wrapper">
 			<div className="home__container">

@@ -1,5 +1,7 @@
 import {FC} from "react"
 import styled from "styled-components"
+import ChatInputBox from "./Chat-input-box"
+import ChatMessagesBox from "./Chat-messages-box"
 
 interface IChatContent {
 
@@ -8,7 +10,9 @@ interface IChatContent {
 const ChatContent: FC<IChatContent> = () => {
 	return <ChatContentWrapper>
 		<div className="chat-cont">
-			qwe
+			<ChatMessagesBox/>
+			<ChatInputBox/>
+
 		</div>
 	</ChatContentWrapper>
 }
@@ -24,6 +28,8 @@ const ChatContentWrapper = styled.div`
   .chat-cont {
     flex: 0 1 728px;
     height: 100%;
-    background-color: red;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 20px;
   }
 `

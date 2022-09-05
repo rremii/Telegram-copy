@@ -18,7 +18,8 @@ const SideBar: FC<ISideBar> = ({setOpen, isOpen}) => {
 	const contextValues = useSideBarContext()
 
 
-	return <SideBarWrapper onClick={() => setOpen(!isOpen)}>
+	// return <SideBarWrapper onClick={() => setOpen(!isOpen)}>
+	return <SideBarWrapper>
 		<SideBarContext.Provider value={contextValues}>
 			<ProfileMenu/>
 			<LogoutPopUp/>
