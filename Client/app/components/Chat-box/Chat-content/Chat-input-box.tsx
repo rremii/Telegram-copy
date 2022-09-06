@@ -12,9 +12,10 @@ const ChatInputBox: FC<IChatInputBox> = () => {
 	return <ChatInputBoxWrapper>
 		<div className="input-cont">
 			<input placeholder="Message" type="text"/>
-
 		</div>
-		<Image className="tail" src={"/bubble-tail-left.svg"} alt=""/>
+		<div className="tail-cont">
+			<Image width={20} height={20} layout="fill" className="tail" src={"/bubble-tail-left.svg"} alt=""/>
+		</div>
 
 	</ChatInputBoxWrapper>
 }
@@ -52,13 +53,17 @@ const ChatInputBoxWrapper = styled.div`
     }
   }
 
-  .tail {
+  .tail-cont {
+
     width: 20px;
     height: 20px;
     position: absolute;
     left: 100%;
     bottom: 0;
     transform: translateX(-7px) rotateY(180deg);
+
+    .tail {
+    }
   }
 
 

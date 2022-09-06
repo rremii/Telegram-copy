@@ -11,7 +11,7 @@ interface IChatMessagesBox {
 const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 	return <ChatMessagesBoxWrapper>
 		<div className="message-cont">
-			<p className="message your-message">your message
+			<div className="message your-message">your message
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam aut culpa deleniti distinctio, dolorum
 				excepturi facilis impedit magni, minima, molestiae nisi reiciendis totam vitae! At harum impedit
 				officiis qui sint.
@@ -21,17 +21,247 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 						   height={16} src="/check.svg"/>
 				</div>
 				<img src="/bubble-tail-left-purple.svg" alt="bubble-tail"/>
-			</p>
+			</div>
 		</div>
 		<div className="message-cont">
-			<p className="message other-message">other message
+			<div className="message other-message">other message
 				<div className="extra-info">
 					<span className="created-at">19:54</span>
 					<Image width={19}
 						   height={16} src="/check.svg"/>
 				</div>
 				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
-			</p>
+			</div>
+		</div>
+		<div className="message-cont">
+			<div className="message other-message">other message
+				<div className="extra-info">
+					<span className="created-at">19:54</span>
+					<Image width={19}
+						   height={16} src="/check.svg"/>
+				</div>
+				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
+			</div>
+		</div>
+		<div className="message-cont">
+			<div className="message other-message">other message
+				<div className="extra-info">
+					<span className="created-at">19:54</span>
+					<Image width={19}
+						   height={16} src="/check.svg"/>
+				</div>
+				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
+			</div>
+		</div>
+		<div className="message-cont">
+			<div className="message other-message">other message
+				<div className="extra-info">
+					<span className="created-at">19:54</span>
+					<Image width={19}
+						   height={16} src="/check.svg"/>
+				</div>
+				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
+			</div>
+		</div>
+		<div className="message-cont">
+			<div className="message other-message">other message
+				<div className="extra-info">
+					<span className="created-at">19:54</span>
+					<Image width={19}
+						   height={16} src="/check.svg"/>
+				</div>
+				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
+			</div>
+		</div>
+		<div className="message-cont">
+			<div className="message other-message">other message
+				<div className="extra-info">
+					<span className="created-at">19:54</span>
+					<Image width={19}
+						   height={16} src="/check.svg"/>
+				</div>
+				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
+			</div>
+		</div>
+		<div className="message-cont">
+			<div className="message other-message">other message
+				<div className="extra-info">
+					<span className="created-at">19:54</span>
+					<Image width={19}
+						   height={16} src="/check.svg"/>
+				</div>
+				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
+			</div>
+		</div>
+		<div className="message-cont">
+			<div className="message other-message">other message
+				<div className="extra-info">
+					<span className="created-at">19:54</span>
+					<Image width={19}
+						   height={16} src="/check.svg"/>
+				</div>
+				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
+			</div>
+		</div>
+		<div className="message-cont">
+			<div className="message other-message">other message
+				<div className="extra-info">
+					<span className="created-at">19:54</span>
+					<Image width={19}
+						   height={16} src="/check.svg"/>
+				</div>
+				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
+			</div>
+		</div>
+		<div className="message-cont">
+			<div className="message other-message">other message
+				<div className="extra-info">
+					<span className="created-at">19:54</span>
+					<Image width={19}
+						   height={16} src="/check.svg"/>
+				</div>
+				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
+			</div>
+		</div>
+		<div className="message-cont">
+			<div className="message other-message">other message
+				<div className="extra-info">
+					<span className="created-at">19:54</span>
+					<Image width={19}
+						   height={16} src="/check.svg"/>
+				</div>
+				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
+			</div>
+		</div>
+		<div className="message-cont">
+			<div className="message other-message">other message
+				<div className="extra-info">
+					<span className="created-at">19:54</span>
+					<Image width={19}
+						   height={16} src="/check.svg"/>
+				</div>
+				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
+			</div>
+		</div>
+		<div className="message-cont">
+			<div className="message other-message">other message
+				<div className="extra-info">
+					<span className="created-at">19:54</span>
+					<Image width={19}
+						   height={16} src="/check.svg"/>
+				</div>
+				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
+			</div>
+		</div>
+		<div className="message-cont">
+			<div className="message other-message">other message
+				<div className="extra-info">
+					<span className="created-at">19:54</span>
+					<Image width={19}
+						   height={16} src="/check.svg"/>
+				</div>
+				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
+			</div>
+		</div>
+		<div className="message-cont">
+			<div className="message other-message">other message
+				<div className="extra-info">
+					<span className="created-at">19:54</span>
+					<Image width={19}
+						   height={16} src="/check.svg"/>
+				</div>
+				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
+			</div>
+		</div>
+		<div className="message-cont">
+			<div className="message other-message">other message
+				<div className="extra-info">
+					<span className="created-at">19:54</span>
+					<Image width={19}
+						   height={16} src="/check.svg"/>
+				</div>
+				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
+			</div>
+		</div>
+		<div className="message-cont">
+			<div className="message other-message">other message
+				<div className="extra-info">
+					<span className="created-at">19:54</span>
+					<Image width={19}
+						   height={16} src="/check.svg"/>
+				</div>
+				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
+			</div>
+		</div>
+		<div className="message-cont">
+			<div className="message other-message">other message
+				<div className="extra-info">
+					<span className="created-at">19:54</span>
+					<Image width={19}
+						   height={16} src="/check.svg"/>
+				</div>
+				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
+			</div>
+		</div>
+		<div className="message-cont">
+			<div className="message other-message">other message
+				<div className="extra-info">
+					<span className="created-at">19:54</span>
+					<Image width={19}
+						   height={16} src="/check.svg"/>
+				</div>
+				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
+			</div>
+		</div>
+		<div className="message-cont">
+			<div className="message other-message">other message
+				<div className="extra-info">
+					<span className="created-at">19:54</span>
+					<Image width={19}
+						   height={16} src="/check.svg"/>
+				</div>
+				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
+			</div>
+		</div>
+		<div className="message-cont">
+			<div className="message other-message">other message
+				<div className="extra-info">
+					<span className="created-at">19:54</span>
+					<Image width={19}
+						   height={16} src="/check.svg"/>
+				</div>
+				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
+			</div>
+		</div>
+		<div className="message-cont">
+			<div className="message other-message">other message
+				<div className="extra-info">
+					<span className="created-at">19:54</span>
+					<Image width={19}
+						   height={16} src="/check.svg"/>
+				</div>
+				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
+			</div>
+		</div>
+		<div className="message-cont">
+			<div className="message other-message">other message
+				<div className="extra-info">
+					<span className="created-at">19:54</span>
+					<Image width={19}
+						   height={16} src="/check.svg"/>
+				</div>
+				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
+			</div>
+		</div>
+		<div className="message-cont">
+			<div className="message other-message">other message
+				<div className="extra-info">
+					<span className="created-at">19:54</span>
+					<Image width={19}
+						   height={16} src="/check.svg"/>
+				</div>
+				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
+			</div>
 		</div>
 	</ChatMessagesBoxWrapper>
 }
@@ -40,6 +270,7 @@ const ChatMessagesBoxWrapper = styled.div`
   width: 100%;
   height: calc(100vh - 140px);
   overflow-y: auto;
+  overflow-x: hidden;
   //background-color: green;
   display: flex;
   flex-direction: column;
@@ -81,11 +312,13 @@ const ChatMessagesBoxWrapper = styled.div`
 
       }
 
+
       img {
         width: 20px;
         height: 20px;
         position: absolute;
       }
+
     }
 
 
