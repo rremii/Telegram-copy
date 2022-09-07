@@ -31,5 +31,6 @@ const ChatContentWrapper = styled.div`
     display: flex;
     flex-direction: column;
     padding-bottom: 20px;
+    align-items: center;
   }
 `

@@ -3,6 +3,7 @@ import styled from "styled-components"
 import SideBar from "../components/Side-bar/Side-bar"
 import ChatBox from "../components/Chat-box/Chat-box"
 import InfoBox from "../components/Info-box"
+import useGlobalContext, {GlobalContext} from "../hooks/useGlobalContext"
 
 interface HomeType {
 }
@@ -12,14 +13,18 @@ const Home: FC<HomeType> = () => {
 
 	const [isOpen, setOpen] = useState(false)
 
+	const contextValues = useGlobalContext()
 
 	return (
 		<HomeWrapper isOpen={isOpen} className="home__wrapper">
-			<div className="home__container">
-				<SideBar isOpen={isOpen} setOpen={setOpen}/>
-				<ChatBox/>
-				<InfoBox isOpen={isOpen}/>
-			</div>
+			<GlobalContext.Provider value={contextValues}>
+
+				<div className="home__container">
+					<SideBar isOpen={isOpen} setOpen={setOpen}/>
+					<ChatBox/>
+					<InfoBox isOpen={isOpen}/>
+				</div>
+			</GlobalContext.Provider>
 		</HomeWrapper>
 	)
 }

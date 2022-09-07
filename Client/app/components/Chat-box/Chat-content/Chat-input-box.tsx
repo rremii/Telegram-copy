@@ -25,11 +25,12 @@ const ChatInputBoxWrapper = styled.div`
   flex: 0 0 54px;
   display: flex;
   align-items: center;
-  width: 100%;
+  width: calc(100% - 15px);
   border-radius: 12px 12px 0 12px;
   font-family: Roboto, sans-serif;
   padding: 0 50px;
   position: relative;
+  margin-top: 5px;
 
   .input-cont {
     width: 100%;

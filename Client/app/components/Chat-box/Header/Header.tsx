@@ -1,9 +1,10 @@
-import React, {FC} from "react"
+import React, {FC, useContext} from "react"
 import styled from "styled-components"
 import Image from "next/image"
 import Ripple from "../../../ui/Ripple"
 import useRipple from "../../../hooks/useRipple"
 import {Rem} from "../../../../styles/functions/mixins"
+import {GlobalContext} from "../../../hooks/useGlobalContext"
 
 interface IHeader {
 
@@ -11,15 +12,22 @@ interface IHeader {
 
 const Header: FC<IHeader> = () => {
 
+	const {screenMode, SetScreenMode} = useContext(GlobalContext)
 	const {X: XMore, Y: YMore, isRipple: isRippleMore, SetIsRipple: SetIsRippleMore} = useRipple()
 
 
 	const HandleMoreClick = (e: React.MouseEvent<HTMLButtonElement>) => {
 		SetIsRippleMore(e)
 	}
+	const HandleArrowClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+		SetScreenMode(screenMode === "sideBar" ? "chat" : "sideBar")
+	}
 
-	return <HeaderWrapper>
+	return <HeaderWrapper screenMode={screenMode}>
 		<section className="chat-info">
+			<button onClick={HandleArrowClick} className="arrow">
+				<Image width={24} height={24} src="/arrow-left-icon.svg"/>
+			</button>
 			<div className="avatar">
 				<Image width={42} height={42} src="/dog-icon.png"/>
 			</div>
@@ -39,7 +47,9 @@ const Header: FC<IHeader> = () => {
 	</HeaderWrapper>
 }
 export default Header
-const HeaderWrapper = styled.div`
+const HeaderWrapper = styled.div<{
+	screenMode: "sideBar" | "chat"
+}>`
   background-color: rgb(33, 33, 33);
   flex: 0 0 60px;
   width: 100%;
@@ -52,6 +62,31 @@ const HeaderWrapper = styled.div`
     display: flex;
     gap: 18px;
     align-items: center;
+
+    .arrow {
+      width: 45px;
+      height: 45px;
+      padding: 0 10px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+      transition: .3s background-color;
+
+      &:hover {
+        background-color: rgb(43, 43, 43);
+      }
+
+      @media screen and (min-width: 920px) {
+        display: none;
+      }
+      @media screen and (max-width: 919px ) {
+        transform: ${({screenMode}) => screenMode === "chat" ? "rotateY(0)" : "rotateY(180deg)"};
+      }
+    }
 
     .avatar {
       border-radius: 50%;

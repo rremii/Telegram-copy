@@ -1,8 +1,9 @@
-import React, {FC} from "react"
+import React, {FC, useContext} from "react"
 import styled from "styled-components"
 import Image from "next/image"
 import {Rem} from "../../../../styles/functions/mixins"
 import {cutStringToLength} from "../../../utils/cutStringToLength"
+import useGlobalContext, {GlobalContext} from "../../../hooks/useGlobalContext"
 
 interface IChatList {
 	avatar: string
@@ -12,8 +13,14 @@ interface IChatList {
 
 
 const ChatCell: FC<IChatList> = ({subTitle, title, avatar}) => {
+	const {screenMode, SetScreenMode} = useContext(GlobalContext)
 
-	return <ChatCellWrapper className="cell">
+
+	const HandleCellClick = () => {
+		SetScreenMode("chat")
+	}
+
+	return <ChatCellWrapper onClick={HandleCellClick} className="cell">
 		<div className="avatar">
 			<Image width={54} height={54} src={avatar}/>
 		</div>
@@ -80,7 +87,7 @@ const ChatCellWrapper = styled.div`
 
       h1 {
         font-family: Roboto, sans-serif;
-        font-size: ${Rem(18)};
+        font-size: ${Rem(16)};
         font-weight: 600;
         letter-spacing: 1px;
         line-height: 27px;

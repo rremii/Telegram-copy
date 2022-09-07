@@ -6,20 +6,23 @@ import SearchMenu from "./Search-menu/Search-menu"
 import Header from "./Header/Header"
 import useSideBarContext, {SideBarContext} from "../../hooks/useSideBarContext"
 import LogoutPopUp from "../Globals/Logout-pop-up"
+import useGlobalContext, {GlobalContext} from "../../hooks/useGlobalContext"
 
 interface ISideBar {
 	setOpen: Dispatch<SetStateAction<boolean>>
 	isOpen: boolean
+
 }
 
 
-const SideBar: FC<ISideBar> = ({setOpen, isOpen}) => {
+const SideBar: FC<ISideBar> = () => {
 
 	const contextValues = useSideBarContext()
+	const {screenMode} = useContext(GlobalContext)
 
 
 	// return <SideBarWrapper onClick={() => setOpen(!isOpen)}>
-	return <SideBarWrapper>
+	return <SideBarWrapper screenMode={screenMode}>
 		<SideBarContext.Provider value={contextValues}>
 			<ProfileMenu/>
 			<LogoutPopUp/>
@@ -32,7 +35,9 @@ const SideBar: FC<ISideBar> = ({setOpen, isOpen}) => {
 	</SideBarWrapper>
 }
 export default SideBar
-const SideBarWrapper = styled.div`
+const SideBarWrapper = styled.div<{
+	screenMode: string
+}>`
   //overflow: hidden;
   height: 100%;
   padding: 0;
@@ -45,7 +50,16 @@ const SideBarWrapper = styled.div`
   @media screen and (max-width: 920px) {
     position: absolute;
     top: 0;
-    left: -420px;
+    z-index: 10;
+    left: ${({screenMode}) => screenMode === "sideBar" ? 0 : "-150px"};
+  }
+  @media screen and (max-width: 600px) {
+    z-index: 10;
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    transition: .5s left;
+    left: ${({screenMode}) => screenMode === "sideBar" ? 0 : "-150px"};
   }
 
   .layout {

@@ -2,6 +2,7 @@ import React, {useContext} from "react"
 import styled from "styled-components"
 import ChatCell from "./Chat-cell"
 import {SideBarContext} from "../../../hooks/useSideBarContext"
+import useGlobalContext from "../../../hooks/useGlobalContext"
 
 
 const chat = [
@@ -15,6 +16,7 @@ const chat = [
 const ChatMenu = () => {
 
 	const {isSearchOn} = useContext(SideBarContext)
+
 
 	return <ChatMenuWrapper isSearchOn={isSearchOn}>
 		{chat.map(({title, subTitle, avatar}, index) => {
