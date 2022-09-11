@@ -3,7 +3,7 @@ import styled from "styled-components"
 import Image from "next/image"
 import Ripple from "../../../ui/Ripple"
 import useRipple from "../../../hooks/useRipple"
-import {Rem} from "../../../../styles/functions/mixins"
+import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
 
 interface IHeader {
@@ -60,7 +60,7 @@ const HeaderWrapper = styled.div<{
   .chat-info {
     flex: 1 1 auto;
     display: flex;
-    gap: 18px;
+    gap: ${AdaptiveValue(18, 5)};
     align-items: center;
 
     .arrow {
@@ -101,7 +101,7 @@ const HeaderWrapper = styled.div<{
 
     .text-content {
       h1 {
-        font-size: ${Rem(16)};
+        font-size: ${AdaptiveValue(16, 14)};
         font-weight: 600;
         font-family: Roboto, sans-serif;
         color: white;
@@ -109,7 +109,7 @@ const HeaderWrapper = styled.div<{
       }
 
       h2 {
-        font-size: ${Rem(14)};
+        font-size: ${AdaptiveValue(14, 13)};
         font-family: Roboto, sans-serif;
         color: #AAAAAA;
       }

@@ -12,7 +12,7 @@ const app = express()
 
 app.use(
     cors({
-        origin: "http://localhost:3000",
+        origin: process.env.CLIENT_URL || "http://localhost:3000",
         credentials: true,
         optionSuccessStatus: 200,
     })
@@ -27,7 +27,7 @@ app.use(errorMiddleware)
 const startApp = async () => {
     try {
         await sequelize.authenticate()
-        await sequelize.sync({ force: false })
+        await sequelize.sync({ force: true })
         app.listen(PORT, () => console.log(`${PORT} post is being listened`))
         console.log("Соединение с БД было успешно установлено")
     } catch (e) {

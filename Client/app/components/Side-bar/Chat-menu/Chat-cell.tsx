@@ -1,7 +1,7 @@
 import React, {FC, useContext} from "react"
 import styled from "styled-components"
 import Image from "next/image"
-import {Rem} from "../../../../styles/functions/mixins"
+import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import {cutStringToLength} from "../../../utils/cutStringToLength"
 import useGlobalContext, {GlobalContext} from "../../../hooks/useGlobalContext"
 
@@ -87,10 +87,10 @@ const ChatCellWrapper = styled.div`
 
       h1 {
         font-family: Roboto, sans-serif;
-        font-size: ${Rem(16)};
+        font-size: ${AdaptiveValue(16, 14)};
         font-weight: 600;
         letter-spacing: 1px;
-        line-height: 27px;
+        line-height: ${AdaptiveValue(27, 15)};
       }
 
       .message-info-cont {
@@ -119,14 +119,14 @@ const ChatCellWrapper = styled.div`
       h2 {
         font-family: Roboto, sans-serif;
         font-weight: 400;
-        font-size: ${Rem(17)};
+        font-size: ${AdaptiveValue(17, 15)};
         flex: 1 1 auto;
       }
 
       .unseen-messages {
         font-family: Roboto, sans-serif;
         font-weight: 600;
-        font-size: ${Rem(16)};
+        font-size: ${AdaptiveValue(16, 14)};
         background-color: rgb(131, 131, 131);
         border-radius: 15px;
         padding: 5px 8px;

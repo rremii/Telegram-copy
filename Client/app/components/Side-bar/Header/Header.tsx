@@ -1,6 +1,6 @@
 import React, {useContext, useState} from "react"
 import styled from "styled-components"
-import {Rem} from "../../../../styles/functions/mixins"
+import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import useRipple from "../../../hooks/useRipple"
 import Ripple from "../../../ui/Ripple"
 import Burger from "./burger"
@@ -74,8 +74,8 @@ const HeaderWrapper = styled.div<{
 
 
   .burger-icon {
-    width: 45px;
-    height: 45px;
+    width: ${AdaptiveValue(45, 35)};
+    height: ${AdaptiveValue(45, 35)};
     display: flex;
     align-items: center;
     justify-content: center;

@@ -4,7 +4,6 @@ import ChatMenu from "./Chat-menu/Chat-menu"
 import ProfileMenu from "./Profile-menu/Profile-menu"
 import SearchMenu from "./Search-menu/Search-menu"
 import Header from "./Header/Header"
-import useSideBarContext, {SideBarContext} from "../../hooks/useSideBarContext"
 import LogoutPopUp from "../Globals/Logout-pop-up"
 import useGlobalContext, {GlobalContext} from "../../hooks/useGlobalContext"
 
@@ -17,21 +16,17 @@ interface ISideBar {
 
 const SideBar: FC<ISideBar> = () => {
 
-	const contextValues = useSideBarContext()
 	const {screenMode} = useContext(GlobalContext)
 
 
 	// return <SideBarWrapper onClick={() => setOpen(!isOpen)}>
 	return <SideBarWrapper screenMode={screenMode}>
-		<SideBarContext.Provider value={contextValues}>
-			<ProfileMenu/>
-			<LogoutPopUp/>
-			<div className="layout">
-				<Header/>
-				<ChatMenu/>
-				<SearchMenu/>
-			</div>
-		</SideBarContext.Provider>
+		<ProfileMenu/>
+		<div className="layout">
+			<Header/>
+			<ChatMenu/>
+			<SearchMenu/>
+		</div>
 	</SideBarWrapper>
 }
 export default SideBar
@@ -48,6 +43,7 @@ const SideBarWrapper = styled.div<{
   width: 420px;
   border-right: 1px black solid;
   @media screen and (max-width: 920px) {
+    transition: .5s left;
     position: absolute;
     top: 0;
     z-index: 10;

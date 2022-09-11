@@ -28,11 +28,12 @@ export default LogoutPopUp
 const LogoutPopUpWrapper = styled.div<{
 	isLogoutPopUp: boolean
 }>`
+  color: white;
   position: fixed;
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.1);
-  z-index: 101;
+  z-index: 1001;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -51,6 +52,7 @@ const LogoutPopUpWrapper = styled.div<{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    //TODO check that all transition are applied to specific properties 
     transition: .3s;
     transform: ${({isLogoutPopUp}) => isLogoutPopUp ?
             "translateY(0) scale(1)" : " scale(0.8)translateY(100px)"};

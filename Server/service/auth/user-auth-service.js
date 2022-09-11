@@ -45,8 +45,10 @@ class UserAuthService {
         await CandidateAuthService.clearExpiredCandidates(email)
 
         const userDto = new UserDto(user)
-        const tokens = TokenService.generateTokens({ ...userDto }, isRememberMe)
-        await TokenService.saveToken(userDto.user_id, tokens.refreshToken)
+        const tokens = await TokenService.getAndSaveTokens(
+            { ...userDto },
+            isRememberMe
+        )
         return {
             ...tokens,
         }
@@ -76,8 +78,13 @@ class UserAuthService {
         await CandidateAuthService.clearExpiredCandidates(email)
 
         const userDto = new UserDto(user)
-        const tokens = TokenService.generateTokens({ ...userDto }, isRememberMe)
-        await TokenService.saveToken(userDto.user_id, tokens.refreshToken)
+
+        const tokens = await TokenService.getAndSaveTokens(
+            { ...userDto },
+            isRememberMe
+        )
+        // const tokens = TokenService.generateTokens({ ...userDto }, isRememberMe)
+        // await TokenService.saveToken(userDto.user_id, tokens.refreshToken)
         return {
             ...tokens,
         }
@@ -104,8 +111,10 @@ class UserAuthService {
             where: { user_id: userData.user_id },
         })
         const userDto = new UserDto(user)
-        const tokens = TokenService.generateTokens({ ...userDto }, isRememberMe)
-        await TokenService.saveToken(userDto.user_id, tokens.refreshToken)
+        const tokens = await TokenService.getAndSaveTokens(
+            { ...userDto },
+            isRememberMe
+        )
         return {
             ...tokens,
         }

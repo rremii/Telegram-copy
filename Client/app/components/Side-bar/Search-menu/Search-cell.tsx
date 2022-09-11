@@ -1,7 +1,7 @@
 import Image from "next/image"
 import React, {FC} from "react"
 import styled from "styled-components"
-import {Rem} from "../../../../styles/functions/mixins"
+import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 
 interface ISearchCell {
 	avatar: string
@@ -14,7 +14,7 @@ const SearchCell: FC<ISearchCell> = ({title, subTitle, avatar}) => {
 
 	return <CellWrapper>
 		<div className="avatar">
-			<Image width={54} height={54} src={avatar}/>
+			<Image layout="fill" width={54} height={54} src={avatar}/>
 		</div>
 		<div className="text-cont">
 
@@ -40,11 +40,13 @@ const CellWrapper = styled.div`
   }
 
   .avatar {
-    height: 100%;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: ${AdaptiveValue(54, 45)};
+    height: ${AdaptiveValue(54, 45)};
+    position: relative;
 
     img, span {
       border-radius: inherit;
@@ -61,10 +63,10 @@ const CellWrapper = styled.div`
 
     h1 {
       font-family: Roboto, sans-serif;
-      font-size: ${Rem(18)};
+      font-size: ${AdaptiveValue(18, 16)};
       font-weight: 600;
       letter-spacing: 1px;
-      line-height: 27px;
+      line-height: ${AdaptiveValue(27, 15)};
 
     }
 

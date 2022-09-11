@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken")
 const { Token } = require("../models/token-model")
 
 class TokenService {
-    generateTokens(payload, isRememberMe = false) {
+    static #generateTokens(payload, isRememberMe = false) {
         const accessToken = jwt.sign(
             payload,
             process.env.JWT_ACCESS_SECRET_KEY,
@@ -19,7 +19,7 @@ class TokenService {
         }
     }
 
-    async saveToken(user_id, refreshToken) {
+    static async #saveToken(user_id, refreshToken) {
         const tokenData = await Token.findOne({
             where: { user_id },
         })
@@ -32,6 +32,15 @@ class TokenService {
             refreshToken,
         })
         if (!tokenResponse.dataValues) throw new Error("token was not saved")
+    }
+
+    async getAndSaveTokens(UserPayload, isRememberMe) {
+        const tokens = TokenService.#generateTokens(
+            { ...UserPayload },
+            isRememberMe
+        )
+        await TokenService.#saveToken(UserPayload.user_id, tokens.refreshToken)
+        return tokens
     }
 
     validateAccessToken(token) {
