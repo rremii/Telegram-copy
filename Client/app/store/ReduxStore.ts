@@ -2,6 +2,7 @@ import {combineReducers, configureStore} from "@reduxjs/toolkit"
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux"
 import AuthSlice from "./AuthSlice"
 import {PreloadedState} from "redux"
+import SearchSlice from "./SearchSlice"
 
 // export const store = configureStore({
 //     reducer: {
@@ -14,6 +15,7 @@ import {PreloadedState} from "redux"
 
 const rootReducer = combineReducers({
 	Auth: AuthSlice,
+	Search: SearchSlice,
 })
 export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
 	return configureStore({

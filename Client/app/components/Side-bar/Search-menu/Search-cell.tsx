@@ -2,6 +2,7 @@ import Image from "next/image"
 import React, {FC} from "react"
 import styled from "styled-components"
 import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
+import {API_URL_STATIC} from "../../../api"
 
 interface ISearchCell {
 	avatar: string
@@ -14,7 +15,7 @@ const SearchCell: FC<ISearchCell> = ({title, subTitle, avatar}) => {
 
 	return <CellWrapper>
 		<div className="avatar">
-			<Image layout="fill" width={54} height={54} src={avatar}/>
+			<Image layout="fill" src={API_URL_STATIC + avatar}/>
 		</div>
 		<div className="text-cont">
 

@@ -1,22 +1,27 @@
-import React, {useContext} from "react"
+import React, {useContext, useEffect} from "react"
 import styled from "styled-components"
 import {Rem} from "../../../../styles/functions/mixins"
 import SearchCell from "./Search-cell"
 import {SideBarContext} from "../../../hooks/useSideBarContext"
+import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
+import {fetchUsers} from "../../../store/SearchSlice"
 
 
-const Users = [
-	{
-		avatar: "/dog-icon.png",
-		title: "Artem Romanov",
-		subTitle: "noruto2021@gmail.com"
-	}
-]
+// const Users = [
+// 	{
+// 		avatar: "/dog-icon.png",
+// 		title: "Artem Romanov",
+// 		subTitle: "noruto2021@gmail.com"
+// 	}
+// ]
 
 const SearchMenu = () => {
 
 	const {isSearchOn} = useContext(SideBarContext)
+	const dispatch = useAppDispatch()
 
+
+	const {users} = useTypedSelector(state => state.Search)
 	return <SearchMenuWrapper isSearchOn={isSearchOn} className="searchMenu__wrapper">
 		<nav>
 			<button className="btn-active">
@@ -27,8 +32,9 @@ const SearchMenu = () => {
 			</button>
 		</nav>
 		<div className="cell-box">
-			{Users.map((userData, index) => {
-				return <SearchCell key={index} {...userData} />
+			{users.map(({firstName, profilePic, lastName}, index) => {
+				return <SearchCell key={index} avatar={profilePic} title={firstName + " " + lastName}
+								   subTitle={"nothing new yet"}/>
 			})}
 		</div>
 	</SearchMenuWrapper>

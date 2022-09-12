@@ -1,12 +1,13 @@
 export interface DefaultResponse {
-    message: string
+	message: string
 }
 
 export interface TokenResponse {
-    accessToken: string
+	accessToken: string
 }
 
 export interface ErrorResponse {
-    error: string
-    errors: [string]
+	error: string
+	errors: [string]
 }
+

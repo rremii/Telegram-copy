@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react"
+import React, {useContext, useEffect, useState} from "react"
 import styled from "styled-components"
 import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import useRipple from "../../../hooks/useRipple"
@@ -6,9 +6,13 @@ import Ripple from "../../../ui/Ripple"
 import Burger from "./burger"
 import {useOutside} from "../../../hooks/useOutside"
 import {SideBarContext} from "../../../hooks/useSideBarContext"
+import {fetchUsers} from "../../../store/SearchSlice"
+import {useAppDispatch} from "../../../store/ReduxStore"
 
 
 const Header = () => {
+
+	const dispatch = useAppDispatch()
 
 	const {
 		isBurger,
@@ -21,11 +25,16 @@ const Header = () => {
 
 
 	const {X, Y, isRipple, SetIsRipple} = useRipple()
-	const {ref, refBtn} = useOutside(false)
-
+	///////////////////////////
+	// useEffect(() => {
+	// }, [])
+	/////////////////////////////
 	const HandleSearchFocus = () => {
 		SetIsSearchLayout(true)
 		SetIsSearch(true)
+	}
+	const HandleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		dispatch(fetchUsers(e.currentTarget.value))
 	}
 
 	const HandleBurgerClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -48,7 +57,7 @@ const Header = () => {
 			{isRipple && <Ripple X={X} Y={Y}/>}
 		</button>
 		<div className="search-cont">
-			<input onBlur={() => SetIsSearchLayout(false)}
+			<input onChange={HandleSearchChange} onBlur={() => SetIsSearchLayout(false)}
 				   onFocus={HandleSearchFocus} placeholder="Search"
 				   type="text" autoComplete="false"/>
 			<div className="search-icon">
