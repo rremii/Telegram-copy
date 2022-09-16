@@ -27,7 +27,7 @@ app.use(errorMiddleware)
 const startApp = async () => {
     try {
         await sequelize.authenticate()
-        await sequelize.sync({ force: true })
+        await sequelize.sync({ force: false })
         app.listen(PORT, () => console.log(`${PORT} post is being listened`))
         console.log("Соединение с БД было успешно установлено")
     } catch (e) {

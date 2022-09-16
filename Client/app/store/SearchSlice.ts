@@ -21,10 +21,12 @@ export const fetchUsers = createAsyncThunk(
 
 interface initialStateType {
 	users: searchUser[]
+	groups: []
 }
 
 const initialState = {
-	users: []
+	users: [],
+	groups: []
 } as initialStateType
 
 const SearchSlice = createSlice({
@@ -34,10 +36,10 @@ const SearchSlice = createSlice({
 		// addUserBio(state, action: PayloadAction<AuthUserBio>) {
 		// 	state.userBio = action.payload
 		// },
-
 	},
 	extraReducers: (builder) => {
 		builder.addCase(fetchUsers.fulfilled, (state, action: PayloadAction<searchUser[]>) => {
+
 			state.users = action.payload
 		})
 

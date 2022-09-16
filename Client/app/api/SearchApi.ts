@@ -1,15 +1,25 @@
 import {$api, API_URL} from "./index"
-import axios from "axios"
-import {DefaultResponse, TokenResponse} from "./types"
+
 import {AuthUserBio, AuthUserEmail, searchUser} from "../store/types"
 
 export const SearchAPI = {
 	getUsers: async (searchString: string) => {
 
-		const splittedString = searchString.split(" ")
-		const firstName = splittedString[0]
-		const lastName = splittedString[1]
-		return await $api.get<searchUser[]>(`users?firstName=${firstName || null}&lastName=${lastName || null}`)
+
+		let email
+		let firstName
+		let lastName
+
+		if (searchString.includes("@")) {
+			email = searchString
+		} else {
+			const splittedString = searchString.split(" ")
+			firstName = splittedString[0]
+			lastName = splittedString[1]
+		}
+
+
+		return await $api.get<searchUser[]>(`users/search?email=${email ? email : ""}${firstName ? "&firstName=" + firstName : ""}${lastName ? "&lastName=" + lastName : ""}`)
 	},
 
 }

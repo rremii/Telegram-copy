@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from "react"
+import React, {useContext, useEffect, useState} from "react"
 import styled from "styled-components"
 import {Rem} from "../../../../styles/functions/mixins"
 import SearchCell from "./Search-cell"
@@ -15,24 +15,34 @@ import {fetchUsers} from "../../../store/SearchSlice"
 // 	}
 // ]
 
+type  searchingFilter = "people" | "groups"
+
 const SearchMenu = () => {
 
 	const {isSearchOn} = useContext(SideBarContext)
-	const dispatch = useAppDispatch()
 
+
+	const [searchFilter, setSearchFilter] = useState<searchingFilter>("people")
 
 	const {users} = useTypedSelector(state => state.Search)
-	return <SearchMenuWrapper isSearchOn={isSearchOn} className="searchMenu__wrapper">
+	const {groups} = useTypedSelector(state => state.Search)
+
+
+	return <SearchMenuWrapper searchingFilter={searchFilter} isSearchOn={isSearchOn} className="searchMenu__wrapper">
 		<nav>
-			<button className="btn-active">
-				<span>Chats</span>
-			</button>
-			<button>
+			<button onClick={() => setSearchFilter("people")} className={searchFilter === "people" ? "btn-active" : ""}>
 				<span>People</span>
+			</button>
+			<button onClick={() => setSearchFilter("groups")} className={searchFilter === "groups" ? "btn-active" : ""}>
+				<span>Groups</span>
 			</button>
 		</nav>
 		<div className="cell-box">
-			{users.map(({firstName, profilePic, lastName}, index) => {
+			{searchFilter === "people" && users.map(({firstName, profilePic, lastName}, index) => {
+				return <SearchCell key={index} avatar={profilePic} title={firstName + " " + lastName}
+								   subTitle={"nothing new yet"}/>
+			})}
+			{searchFilter === "groups" && groups.map(({firstName, profilePic, lastName}, index) => {
 				return <SearchCell key={index} avatar={profilePic} title={firstName + " " + lastName}
 								   subTitle={"nothing new yet"}/>
 			})}
@@ -42,6 +52,7 @@ const SearchMenu = () => {
 export default SearchMenu
 const SearchMenuWrapper = styled.div<{
 	isSearchOn: boolean
+	searchingFilter: searchingFilter
 }>`
   width: 100%;
   height: calc(100% - 60px);
@@ -74,13 +85,26 @@ const SearchMenuWrapper = styled.div<{
       background-color: rgba(0, 0, 0, 0.46);
     }
 
+    &::before {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 0;
+      transition: transform .4s;
+      transform: ${({searchingFilter}) => searchingFilter === "people" ? "translateX(16px)" : "translateX(102px)"};
+      width: 51px;
+      height: 3px;
+      border-radius: 5px;
+      background-color: rgb(135, 116, 225);
+    }
+
     button {
       display: flex;
       align-items: center;
       padding: 16px;
       border-radius: 10px;
       position: relative;
-
+      transition: .4s;
 
       &:hover {
         background-color: rgba(170, 170, 170, 0.08);
@@ -96,17 +120,18 @@ const SearchMenuWrapper = styled.div<{
     }
 
     .btn-active {
-      &::after {
-        content: '';
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 60%;
-        height: 3px;
-        border-radius: 5px;
-        background-color: rgb(135, 116, 225);
-      }
+
+      //&::after {
+      //  content: '';
+      //  position: absolute;
+      //  top: 100%;
+      //  left: 50%;
+      //  transform: translateX(-50%);
+      //  width: 60%;
+      //  height: 3px;
+      //  border-radius: 5px;
+      //  background-color: rgb(135, 116, 225);
+      //}
 
       &:hover {
         background-color: rgba(135, 116, 225, 0.08);

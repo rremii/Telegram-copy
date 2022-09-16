@@ -3,6 +3,6 @@ const userController = require("./../controllers/user-controller")
 
 const router = Router()
 
-router.get("/users", userController.findAll)
+router.get("/users/search", userController.findAll)
 
 module.exports = router

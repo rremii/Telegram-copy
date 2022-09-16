@@ -25,10 +25,7 @@ const Header = () => {
 
 
 	const {X, Y, isRipple, SetIsRipple} = useRipple()
-	///////////////////////////
-	// useEffect(() => {
-	// }, [])
-	/////////////////////////////
+
 	const HandleSearchFocus = () => {
 		SetIsSearchLayout(true)
 		SetIsSearch(true)
@@ -103,8 +100,8 @@ const HeaderWrapper = styled.div<{
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 30px;
-      height: 30px;
+      width: 27px;
+      height: 27px;
       transform: translate(-50%, -50%) rotate(180deg);
       z-index: 10;
       opacity: ${({isSearchOn}) => isSearchOn ? 1 : 0};
@@ -143,7 +140,7 @@ const HeaderWrapper = styled.div<{
   .search-cont {
     position: relative;
     flex: 1 1 auto;
-    height: 47px;
+    height: 43px;
     border-radius: 22px;
     display: flex;
     align-items: center;

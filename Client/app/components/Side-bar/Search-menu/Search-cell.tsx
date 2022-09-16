@@ -15,7 +15,7 @@ const SearchCell: FC<ISearchCell> = ({title, subTitle, avatar}) => {
 
 	return <CellWrapper>
 		<div className="avatar">
-			<Image layout="fill" src={API_URL_STATIC + avatar}/>
+			<Image layout="fill" src={avatar ? API_URL_STATIC + avatar : "/no-avatar.svg"}/>
 		</div>
 		<div className="text-cont">
 
