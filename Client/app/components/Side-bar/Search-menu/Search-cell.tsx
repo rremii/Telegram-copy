@@ -3,17 +3,28 @@ import React, {FC} from "react"
 import styled from "styled-components"
 import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import {API_URL_STATIC} from "../../../api"
+import {createChat} from "../../../store/ChatSlice"
+import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
 
 interface ISearchCell {
 	avatar: string
 	title: string
 	subTitle: string
+	id: number
 }
 
-const SearchCell: FC<ISearchCell> = ({title, subTitle, avatar}) => {
+const SearchCell: FC<ISearchCell> = ({title = "", subTitle = "", avatar, id}) => {
+
+	const dispatch = useAppDispatch()
+
+	const {user_id} = useTypedSelector(state => state.Me.me)
+
+	const CreateChat = () => {
+		dispatch(createChat([user_id, id]))
+	}
 
 
-	return <CellWrapper>
+	return <CellWrapper onClick={CreateChat}>
 		<div className="avatar">
 			<Image layout="fill" src={avatar ? API_URL_STATIC + avatar : "/no-avatar.svg"}/>
 		</div>

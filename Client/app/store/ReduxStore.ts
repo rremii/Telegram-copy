@@ -3,6 +3,8 @@ import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux"
 import AuthSlice from "./AuthSlice"
 import {PreloadedState} from "redux"
 import SearchSlice from "./SearchSlice"
+import MeSlice from "./MeSlice"
+import ChatSlice from "./ChatSlice"
 
 // export const store = configureStore({
 //     reducer: {
@@ -16,6 +18,8 @@ import SearchSlice from "./SearchSlice"
 const rootReducer = combineReducers({
 	Auth: AuthSlice,
 	Search: SearchSlice,
+	Me: MeSlice,
+	Chats: ChatSlice
 })
 export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
 	return configureStore({

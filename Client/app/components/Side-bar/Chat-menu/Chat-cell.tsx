@@ -6,13 +6,13 @@ import {cutStringToLength} from "../../../utils/cutStringToLength"
 import useGlobalContext, {GlobalContext} from "../../../hooks/useGlobalContext"
 
 interface IChatList {
-	avatar: string
+	avatar: string | null
 	title: string
 	subTitle: string
 }
 
 
-const ChatCell: FC<IChatList> = ({subTitle, title, avatar}) => {
+const ChatCell: FC<IChatList> = ({subTitle, title, avatar = ""}) => {
 	const {screenMode, SetScreenMode} = useContext(GlobalContext)
 
 
@@ -22,7 +22,7 @@ const ChatCell: FC<IChatList> = ({subTitle, title, avatar}) => {
 
 	return <ChatCellWrapper onClick={HandleCellClick} className="cell">
 		<div className="avatar">
-			<Image width={54} height={54} src={avatar}/>
+			<Image width={54} height={54} src={avatar ? avatar : "/no-avatar.svg"}/>
 		</div>
 		<div className="text-box">
 			<div className="title-cont">

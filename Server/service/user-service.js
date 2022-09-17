@@ -8,7 +8,7 @@ class UserService {
             const users = await User.findAll({
                 where: { email: { [Op.like]: `%${email}%` } },
             })
-            const usersInfo = await Promise.all(
+            return await Promise.all(
                 users.map(async (user) => {
                     return await UserBio.findOne({
                         where: {
@@ -17,8 +17,6 @@ class UserService {
                     })
                 })
             )
-            debugger
-            return usersInfo
         }
         if (firstName || lastName) {
             return await UserBio.findAll({

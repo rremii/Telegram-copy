@@ -1,18 +1,23 @@
-import React, {FC, useState} from "react"
+import React, {FC, useEffect, useState} from "react"
 import styled from "styled-components"
 import SideBar from "../components/Side-bar/Side-bar"
 import ChatBox from "../components/Chat-box/Chat-box"
 import InfoBox from "../components/Info-box"
 import LogoutPopUp from "../components/Globals/Logout-pop-up"
+import {fetchMe} from "../store/MeSlice"
+import {useAppDispatch} from "../store/ReduxStore"
 
 interface HomeType {
 }
 
 
 const Home: FC<HomeType> = () => {
-
+	const dispatch = useAppDispatch()
 	const [isOpen, setOpen] = useState(false)
 
+	useEffect(() => {
+		dispatch(fetchMe())
+	})
 
 	return (
 		<HomeWrapper isOpen={isOpen} className="home__wrapper">

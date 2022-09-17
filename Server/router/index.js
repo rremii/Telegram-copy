@@ -4,6 +4,7 @@ const fs = require("fs")
 const authRouter = require("./auth-router")
 const chatRouter = require("./chat-router")
 const usersRouter = require("./users-router")
+const meRouter = require("./me-router")
 const { Candidate } = require("../models/candidate-model")
 const { User } = require("../models/user-model")
 const { UserBio } = require("../models/userBio-model")
@@ -15,6 +16,7 @@ const router = Router()
 router.use("/auth", authRouter)
 router.use("/", chatRouter)
 router.use("/", usersRouter)
+router.use("/", meRouter)
 
 router.use("/getcandidates", async (request, response) => {
     const candidates = await Candidate.findAll()
@@ -33,6 +35,14 @@ router.use("/chat123", async (request, response) => {
         firstName: "Artem",
         lastName: "Romanov",
         user_id: 1,
+    })
+    const user2 = await User.create({
+        email: "noruto@gmail.com",
+    })
+    const userBio2 = await UserBio.create({
+        firstName: "Mert",
+        lastName: "Mehmet",
+        user_id: 2,
     })
     // await Chat.create()
     // await Chat.create()

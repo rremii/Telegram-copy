@@ -7,6 +7,7 @@ const { Candidate, fiveMin } = require("../../models/candidate-model")
 
 class CandidateAuthService {
     async createCandidate(email, type = "register") {
+        //TODO check that all services have a validation
         if (!email) throw ApiError.BadRequest("invalid email")
 
         const registeredUser = await User.findOne({
@@ -17,8 +18,8 @@ class CandidateAuthService {
         if (type === "login" && !registeredUser)
             throw ApiError.BadRequest("User with this email was not found")
 
-        const code = uuid.v4().slice(0, 6)
-        // const code = '111111'
+        // const code = uuid.v4().slice(0, 6)
+        const code = "111111"
         await MailService.sendCodeMail(email, code)
 
         await Candidate.create({
