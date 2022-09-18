@@ -10,6 +10,7 @@ const { User } = require("../models/user-model")
 const { UserBio } = require("../models/userBio-model")
 const { Chat, UserChat } = require("../models/chat-models/chat-model")
 const { ChatMessage } = require("../models/chat-models/chat-message-model")
+const { Op } = require("sequelize")
 
 const router = Router()
 
@@ -28,53 +29,39 @@ router.use("/getusers", async (request, response) => {
     response.json({ users })
 })
 router.use("/chat123", async (request, response) => {
-    const user = await User.create({
-        email: "noruto2021@gmail.com",
+    const chats = await Chat.findAll({
+        include: {
+            model: User,
+            where: {
+                [Op.or]: [{ user_id: 1 }, { user_id: { [Op.ne]: 1 } }],
+            },
+        },
     })
-    const userBio = await UserBio.create({
-        firstName: "Artem",
-        lastName: "Romanov",
-        user_id: 1,
+
+    const chatsData = await User.findOne({
+        where: { user_id: 1 },
+        attributes: ["email"],
+        include: {
+            model: Chat,
+            attributes: ["chat_id"],
+            include: {
+                model: User,
+                where: { user_id: { [Op.ne]: 1 } },
+                include: UserBio,
+            },
+        },
     })
-    const user2 = await User.create({
-        email: "noruto@gmail.com",
-    })
-    const userBio2 = await UserBio.create({
-        firstName: "Mert",
-        lastName: "Mehmet",
-        user_id: 2,
-    })
-    // await Chat.create()
-    // await Chat.create()
-    // await UserChat.create({
-    //     chat_id: 1,
-    //     user_id: 1,
-    // })
-    // await UserChat.create({
-    //     chat_id: 2,
-    //     user_id: 1,
-    // })
-    // await ChatMessage.create({
-    //     content: "some cool message",
-    //     chat_id: 1,
-    //     sender_id: 1,
-    // })
-    // await ChatMessage.create({
-    //     content: "some cool message 2",
-    //     chat_id: 2,
-    //     sender_id: 1,
-    // })
-    //
-    // const chats = await Chat.findAll()
-    // const userChat = await UserChat.findAll()
-    // const chatMessages = await ChatMessage.findAll()
-    // const chatMessages = await ChatMessage.create({
-    //     chat_id: 1,
-    //     sender_id: 1,
-    //     content: "qwe",
+
+    // const res = await UserChat.findAll({
+    //     where: { chat_id: 1 },
+    //     include: {
+    //         model: User,
+    //         where: { user_id: { [Op.ne]: 1 } },
+    //         as: "user",
+    //     },
     // })
 
-    response.json({ user, userBio })
+    response.json({ chats })
 })
 
 module.exports = router

@@ -28,6 +28,7 @@ const UserBio = sequelize.define(
 )
 User.hasOne(UserBio, {
     foreignKey: "user_id",
+    as: "userBio",
 })
 UserBio.belongsTo(User, {
     foreignKey: "user_id",

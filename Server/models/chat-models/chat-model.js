@@ -31,7 +31,7 @@ const UserChat = sequelize.define(
             type: INTEGER,
             allowNull: false,
             references: {
-                model: Chat, // 'Movies' would also work
+                model: Chat,
                 key: "chat_id",
             },
         },
@@ -39,7 +39,7 @@ const UserChat = sequelize.define(
             type: INTEGER,
             allowNull: false,
             references: {
-                model: User, // 'Movies' would also work
+                model: User,
                 key: "user_id",
             },
         },
