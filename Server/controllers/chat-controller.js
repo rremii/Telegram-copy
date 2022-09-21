@@ -1,12 +1,32 @@
 const ChatService = require("../service/chat-service")
 
 class ChatController {
-    async createChat(request, response, next) {
+    // async createChat(request, response, next) {
+    //     try {
+    //         const { userIds } = request.body
+    //         const userChatInfo = await ChatService.createChat(userIds)
+    //
+    //         response.json(userChatInfo)
+    //     } catch (e) {
+    //         next(e)
+    //     }
+    // }
+
+    async findOrCreate(request, response, next) {
         try {
             const { userIds } = request.body
-            const userChatInfo = await ChatService.createChat(userIds)
+
+            const userChatInfo = await ChatService.findOrCreate(userIds)
 
             response.json(userChatInfo)
+        } catch (e) {
+            next(e)
+        }
+    }
+
+    async getChatById(request, response, next) {
+        try {
+            const { chatId } = request
         } catch (e) {
             next(e)
         }

@@ -3,8 +3,8 @@ import React, {FC} from "react"
 import styled from "styled-components"
 import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import {API_URL_STATIC} from "../../../api"
-import {createChat} from "../../../store/ChatSlice"
 import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
+import {findOrCreateChat} from "../../../store/ChatSlice"
 
 interface ISearchCell {
 	avatar: string
@@ -19,19 +19,19 @@ const SearchCell: FC<ISearchCell> = ({title = "", subTitle = "", avatar, id}) =>
 
 	const {user_id} = useTypedSelector(state => state.Me.me)
 
-	const CreateChat = () => {
-		dispatch(createChat([user_id, id]))
+	const FindOrCreateChat = () => {
+		dispatch(findOrCreateChat([user_id, id]))
 	}
 
 
-	return <CellWrapper onClick={CreateChat}>
+	return <CellWrapper onClick={FindOrCreateChat}>
 		<div className="avatar">
 			<Image layout="fill" src={avatar ? API_URL_STATIC + avatar : "/no-avatar.svg"}/>
 		</div>
 		<div className="text-cont">
 
 			<h1>{title}</h1>
-			<h2>{subTitle}</h2>
+			<h2>{subTitle ? subTitle : ""}</h2>
 		</div>
 	</CellWrapper>
 }

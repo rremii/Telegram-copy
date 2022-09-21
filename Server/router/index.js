@@ -29,14 +29,14 @@ router.use("/getusers", async (request, response) => {
     response.json({ users })
 })
 router.use("/chat123", async (request, response) => {
-    const chats = await Chat.findAll({
-        include: {
-            model: User,
-            where: {
-                [Op.or]: [{ user_id: 1 }, { user_id: { [Op.ne]: 1 } }],
-            },
-        },
-    })
+    // const chats = await Chat.findAll({
+    //     include: {
+    //         model: User,
+    //         where: {
+    //             [Op.or]: [{ user_id: 1 }, { user_id: { [Op.ne]: 1 } }],
+    //         },
+    //     },
+    // })
 
     const chatsData = await User.findOne({
         where: { user_id: 1 },
@@ -61,7 +61,7 @@ router.use("/chat123", async (request, response) => {
     //     },
     // })
 
-    response.json({ chats })
+    response.json({ chatsData })
 })
 
 module.exports = router

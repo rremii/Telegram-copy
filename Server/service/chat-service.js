@@ -7,19 +7,26 @@ const { Op } = require("sequelize")
 class ChatService {
     async createChat(userIds) {
         if (!userIds) throw ApiError.BadRequest("invalid id's")
-        //TODO add validation that you cant create same chat twice
         const [id1, id2] = userIds
-
-        // const chat = await User.findOne({
+        ////////////////////////////////////////////////////////
+        // const chats1 = await UserChat.findAll({
         //     where: { user_id: id1 },
-        //     include: {
-        //         model: Chat,
-        //         include: {
-        //             model: User,
-        //             where: { user_id: 3 },
-        //         },
-        //     },
         // })
+        // const chatsIds1 = chats1.map((chat) => {
+        //     return chat.dataValues.chat_id
+        // })
+        // const chats2 = await UserChat.findAll({
+        //     where: { user_id: id2 },
+        // })
+        // const chatsIds2 = chats2.map((chat) => {
+        //     return chat.dataValues.chat_id
+        // })
+        //
+        // const haveSameChat = chatsIds1.some((id, i) => {
+        //     return chatsIds2[i] === id
+        // })
+        // if (haveSameChat) throw ApiError.BadRequest("this chat already exist")
+        ////////////////////////////////////////////////////////
 
         if (id1 === id2) throw ApiError.BadRequest("wrong ids")
 
@@ -30,10 +37,37 @@ class ChatService {
             { chat_id: chatData.chat_id, user_id: id2 },
         ])
 
-        return {
-            userChatInfo,
-        }
+        debugger
+
+        return { chatId: chatData.chat_id, membersIds: userIds }
     }
+
+    async findOrCreate(userIds) {
+        if (!userIds) throw ApiError.BadRequest("invalid id's")
+        const [id1, id2] = userIds
+        ////////////////////////////////////////////////////////
+        const chats1 = await UserChat.findAll({
+            where: { user_id: id1 },
+        })
+        const chatsIds1 = chats1.map((chat) => {
+            return chat.dataValues.chat_id
+        })
+        const chats2 = await UserChat.findAll({
+            where: { user_id: id2 },
+        })
+        const chatsIds2 = chats2.map((chat) => {
+            return chat.dataValues.chat_id
+        })
+
+        const sameChatId = chatsIds1.find((id, i) => {
+            return chatsIds2[i] === id && id
+        })
+        ////////////////////////////////////////////////////////
+
+        if (sameChatId) return { chatId: sameChatId, membersIds: userIds }
+        await this.createChat(userIds)
+    }
+
     async getChatsByUserId(userId) {
         const chats = await UserChat.findAll({
             where: { user_id: userId },
@@ -48,7 +82,7 @@ class ChatService {
                     include: [
                         {
                             model: User,
-                            where: { user_id: { [Op.ne]: 1 } },
+                            where: { user_id: { [Op.ne]: userId } },
                             include: {
                                 as: "userBio",
                                 model: UserBio,
@@ -62,66 +96,8 @@ class ChatService {
                             .dataValues,
                     chatId,
                 }
-
-                // const chatMembers = await UserChat.findAll({
-                //     where: { chat_id: chatId },
-                // })
-                // const [member] = chatMembers.filter((member) => {
-                //     return member.dataValues.user_id !== +userId
-                // })
-                // const memberId = member.dataValues.user_id
-                // const memberData = await UserBio.findOne({
-                //     where: { user_id: memberId },
-                // })
             })
         )
-
-        // const chatsData = await User.findAll({
-        //     where: { user_id: 1 },
-        //     attributes: ["email"],
-        //     include: {
-        //         model: Chat,
-        //         attributes: ["chat_id"],
-        //         include: {
-        //             model: User,
-        //             where: { user_id: { [Op.ne]: 1 } },
-        //             include: UserBio,
-        //         },
-        //     },
-        // })
-        // const { dataValues: data } = chatsData
-        // const chats = data
-        debugger
-
-        // return {
-        //     memberData: memberData.dataValues,
-        //     chatId,
-        // }
-
-        // const chats = await UserChat.findAll({
-        //     where: { user_id: userId },
-        // })
-        //
-        // return await Promise.all(
-        //     chats.map(async (chat) => {
-        //         //TODO add comments to this algo
-        //         const chatId = chat.dataValues.chat_id
-        //         const chatMembers = await UserChat.findAll({
-        //             where: { chat_id: chatId },
-        //         })
-        //         const [member] = chatMembers.filter((member) => {
-        //             return member.dataValues.user_id !== +userId
-        //         })
-        //         const memberId = member.dataValues.user_id
-        //         const memberData = await UserBio.findOne({
-        //             where: { user_id: memberId },
-        //         })
-        //         return {
-        //             memberData: memberData.dataValues,
-        //             chatId,
-        //         }
-        //     })
-        // )
     }
 }
 module.exports = new ChatService()

@@ -2,16 +2,28 @@ import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit"
 import {AuthUserBio, AuthUserEmail, searchUser} from "./types"
 import {AuthAPI} from "../api/AuthApi"
 import {SearchAPI} from "../api/SearchApi"
+import {AppDispatch, RootState} from "./ReduxStore"
+import {State} from "jest-circus"
 
 
-export const fetchUsers = createAsyncThunk(
+export const fetchUsers = createAsyncThunk<searchUser[],
+	string,
+	{
+		dispatch: AppDispatch
+		state: RootState
+	}>(
 	"SearchSlice/fetchUsers",
-	async (searchString: string, {rejectWithValue}) => {
+	async (searchString: string, {rejectWithValue, getState}) => {
 		try {
 
 			const response = await SearchAPI.getUsers(searchString)
 
-			return response.data
+			const state = getState()
+
+			const id = state.Me.me.user_id
+
+
+			return response.data.filter(({user_id}) => user_id !== id)
 		} catch (e: any) {
 			return rejectWithValue(e.response.data.message)
 		}

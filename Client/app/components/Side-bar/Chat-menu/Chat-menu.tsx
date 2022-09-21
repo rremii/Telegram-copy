@@ -24,7 +24,7 @@ const ChatMenu = () => {
 
 
 	useEffect(() => {
-		dispatch(fetchChatsByUserId(id))
+		if (id) dispatch(fetchChatsByUserId(id))
 	}, [id])
 
 
@@ -32,11 +32,11 @@ const ChatMenu = () => {
 
 	return <ChatMenuWrapper isSearchOn={isSearchOn}>
 		{chats.map(({chatId, memberData}) => {
-			return <ChatCell key={chatId} avatar={memberData.profilePic}
+			return <ChatCell chatId={chatId} key={chatId} avatar={memberData.profilePic}
 							 subTitle={"gotta fix"}
-							 title={memberData.firstName + " " + memberData.lastName}/>
-		})
-		}
+							 userId={memberData.user_id}
+							 title={memberData.firstName + " " + (memberData.lastName ? memberData.lastName : "")}/>
+		})}
 	</ChatMenuWrapper>
 }
 export default ChatMenu

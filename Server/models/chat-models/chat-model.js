@@ -51,7 +51,6 @@ const UserChat = sequelize.define(
 
 Chat.belongsToMany(User, {
     through: UserChat,
-
     foreignKey: "chat_id",
 })
 User.belongsToMany(Chat, {

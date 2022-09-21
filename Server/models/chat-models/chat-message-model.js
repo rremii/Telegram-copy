@@ -2,7 +2,6 @@ const { INTEGER, BOOLEAN, STRING, ARRAY, TEXT } = require("sequelize")
 const sequelize = require("../../db")
 const { User } = require("../user-model")
 const { Chat } = require("./chat-model")
-const { ChatMessages } = require("./user-chat-model")
 
 const ChatMessage = sequelize.define(
     "chat-message",

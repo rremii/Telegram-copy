@@ -1,16 +1,28 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit"
-import {AuthUserBio, AuthUserEmail, Chat, searchUser} from "./types"
-import {AuthAPI} from "../api/AuthApi"
-import {SearchAPI} from "../api/SearchApi"
+import {Chat} from "./types"
 import {ChatAPI} from "../api/ChatApi"
+import {ChatResponse} from "../api/types"
 
 
-export const createChat = createAsyncThunk(
-	"ChatSlice/createChat",
+// export const createChat = createAsyncThunk(
+// 	"ChatSlice/createChat",
+// 	async (ids: number[], {rejectWithValue}) => {
+// 		try {
+//
+// 			const response = await ChatAPI.createChat(ids)
+//
+// 			return response.data
+// 		} catch (e: any) {
+// 			return rejectWithValue(e.response.data.message)
+// 		}
+// 	}
+// )
+export const findOrCreateChat = createAsyncThunk(
+	"ChatSlice/findOrCreateChat",
 	async (ids: number[], {rejectWithValue}) => {
 		try {
 
-			const response = await ChatAPI.createChat(ids)
+			const response = await ChatAPI.findOrCreateChat(ids)
 
 			return response.data
 		} catch (e: any) {
@@ -36,27 +48,38 @@ export const fetchChatsByUserId = createAsyncThunk(
 
 interface initialStateType {
 	chats: Chat[]
+	currentChat: {
+		membersIds: number[]
+	}
+	currentChatId: number | null
 }
 
 const initialState = {
-	chats: []
+	chats: [],
+	currentChat: {
+		membersIds: []
+	},
+	currentChatId: null
 } as initialStateType
 
 const ChatSlice = createSlice({
 	name: "ChatSlice",
 	initialState,
 	reducers: {
-		// addUserBio(state, action: PayloadAction<AuthUserBio>) {
-		// 	state.userBio = action.payload
-		// },
+		setCurrentChat(state, action: PayloadAction<ChatResponse>) {
+			state.currentChatId = action.payload.chatId
+			state.currentChat.membersIds = action.payload.membersIds
+		},
 	},
 	extraReducers: (builder) => {
-
 		builder.addCase(fetchChatsByUserId.fulfilled, (state, action: PayloadAction<Chat[]>) => {
 			state.chats = action.payload
 		})
-
+		builder.addCase(findOrCreateChat.fulfilled, (state, action: PayloadAction<ChatResponse>) => {
+			state.currentChatId = action.payload.chatId
+			state.currentChat.membersIds = action.payload.membersIds
+		})
 	},
 })
-// export const {} = ChatSlice.actions
+export const {setCurrentChat} = ChatSlice.actions
 export default ChatSlice.reducer

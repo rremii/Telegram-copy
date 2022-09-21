@@ -4,19 +4,30 @@ import Image from "next/image"
 import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import {cutStringToLength} from "../../../utils/cutStringToLength"
 import useGlobalContext, {GlobalContext} from "../../../hooks/useGlobalContext"
+import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
+import {setCurrentChat} from "../../../store/ChatSlice"
+import {useRouter} from "next/router"
 
 interface IChatList {
 	avatar: string | null
 	title: string
 	subTitle: string
+	chatId: number
+	userId: number
 }
 
 
-const ChatCell: FC<IChatList> = ({subTitle, title, avatar = ""}) => {
+const ChatCell: FC<IChatList> = ({userId, chatId, subTitle = "", title, avatar = ""}) => {
+	const dispatch = useAppDispatch()
+	const router = useRouter()
+
+	const {user_id: id} = useTypedSelector(state => state.Me.me)
+
 	const {screenMode, SetScreenMode} = useContext(GlobalContext)
 
-
-	const HandleCellClick = () => {
+	const HandleCellClick = async () => {
+		dispatch(setCurrentChat({chatId, membersIds: [userId, id]}))
+		await router.push("/?chatId=" + chatId)
 		SetScreenMode("chat")
 	}
 

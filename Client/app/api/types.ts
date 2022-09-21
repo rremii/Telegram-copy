@@ -13,5 +13,10 @@ export interface ErrorResponse {
 	errors: [string]
 }
 
+export interface ChatResponse {
+	chatId: number
+	membersIds: number[]
+}
+
 
 
