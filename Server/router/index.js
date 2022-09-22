@@ -5,6 +5,7 @@ const authRouter = require("./auth-router")
 const chatRouter = require("./chat-router")
 const usersRouter = require("./users-router")
 const meRouter = require("./me-router")
+const messageRouter = require("./message-router")
 const { Candidate } = require("../models/candidate-model")
 const { User } = require("../models/user-model")
 const { UserBio } = require("../models/userBio-model")
@@ -18,6 +19,7 @@ router.use("/auth", authRouter)
 router.use("/", chatRouter)
 router.use("/", usersRouter)
 router.use("/", meRouter)
+router.use("/messages", messageRouter)
 
 router.use("/getcandidates", async (request, response) => {
     const candidates = await Candidate.findAll()
@@ -29,15 +31,6 @@ router.use("/getusers", async (request, response) => {
     response.json({ users })
 })
 router.use("/chat123", async (request, response) => {
-    // const chats = await Chat.findAll({
-    //     include: {
-    //         model: User,
-    //         where: {
-    //             [Op.or]: [{ user_id: 1 }, { user_id: { [Op.ne]: 1 } }],
-    //         },
-    //     },
-    // })
-
     const chatsData = await User.findOne({
         where: { user_id: 1 },
         attributes: ["email"],
@@ -51,16 +44,6 @@ router.use("/chat123", async (request, response) => {
             },
         },
     })
-
-    // const res = await UserChat.findAll({
-    //     where: { chat_id: 1 },
-    //     include: {
-    //         model: User,
-    //         where: { user_id: { [Op.ne]: 1 } },
-    //         as: "user",
-    //     },
-    // })
-
     response.json({ chatsData })
 })
 

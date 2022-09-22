@@ -1,4 +1,4 @@
-const ChatService = require("../service/chat-service")
+const ChatService = require("../service/chats/chat-service")
 
 class ChatController {
     // async createChat(request, response, next) {

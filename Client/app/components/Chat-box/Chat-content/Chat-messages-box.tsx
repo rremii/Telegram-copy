@@ -1,7 +1,10 @@
-import {FC} from "react"
+import {FC, useEffect} from "react"
 import styled from "styled-components"
 import {Rem} from "../../../../styles/functions/mixins"
 import Image from "next/image"
+import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
+import {getAllMessages} from "../../../store/ChatSlice"
+import {setIn} from "formik"
 
 interface IChatMessagesBox {
 
@@ -9,260 +12,38 @@ interface IChatMessagesBox {
 
 
 const ChatMessagesBox: FC<IChatMessagesBox> = () => {
+
+	const dispatch = useAppDispatch()
+
+	const {currentChatId} = useTypedSelector(state => state.Chats)
+	const {user_id} = useTypedSelector(state => state.Me.me)
+	const {messages} = useTypedSelector(state => state.Chats.currentChat)
+
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			if (!currentChatId) return
+			dispatch(getAllMessages(currentChatId))
+		}, 2000)
+		return () => clearInterval(interval)
+	}, [currentChatId])
+
 	return <ChatMessagesBoxWrapper>
-		<div className="message-cont">
-			<div className="message your-message">your message
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam aut culpa deleniti distinctio, dolorum
-				excepturi facilis impedit magni, minima, molestiae nisi reiciendis totam vitae! At harum impedit
-				officiis qui sint.
-				<div className="extra-info">
-					<span className="created-at">19:54</span>
-					<Image width={19}
-						   height={16} src="/check.svg"/>
+
+		{messages.map(({content, sender_id, chat_id}, i) => {
+			return <div key={i} className="message-cont">
+				<div className={`message ${user_id === sender_id ? "your-message" : "other-message"}`}>
+					{content}
+					<div className="extra-info">
+						<span className="created-at">19:54</span>
+						<Image width={19}
+							   height={16} src="/check.svg"/>
+					</div>
+					<img src="/bubble-tail-left-purple.svg" alt="bubble-tail"/>
 				</div>
-				<img src="/bubble-tail-left-purple.svg" alt="bubble-tail"/>
 			</div>
-		</div>
-		<div className="message-cont">
-			<div className="message other-message">other message
-				<div className="extra-info">
-					<span className="created-at">19:54</span>
-					<Image width={19}
-						   height={16} src="/check.svg"/>
-				</div>
-				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
-			</div>
-		</div>
-		<div className="message-cont">
-			<div className="message other-message">other message
-				<div className="extra-info">
-					<span className="created-at">19:54</span>
-					<Image width={19}
-						   height={16} src="/check.svg"/>
-				</div>
-				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
-			</div>
-		</div>
-		<div className="message-cont">
-			<div className="message other-message">other message
-				<div className="extra-info">
-					<span className="created-at">19:54</span>
-					<Image width={19}
-						   height={16} src="/check.svg"/>
-				</div>
-				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
-			</div>
-		</div>
-		<div className="message-cont">
-			<div className="message other-message">other message
-				<div className="extra-info">
-					<span className="created-at">19:54</span>
-					<Image width={19}
-						   height={16} src="/check.svg"/>
-				</div>
-				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
-			</div>
-		</div>
-		<div className="message-cont">
-			<div className="message other-message">other message
-				<div className="extra-info">
-					<span className="created-at">19:54</span>
-					<Image width={19}
-						   height={16} src="/check.svg"/>
-				</div>
-				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
-			</div>
-		</div>
-		<div className="message-cont">
-			<div className="message other-message">other message
-				<div className="extra-info">
-					<span className="created-at">19:54</span>
-					<Image width={19}
-						   height={16} src="/check.svg"/>
-				</div>
-				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
-			</div>
-		</div>
-		<div className="message-cont">
-			<div className="message other-message">other message
-				<div className="extra-info">
-					<span className="created-at">19:54</span>
-					<Image width={19}
-						   height={16} src="/check.svg"/>
-				</div>
-				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
-			</div>
-		</div>
-		<div className="message-cont">
-			<div className="message other-message">other message
-				<div className="extra-info">
-					<span className="created-at">19:54</span>
-					<Image width={19}
-						   height={16} src="/check.svg"/>
-				</div>
-				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
-			</div>
-		</div>
-		<div className="message-cont">
-			<div className="message other-message">other message
-				<div className="extra-info">
-					<span className="created-at">19:54</span>
-					<Image width={19}
-						   height={16} src="/check.svg"/>
-				</div>
-				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
-			</div>
-		</div>
-		<div className="message-cont">
-			<div className="message other-message">other message
-				<div className="extra-info">
-					<span className="created-at">19:54</span>
-					<Image width={19}
-						   height={16} src="/check.svg"/>
-				</div>
-				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
-			</div>
-		</div>
-		<div className="message-cont">
-			<div className="message other-message">other message
-				<div className="extra-info">
-					<span className="created-at">19:54</span>
-					<Image width={19}
-						   height={16} src="/check.svg"/>
-				</div>
-				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
-			</div>
-		</div>
-		<div className="message-cont">
-			<div className="message other-message">other message
-				<div className="extra-info">
-					<span className="created-at">19:54</span>
-					<Image width={19}
-						   height={16} src="/check.svg"/>
-				</div>
-				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
-			</div>
-		</div>
-		<div className="message-cont">
-			<div className="message other-message">other message
-				<div className="extra-info">
-					<span className="created-at">19:54</span>
-					<Image width={19}
-						   height={16} src="/check.svg"/>
-				</div>
-				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
-			</div>
-		</div>
-		<div className="message-cont">
-			<div className="message other-message">other message
-				<div className="extra-info">
-					<span className="created-at">19:54</span>
-					<Image width={19}
-						   height={16} src="/check.svg"/>
-				</div>
-				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
-			</div>
-		</div>
-		<div className="message-cont">
-			<div className="message other-message">other message
-				<div className="extra-info">
-					<span className="created-at">19:54</span>
-					<Image width={19}
-						   height={16} src="/check.svg"/>
-				</div>
-				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
-			</div>
-		</div>
-		<div className="message-cont">
-			<div className="message other-message">other message
-				<div className="extra-info">
-					<span className="created-at">19:54</span>
-					<Image width={19}
-						   height={16} src="/check.svg"/>
-				</div>
-				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
-			</div>
-		</div>
-		<div className="message-cont">
-			<div className="message other-message">other message
-				<div className="extra-info">
-					<span className="created-at">19:54</span>
-					<Image width={19}
-						   height={16} src="/check.svg"/>
-				</div>
-				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
-			</div>
-		</div>
-		<div className="message-cont">
-			<div className="message other-message">other message
-				<div className="extra-info">
-					<span className="created-at">19:54</span>
-					<Image width={19}
-						   height={16} src="/check.svg"/>
-				</div>
-				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
-			</div>
-		</div>
-		<div className="message-cont">
-			<div className="message other-message">other message
-				<div className="extra-info">
-					<span className="created-at">19:54</span>
-					<Image width={19}
-						   height={16} src="/check.svg"/>
-				</div>
-				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
-			</div>
-		</div>
-		<div className="message-cont">
-			<div className="message other-message">other message
-				<div className="extra-info">
-					<span className="created-at">19:54</span>
-					<Image width={19}
-						   height={16} src="/check.svg"/>
-				</div>
-				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
-			</div>
-		</div>
-		<div className="message-cont">
-			<div className="message other-message">other message
-				<div className="extra-info">
-					<span className="created-at">19:54</span>
-					<Image width={19}
-						   height={16} src="/check.svg"/>
-				</div>
-				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
-			</div>
-		</div>
-		<div className="message-cont">
-			<div className="message other-message">other message
-				<div className="extra-info">
-					<span className="created-at">19:54</span>
-					<Image width={19}
-						   height={16} src="/check.svg"/>
-				</div>
-				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
-			</div>
-		</div>
-		<div className="message-cont">
-			<div className="message other-message">other message
-				<div className="extra-info">
-					<span className="created-at">19:54</span>
-					<Image width={19}
-						   height={16} src="/check.svg"/>
-				</div>
-				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
-			</div>
-		</div>
-		<div className="message-cont">
-			<div className="message other-message">other message
-				<div className="extra-info">
-					<span className="created-at">19:54</span>
-					<Image width={19}
-						   height={16} src="/check.svg"/>
-				</div>
-				<img src="/bubble-tail-left.svg" alt="bubble-tail"/>
-			</div>
-		</div>
+		})}
+
 	</ChatMessagesBoxWrapper>
 }
 export default ChatMessagesBox

@@ -27,7 +27,7 @@ export interface Me {
 }
 
 export interface Chat {
-	chatId: number
+	chat_id: number
 	memberData: {
 		firstName: string
 		lastName: string
@@ -35,4 +35,17 @@ export interface Chat {
 		userBio_id: number
 		user_id: number
 	}
+}
+
+export interface messageData {
+	chat_id: number,
+	user_id: number,
+	content: string
+}
+
+export interface message {
+	chat_id: number
+	chat_message_id: number
+	content: string
+	sender_id: number
 }

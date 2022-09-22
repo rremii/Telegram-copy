@@ -2,6 +2,9 @@ import {FC} from "react"
 import styled from "styled-components"
 import {Rem} from "../../../../styles/functions/mixins"
 import Image from "next/image"
+import {Form, Formik, Field} from "formik"
+import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
+import {addMessage} from "../../../store/ChatSlice"
 
 interface IChatInputBox {
 
@@ -9,13 +12,37 @@ interface IChatInputBox {
 
 
 const ChatInputBox: FC<IChatInputBox> = () => {
+
+	const dispatch = useAppDispatch()
+
+	const {currentChatId} = useTypedSelector(state => state.Chats)
+	const {user_id} = useTypedSelector(state => state.Me.me)
+
+
 	return <ChatInputBoxWrapper>
-		<div className="input-cont">
-			<input placeholder="Message" type="text"/>
-		</div>
-		<div className="tail-cont">
-			<Image width={20} height={20} layout="fill" className="tail" src={"/bubble-tail-left.svg"} alt=""/>
-		</div>
+
+
+		<Formik
+			initialValues={{
+				content: "" as string
+			}}
+			onSubmit={(({content}, {resetForm}) => {
+				if (!currentChatId) return
+				dispatch(addMessage({content, user_id, chat_id: currentChatId}))
+				resetForm()
+			})}
+		>
+			<Form>
+
+
+				<div className="input-cont">
+					<Field name="content" placeholder="Message" type="text"/>
+				</div>
+				<div className="tail-cont">
+					<Image width={20} height={20} layout="fill" className="tail" src={"/bubble-tail-left.svg"} alt=""/>
+				</div>
+			</Form>
+		</Formik>
 
 	</ChatInputBoxWrapper>
 }

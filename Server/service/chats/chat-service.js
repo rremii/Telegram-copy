@@ -1,7 +1,7 @@
-const { Chat, UserChat } = require("../models/chat-models/chat-model")
-const { User } = require("../models/user-model")
-const ApiError = require("../exceptions/api-error")
-const { UserBio } = require("../models/userBio-model")
+const { Chat, UserChat } = require("../../models/chat-models/chat-model")
+const { User } = require("../../models/user-model")
+const ApiError = require("../../exceptions/api-error")
+const { UserBio } = require("../../models/userBio-model")
 const { Op } = require("sequelize")
 
 class ChatService {

@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit"
-import {Chat} from "./types"
+import {Chat, message, messageData} from "./types"
 import {ChatAPI} from "../api/ChatApi"
 import {ChatResponse} from "../api/types"
 
@@ -44,12 +44,39 @@ export const fetchChatsByUserId = createAsyncThunk(
 		}
 	}
 )
+export const addMessage = createAsyncThunk(
+	"ChatSlice/addMessage",
+	async (messageData: messageData, {rejectWithValue}) => {
+		try {
+
+			const response = await ChatAPI.addMessage(messageData)
+
+			return response.data
+		} catch (e: any) {
+			return rejectWithValue(e.response.data.message)
+		}
+	}
+)
+
+export const getAllMessages = createAsyncThunk(
+	"ChatSlice/getAllMessages",
+	async (chat_id: number, {rejectWithValue}) => {
+		try {
+			const response = await ChatAPI.getAllMessages(chat_id)
+
+			return response.data
+		} catch (e: any) {
+			return rejectWithValue(e.response.data.message)
+		}
+	}
+)
 
 
 interface initialStateType {
 	chats: Chat[]
 	currentChat: {
 		membersIds: number[]
+		messages: message[]
 	}
 	currentChatId: number | null
 }
@@ -57,7 +84,8 @@ interface initialStateType {
 const initialState = {
 	chats: [],
 	currentChat: {
-		membersIds: []
+		membersIds: [],
+		messages: []
 	},
 	currentChatId: null
 } as initialStateType
@@ -78,6 +106,9 @@ const ChatSlice = createSlice({
 		builder.addCase(findOrCreateChat.fulfilled, (state, action: PayloadAction<ChatResponse>) => {
 			state.currentChatId = action.payload.chatId
 			state.currentChat.membersIds = action.payload.membersIds
+		})
+		builder.addCase(getAllMessages.fulfilled, (state, action: PayloadAction<message[]>) => {
+			state.currentChat.messages = action.payload
 		})
 	},
 })
