@@ -5,12 +5,16 @@ import Ripple from "../../../ui/Ripple"
 import useRipple from "../../../hooks/useRipple"
 import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
+import {useTypedSelector} from "../../../store/ReduxStore"
 
 interface IHeader {
 
 }
 
 const Header: FC<IHeader> = () => {
+
+
+	const {memberInfo} = useTypedSelector(state => state.Chats.currentChat)
 
 	const {screenMode, SetScreenMode} = useContext(GlobalContext)
 	const {X: XMore, Y: YMore, isRipple: isRippleMore, SetIsRipple: SetIsRippleMore} = useRipple()
@@ -19,8 +23,11 @@ const Header: FC<IHeader> = () => {
 	const HandleMoreClick = (e: React.MouseEvent<HTMLButtonElement>) => {
 		SetIsRippleMore(e)
 	}
-	const HandleArrowClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+	const HandleArrowClick = () => {
 		SetScreenMode(screenMode === "sideBar" ? "chat" : "sideBar")
+	}
+	const HandleAvatarClick = () => {
+		SetScreenMode("info")
 	}
 
 	return <HeaderWrapper screenMode={screenMode}>
@@ -28,12 +35,15 @@ const Header: FC<IHeader> = () => {
 			<button onClick={HandleArrowClick} className="arrow">
 				<Image width={24} height={24} src="/arrow-left-icon.svg"/>
 			</button>
-			<div className="avatar">
-				<Image width={42} height={42} src="/dog-icon.png"/>
-			</div>
-			<div className="text-content">
-				<h1>Artem Romanov</h1>
-				<h2>last seen 19 min ago</h2>
+			<div onClick={HandleAvatarClick}>
+				<div className="avatar">
+					<Image width={42} height={42}
+						   src={memberInfo.profilePic ? memberInfo.profilePic : "/no-avatar.svg"}/>
+				</div>
+				<div className="text-content">
+					<h1>{memberInfo.firstName} {memberInfo.lastName ? memberInfo.lastName : ""}</h1>
+					<h2>last seen 19 min ago</h2>
+				</div>
 			</div>
 		</section>
 		<section className="chat-utils">
@@ -48,7 +58,7 @@ const Header: FC<IHeader> = () => {
 }
 export default Header
 const HeaderWrapper = styled.div<{
-	screenMode: "sideBar" | "chat"
+	screenMode: "sideBar" | "chat" | "info"
 }>`
   background-color: rgb(33, 33, 33);
   flex: 0 0 60px;
@@ -60,8 +70,14 @@ const HeaderWrapper = styled.div<{
   .chat-info {
     flex: 1 1 auto;
     display: flex;
-    gap: ${AdaptiveValue(18, 5)};
     align-items: center;
+
+    & > div {
+      display: flex;
+      gap: ${AdaptiveValue(18, 5)};
+      align-items: center;
+      cursor: pointer;
+    }
 
     .arrow {
       width: 45px;
@@ -84,7 +100,7 @@ const HeaderWrapper = styled.div<{
         display: none;
       }
       @media screen and (max-width: 919px ) {
-        transform: ${({screenMode}) => screenMode === "chat" ? "rotateY(0)" : "rotateY(180deg)"};
+        transform: ${({screenMode}) => screenMode !== "sideBar" ? "rotateY(0)" : "rotateY(180deg)"};
       }
     }
 
@@ -115,6 +131,7 @@ const HeaderWrapper = styled.div<{
       }
     }
   }
+
 
   .chat-utils {
     .more {

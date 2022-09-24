@@ -5,7 +5,7 @@ import {AuthUserBio, AuthUserEmail, searchUser} from "../store/types"
 export const SearchAPI = {
 	getUsers: async (searchString: string) => {
 
-
+//TODO put it in a utils
 		let email
 		let firstName
 		let lastName

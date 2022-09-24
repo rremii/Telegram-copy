@@ -15,7 +15,6 @@ export interface ErrorResponse {
 
 export interface ChatResponse {
 	chatId: number
-	membersIds: number[]
 }
 
 

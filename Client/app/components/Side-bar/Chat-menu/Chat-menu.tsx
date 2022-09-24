@@ -19,6 +19,7 @@ const ChatMenu = () => {
 	const dispatch = useAppDispatch()
 
 	const id = useTypedSelector(state => state.Me.me.user_id)
+	const {chats} = useTypedSelector(state => state.Chats)
 
 	const {isSearchOn} = useContext(SideBarContext)
 
@@ -28,14 +29,11 @@ const ChatMenu = () => {
 	}, [id])
 
 
-	const {chats} = useTypedSelector(state => state.Chats)
-
 	return <ChatMenuWrapper isSearchOn={isSearchOn}>
-		{chats.map(({chatId, memberData}) => {
-			return <ChatCell chatId={chatId} key={chatId} avatar={memberData.profilePic}
+		{chats.map(({chat_id, memberInfo}) => {
+			return <ChatCell chatId={chat_id} {...memberInfo} key={chat_id}
 							 subTitle={"gotta fix"}
-							 userId={memberData.user_id}
-							 title={memberData.firstName + " " + (memberData.lastName ? memberData.lastName : "")}/>
+			/>
 		})}
 	</ChatMenuWrapper>
 }

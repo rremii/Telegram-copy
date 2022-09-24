@@ -1,26 +1,36 @@
 import Image from "next/image"
-import React, {FC} from "react"
+import React, {FC, useContext} from "react"
 import styled from "styled-components"
 import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import {API_URL_STATIC} from "../../../api"
 import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
-import {findOrCreateChat} from "../../../store/ChatSlice"
+import {findOrCreateChat, setCurrentMemberInfo} from "../../../store/ChatSlice"
+import {userInfo} from "../../../store/types"
+import {GlobalContext} from "../../../hooks/useGlobalContext"
+import {SideBarContext} from "../../../hooks/useSideBarContext"
 
 interface ISearchCell {
-	avatar: string
+	avatar: string | null
 	title: string
 	subTitle: string
 	id: number
+	memberInfo: userInfo
 }
 
-const SearchCell: FC<ISearchCell> = ({title = "", subTitle = "", avatar, id}) => {
+const SearchCell: FC<userInfo> = (userInfo) => {
+	const {user_id: id, firstName, profilePic: avatar, lastName, email} = userInfo
 
 	const dispatch = useAppDispatch()
 
+	const {SetIsSearch} = useContext(SideBarContext)
+
 	const {user_id} = useTypedSelector(state => state.Me.me)
+
 
 	const FindOrCreateChat = () => {
 		dispatch(findOrCreateChat([user_id, id]))
+		dispatch(setCurrentMemberInfo(userInfo))
+		SetIsSearch(false)
 	}
 
 
@@ -30,8 +40,8 @@ const SearchCell: FC<ISearchCell> = ({title = "", subTitle = "", avatar, id}) =>
 		</div>
 		<div className="text-cont">
 
-			<h1>{title}</h1>
-			<h2>{subTitle ? subTitle : ""}</h2>
+			<h1>{firstName + " " + (lastName ? lastName : "")}</h1>
+			<h2>{email}</h2>
 		</div>
 	</CellWrapper>
 }

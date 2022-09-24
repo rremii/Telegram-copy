@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit"
-import {Chat, message, messageData} from "./types"
+import {Chat, message, messageData, searchUser, userInfo} from "./types"
 import {ChatAPI} from "../api/ChatApi"
 import {ChatResponse} from "../api/types"
 
@@ -75,7 +75,7 @@ export const getAllMessages = createAsyncThunk(
 interface initialStateType {
 	chats: Chat[]
 	currentChat: {
-		membersIds: number[]
+		memberInfo: userInfo
 		messages: message[]
 	}
 	currentChatId: number | null
@@ -84,7 +84,14 @@ interface initialStateType {
 const initialState = {
 	chats: [],
 	currentChat: {
-		membersIds: [],
+		memberInfo: {
+			firstName: "",
+			lastName: null,
+			profilePic: null,
+			userBio_id: 0,
+			user_id: 0,
+			email: ""
+		},
 		messages: []
 	},
 	currentChatId: null
@@ -94,9 +101,11 @@ const ChatSlice = createSlice({
 	name: "ChatSlice",
 	initialState,
 	reducers: {
-		setCurrentChat(state, action: PayloadAction<ChatResponse>) {
+		setCurrentChatId(state, action: PayloadAction<ChatResponse>) {
 			state.currentChatId = action.payload.chatId
-			state.currentChat.membersIds = action.payload.membersIds
+		},
+		setCurrentMemberInfo(state, action: PayloadAction<userInfo>) {
+			state.currentChat.memberInfo = action.payload
 		},
 	},
 	extraReducers: (builder) => {
@@ -105,12 +114,11 @@ const ChatSlice = createSlice({
 		})
 		builder.addCase(findOrCreateChat.fulfilled, (state, action: PayloadAction<ChatResponse>) => {
 			state.currentChatId = action.payload.chatId
-			state.currentChat.membersIds = action.payload.membersIds
 		})
 		builder.addCase(getAllMessages.fulfilled, (state, action: PayloadAction<message[]>) => {
 			state.currentChat.messages = action.payload
 		})
 	},
 })
-export const {setCurrentChat} = ChatSlice.actions
+export const {setCurrentChatId, setCurrentMemberInfo} = ChatSlice.actions
 export default ChatSlice.reducer

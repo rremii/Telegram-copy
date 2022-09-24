@@ -9,12 +9,23 @@ export interface AuthUserEmail {
 	type: string
 }
 
+//TODO gotta fix types cuc most of em are same
 export interface searchUser {
 	userBio_id: number
 	user_id: number
 	firstName: string
 	lastName: string
 	profilePic: string
+	email: string
+}
+
+export interface userInfo {
+	email: string
+	firstName: string
+	lastName: null | string
+	profilePic: null | string
+	userBio_id: number
+	user_id: number
 }
 
 export interface Me {
@@ -28,13 +39,7 @@ export interface Me {
 
 export interface Chat {
 	chat_id: number
-	memberData: {
-		firstName: string
-		lastName: string
-		profilePic: null | string
-		userBio_id: number
-		user_id: number
-	}
+	memberInfo: userInfo
 }
 
 export interface messageData {

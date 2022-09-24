@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from "react"
+import React, {FC, useContext, useEffect, useState} from "react"
 import styled from "styled-components"
 import SideBar from "../components/Side-bar/Side-bar"
 import ChatBox from "../components/Chat-box/Chat-box"
@@ -6,6 +6,7 @@ import InfoBox from "../components/Info-box"
 import LogoutPopUp from "../components/Globals/Logout-pop-up"
 import {fetchMe} from "../store/MeSlice"
 import {useAppDispatch} from "../store/ReduxStore"
+import {GlobalContext} from "../hooks/useGlobalContext"
 
 interface HomeType {
 }
@@ -13,19 +14,20 @@ interface HomeType {
 
 const Home: FC<HomeType> = () => {
 	const dispatch = useAppDispatch()
-	const [isOpen, setOpen] = useState(false)
+
+	const {screenMode} = useContext(GlobalContext)
 
 	useEffect(() => {
 		dispatch(fetchMe())
-	})
+	}, [])
 
 	return (
-		<HomeWrapper isOpen={isOpen} className="home__wrapper">
+		<HomeWrapper isOpen={screenMode === "info"} className="home__wrapper">
 
 			<div className="home__container">
-				<SideBar isOpen={isOpen} setOpen={setOpen}/>
+				<SideBar/>
 				<ChatBox/>
-				<InfoBox isOpen={isOpen}/>
+				<InfoBox/>
 				<LogoutPopUp/>
 			</div>
 
@@ -43,8 +45,6 @@ const HomeWrapper = styled.div<{ isOpen: boolean }>`
   .home__container {
     transition: 0.7s width;
     width: ${({isOpen}) => isOpen ? "100%" : "calc(100vw + 420px)"};
-
-
     position: relative;
     height: 100%;
     display: flex;

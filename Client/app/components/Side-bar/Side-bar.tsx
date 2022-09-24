@@ -8,8 +8,6 @@ import LogoutPopUp from "../Globals/Logout-pop-up"
 import useGlobalContext, {GlobalContext} from "../../hooks/useGlobalContext"
 
 interface ISideBar {
-	setOpen: Dispatch<SetStateAction<boolean>>
-	isOpen: boolean
 
 }
 
@@ -19,8 +17,8 @@ const SideBar: FC<ISideBar> = () => {
 	const {screenMode} = useContext(GlobalContext)
 
 
-	// return <SideBarWrapper onClick={() => setOpen(!isOpen)}>
 	return <SideBarWrapper screenMode={screenMode}>
+
 		<ProfileMenu/>
 		<div className="layout">
 			<Header/>

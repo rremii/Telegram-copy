@@ -4,11 +4,12 @@ const { Op } = require("sequelize")
 
 class UserService {
     async findAll({ firstName = null, lastName = null, email = null }) {
+        //TODO add comments to this algo
         if (email) {
             const users = await User.findAll({
                 where: { email: { [Op.like]: `%${email}%` } },
             })
-            return await Promise.all(
+            const userBio = await Promise.all(
                 users.map(async (user) => {
                     return await UserBio.findOne({
                         where: {
@@ -17,15 +18,28 @@ class UserService {
                     })
                 })
             )
+            return users.map((user, i) => ({
+                ...user.dataValues,
+                ...userBio[i].dataValues,
+            }))
         }
         if (firstName || lastName) {
-            return await UserBio.findAll({
+            const userInfo = await UserBio.findAll({
                 where: {
                     [Op.or]: [
                         { firstName: { [Op.like]: `%${firstName}%` } },
                         { lastName: { [Op.like]: `%${lastName}%` } },
                     ],
                 },
+                include: User,
+            })
+
+            return userInfo.map((userInfo) => {
+                const { user, ...userData } = userInfo.dataValues
+                return {
+                    ...user.dataValues,
+                    ...userData,
+                }
             })
         } else return []
     }

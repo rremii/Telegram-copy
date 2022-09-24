@@ -5,32 +5,39 @@ import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import {cutStringToLength} from "../../../utils/cutStringToLength"
 import useGlobalContext, {GlobalContext} from "../../../hooks/useGlobalContext"
 import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
-import {setCurrentChat} from "../../../store/ChatSlice"
 import {useRouter} from "next/router"
+import {setCurrentChatId, setCurrentMemberInfo} from "../../../store/ChatSlice"
+import {userInfo} from "../../../store/types"
 
-interface IChatList {
-	avatar: string | null
-	title: string
-	subTitle: string
+interface IChatList extends userInfo {
 	chatId: number
-	userId: number
+	subTitle: string
 }
 
 
-const ChatCell: FC<IChatList> = ({userId, chatId, subTitle = "", title, avatar = ""}) => {
+const ChatCell: FC<IChatList> = ({
+	chatId,
+	subTitle = "",
+	...memberInfo
+}) => {
+	const {lastName, firstName, profilePic: avatar} = memberInfo
+
 	const dispatch = useAppDispatch()
 	const router = useRouter()
 
-	const {user_id: id} = useTypedSelector(state => state.Me.me)
 
-	const {screenMode, SetScreenMode} = useContext(GlobalContext)
+	const {SetScreenMode} = useContext(GlobalContext)
+
 
 	const HandleCellClick = async () => {
-		dispatch(setCurrentChat({chatId, membersIds: [userId, id]}))
+		dispatch(setCurrentChatId({chatId}))
+		dispatch(setCurrentMemberInfo(memberInfo))
+
 		await router.push("/?chatId=" + chatId)
 		SetScreenMode("chat")
 	}
 
+	const title = firstName + " " + (lastName ? lastName : "")
 	return <ChatCellWrapper onClick={HandleCellClick} className="cell">
 		<div className="avatar">
 			<Image width={54} height={54} src={avatar ? avatar : "/no-avatar.svg"}/>

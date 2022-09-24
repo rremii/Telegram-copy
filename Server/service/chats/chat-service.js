@@ -64,25 +64,25 @@ class ChatService {
         })
         ////////////////////////////////////////////////////////
 
-        if (sameChatId) return { chatId: sameChatId, membersIds: userIds }
+        if (sameChatId) return { chatId: sameChatId, memberIds: userIds }
         await this.createChat(userIds)
     }
 
-    async getChatsByUserId(userId) {
+    async getChatsByUserId(user_id) {
         const chats = await UserChat.findAll({
-            where: { user_id: userId },
+            where: { user_id },
         })
         return await Promise.all(
             chats.map(async (chat) => {
                 //TODO add comments to this algo
-                const chatId = chat.dataValues.chat_id
+                const chat_id = chat.dataValues.chat_id
 
                 const member = await Chat.findOne({
-                    where: { chat_id: chatId },
+                    where: { chat_id },
                     include: [
                         {
                             model: User,
-                            where: { user_id: { [Op.ne]: userId } },
+                            where: { user_id: { [Op.ne]: user_id } },
                             include: {
                                 as: "userBio",
                                 model: UserBio,
@@ -91,10 +91,12 @@ class ChatService {
                     ],
                 })
                 return {
-                    memberData:
-                        member.dataValues.users[0].dataValues.userBio
+                    memberInfo: {
+                        email: member.dataValues.users[0].dataValues.email,
+                        ...member.dataValues.users[0].dataValues.userBio
                             .dataValues,
-                    chatId,
+                    },
+                    chat_id,
                 }
             })
         )

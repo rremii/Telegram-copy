@@ -38,15 +38,11 @@ const SearchMenu = () => {
 			</button>
 		</nav>
 		<div className="cell-box">
-			{searchFilter === "people" && users.map(({user_id, firstName, profilePic, lastName}, index) => {
-				return <SearchCell key={index} id={user_id} avatar={profilePic}
-								   title={firstName + " " + (lastName ? lastName : "")}
-								   subTitle={"nothing new yet"}/>
+			{searchFilter === "people" && users.map((userInfo, index) => {
+				return <SearchCell key={index} {...userInfo}/>
 			})}
-			{searchFilter === "groups" && groups.map(({user_id, firstName, profilePic, lastName}, index) => {
-				return <SearchCell key={index} id={user_id} avatar={profilePic}
-								   title={firstName + " " + (lastName ? lastName : "")}
-								   subTitle={"nothing new yet"}/>
+			{searchFilter === "groups" && groups.map((_, index) => {
+				return <div key={index}/>
 			})}
 		</div>
 	</SearchMenuWrapper>

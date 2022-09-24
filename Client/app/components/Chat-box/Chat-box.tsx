@@ -11,39 +11,30 @@ interface ChatBoxType {
 }
 
 const ChatBox: FC<ChatBoxType> = () => {
-	const router = useRouter()
-
-	const params = router.query
-
-	const {screenMode, SetScreenMode} = useContext(GlobalContext)
+	const {screenMode} = useContext(GlobalContext)
 
 	const {currentChatId} = useTypedSelector(state => state.Chats)
 
 
-	useEffect(() => {
-		// alert(params)
-	}, [params])
-
-
 	return <ChatBoxWrapper currentChatId={currentChatId} screenMode={screenMode}>
-		<Header/>
-		<ChatContent/>
+		<div className="chat-box-content">
+
+			<Header/>
+			<ChatContent/>
+		</div>
 	</ChatBoxWrapper>
 }
 export default ChatBox
 const ChatBoxWrapper = styled.div<{
-	screenMode: "sideBar" | "chat"
+	screenMode: "sideBar" | "chat" | "info"
 	currentChatId: number | null
 }>`
   height: 100%;
   padding: 0;
   background-color: rgb(33, 33, 33);
   background-image: url("/chat-background.jpg");
-  //background-repeat: no-repeat;
-  display: ${({currentChatId}) => currentChatId ? "flex" : "none"};
   background-size: cover;
   flex: 1 1 auto;
-  flex-direction: column;
   z-index: 15;
   @media screen and (max-width: 920px) {
     z-index: 15;
@@ -51,7 +42,7 @@ const ChatBoxWrapper = styled.div<{
     top: 0;
     width: 100vw;
     transition: .4s left;
-    left: ${({screenMode}) => screenMode === "chat" ? 0 : "420px"};
+    left: ${({screenMode}) => screenMode !== "sideBar" ? 0 : "420px"};
   }
   @media screen and (max-width: 600px) {
     z-index: 15;
@@ -59,6 +50,14 @@ const ChatBoxWrapper = styled.div<{
     top: 0;
     width: 100vw;
     transition: .4s left;
-    left: ${({screenMode}) => screenMode === "chat" ? 0 : "100%"};
+    left: ${({screenMode}) => screenMode !== "sideBar" ? 0 : "100%"};
+  }
+
+  .chat-box-content {
+    width: 100%;
+    height: 100%;
+    display: ${({currentChatId}) => currentChatId ? "flex" : "none"};
+    flex-direction: column;
+
   }
 `

@@ -4,11 +4,7 @@ import {AuthUserBio, AuthUserEmail, Chat, message, messageData, searchUser} from
 import {ChatResponse} from "./types"
 
 export const ChatAPI = {
-	// createChat: async (ids: number[]) => {
-	// 	return await $api.post<searchUser[]>(`chat`, {
-	// 		userIds: ids
-	// 	})
-	// },
+
 	findOrCreateChat: async (ids: number[]) => {
 		return await $api.post<ChatResponse>(`chat`, {
 			userIds: ids

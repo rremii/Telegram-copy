@@ -1,9 +1,7 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit"
-import {AuthUserBio, AuthUserEmail, searchUser} from "./types"
-import {AuthAPI} from "../api/AuthApi"
+import {AuthUserBio, AuthUserEmail, searchUser, userInfo} from "./types"
 import {SearchAPI} from "../api/SearchApi"
 import {AppDispatch, RootState} from "./ReduxStore"
-import {State} from "jest-circus"
 
 
 export const fetchUsers = createAsyncThunk<searchUser[],
@@ -32,7 +30,7 @@ export const fetchUsers = createAsyncThunk<searchUser[],
 
 
 interface initialStateType {
-	users: searchUser[]
+	users: userInfo[]
 	groups: []
 }
 

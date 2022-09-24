@@ -1,8 +1,8 @@
 import {createContext, useState} from "react"
 
 export interface IGlobalContext {
-	screenMode: "sideBar" | "chat"
-	SetScreenMode: (values: "sideBar" | "chat") => void
+	screenMode: "sideBar" | "chat" | "info"
+	SetScreenMode: (values: "sideBar" | "chat" | "info") => void
 }
 
 
@@ -14,8 +14,8 @@ export const GlobalContext = createContext<IGlobalContext>({
 
 
 const useGlobalContext = (): IGlobalContext => {
-	const [screenMode, setScreenMode] = useState<"sideBar" | "chat">("sideBar")
-	const SetScreenMode = (value: "sideBar" | "chat") => {
+	const [screenMode, setScreenMode] = useState<"sideBar" | "chat" | "info">("sideBar")
+	const SetScreenMode = (value: "sideBar" | "chat" | "info") => {
 		setScreenMode(value)
 	}
 	return {

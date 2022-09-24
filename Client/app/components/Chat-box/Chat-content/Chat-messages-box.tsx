@@ -21,16 +21,16 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 
 
 	useEffect(() => {
-		const interval = setInterval(() => {
-			if (!currentChatId) return
-			dispatch(getAllMessages(currentChatId))
-		}, 2000)
-		return () => clearInterval(interval)
+		// const interval = setInterval(() => {
+		// }, 1000)
+		// return () => clearInterval(interval)
+		if (!currentChatId) return
+		dispatch(getAllMessages(currentChatId))
 	}, [currentChatId])
 
 	return <ChatMessagesBoxWrapper>
 
-		{messages.map(({content, sender_id, chat_id}, i) => {
+		{messages.map(({content, sender_id}, i) => {
 			return <div key={i} className="message-cont">
 				<div className={`message ${user_id === sender_id ? "your-message" : "other-message"}`}>
 					{content}
