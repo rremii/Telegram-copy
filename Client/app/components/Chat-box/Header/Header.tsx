@@ -65,7 +65,9 @@ const HeaderWrapper = styled.div<{
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 0 16px;
+  padding-left: 16px;
+  padding-right: 16px;
+
 
   .chat-info {
     flex: 1 1 auto;
