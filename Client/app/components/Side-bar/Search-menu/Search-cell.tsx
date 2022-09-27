@@ -9,13 +9,6 @@ import {userInfo} from "../../../store/types"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
 import {SideBarContext} from "../../../hooks/useSideBarContext"
 
-interface ISearchCell {
-	avatar: string | null
-	title: string
-	subTitle: string
-	id: number
-	memberInfo: userInfo
-}
 
 const SearchCell: FC<userInfo> = (userInfo) => {
 	const {user_id: id, firstName, profilePic: avatar, lastName, email} = userInfo
@@ -23,6 +16,7 @@ const SearchCell: FC<userInfo> = (userInfo) => {
 	const dispatch = useAppDispatch()
 
 	const {SetIsSearch} = useContext(SideBarContext)
+	const {SetScreenMode} = useContext(GlobalContext)
 
 	const {user_id} = useTypedSelector(state => state.Me.me)
 
@@ -31,6 +25,7 @@ const SearchCell: FC<userInfo> = (userInfo) => {
 		dispatch(findOrCreateChat([user_id, id]))
 		dispatch(setCurrentMemberInfo(userInfo))
 		SetIsSearch(false)
+		SetScreenMode("chat")
 	}
 
 

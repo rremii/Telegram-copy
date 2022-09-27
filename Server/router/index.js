@@ -12,14 +12,15 @@ const { UserBio } = require("../models/userBio-model")
 const { Chat, UserChat } = require("../models/chat-models/chat-model")
 const { ChatMessage } = require("../models/chat-models/chat-message-model")
 const { Op } = require("sequelize")
+const AuthMiddleware = require("../middlewares/auth-middleware")
 
 const router = Router()
 
 router.use("/auth", authRouter)
-router.use("/", chatRouter)
-router.use("/", usersRouter)
-router.use("/", meRouter)
-router.use("/messages", messageRouter)
+router.use("/", AuthMiddleware, chatRouter)
+router.use("/", AuthMiddleware, usersRouter)
+router.use("/", AuthMiddleware, meRouter)
+router.use("/messages", AuthMiddleware, messageRouter)
 
 router.use("/getcandidates", async (request, response) => {
     const candidates = await Candidate.findAll()

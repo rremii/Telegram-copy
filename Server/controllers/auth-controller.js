@@ -62,10 +62,10 @@ class AuthController {
             const { refreshToken } = request.cookies
             await UserAuthService.logout(refreshToken)
             response.clearCookie("refreshToken", {
-                // domain: process.env.API_URL,
-                // path: '/api/logout',
-                // sameSite: 'none',
-                // secure: true
+                domain: process.env.API_URL,
+                path: "/api/auth/logout",
+                sameSite: "none",
+                secure: true,
             })
             return response.status(200).json({ message: "you are logged out" })
         } catch (e) {

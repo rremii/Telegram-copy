@@ -31,22 +31,11 @@ export const AuthAPI = {
 	refresh: async () => {
 		return await axios.get<TokenResponse>(API_URL + "auth/refresh", {
 			withCredentials: true,
-			// headers: {
-			//     IsRemember: localStorage.getItem('isRememberMe') + ''
-			// }
 		})
 	},
 	logout: async () => {
 		return await $api.post("auth/logout")
 	},
 
-	// getPosts: () => {
-	//     return instance.get(`posts`)
-	// },
-	// addPost: (newTitle: string) => {
-	//     return instance.post(`posts`, {title: newTitle})
-	// },
-	// deletePost: (id: number) => {
-	//     return instance.delete(`posts/${id}`)
-	// },
+
 }

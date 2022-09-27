@@ -2,16 +2,27 @@ import React, {FC, useContext, useState} from "react"
 import styled from "styled-components"
 import {Rem} from "../../../styles/functions/mixins"
 import {SideBarContext} from "../../hooks/useSideBarContext"
+import {fetchLogout} from "../../store/AuthSlice"
+import {useAppDispatch} from "../../store/ReduxStore"
 
 interface ILogoutPopUp {
 
 }
 
 const LogoutPopUp: FC<ILogoutPopUp> = () => {
+	const dispatch = useAppDispatch()
+
 	const {
 		isLogoutPopUp,
 		SetLogoutPopUp
 	} = useContext(SideBarContext)
+
+
+	const Logout = () => {
+		dispatch(fetchLogout())
+		SetLogoutPopUp(false)
+	}
+
 	return <LogoutPopUpWrapper isLogoutPopUp={isLogoutPopUp}>
 		<div className="pop-up-cont">
 			<h1>Log out</h1>
@@ -19,7 +30,7 @@ const LogoutPopUp: FC<ILogoutPopUp> = () => {
 			<span>Note that you can seamlessly use Telegram on all your devices at once.</span>
 			<div className="btn-cont">
 				<button onClick={() => SetLogoutPopUp(false)} className="cancel">CANCEL</button>
-				<button className="logout">LOGOUT</button>
+				<button onClick={Logout} className="logout">LOGOUT</button>
 			</div>
 		</div>
 	</LogoutPopUpWrapper>

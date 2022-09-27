@@ -6,6 +6,7 @@ import useRipple from "../../../hooks/useRipple"
 import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
 import {useTypedSelector} from "../../../store/ReduxStore"
+import {API_URL_STATIC} from "../../../api"
 
 interface IHeader {
 
@@ -38,7 +39,7 @@ const Header: FC<IHeader> = () => {
 			<div onClick={HandleAvatarClick}>
 				<div className="avatar">
 					<Image width={42} height={42}
-						   src={memberInfo.profilePic ? memberInfo.profilePic : "/no-avatar.svg"}/>
+						   src={memberInfo.profilePic ? API_URL_STATIC + memberInfo.profilePic : "/no-avatar.svg"}/>
 				</div>
 				<div className="text-content">
 					<h1>{memberInfo.firstName} {memberInfo.lastName ? memberInfo.lastName : ""}</h1>
@@ -67,7 +68,9 @@ const HeaderWrapper = styled.div<{
   align-items: center;
   padding-left: 16px;
   padding-right: 16px;
-
+  @media screen and (min-width: 1000px) {
+    max-width: calc(100vw - 420px);
+  }
 
   .chat-info {
     flex: 1 1 auto;
@@ -93,6 +96,7 @@ const HeaderWrapper = styled.div<{
       justify-content: center;
       z-index: 1;
       transition: .3s background-color;
+      margin-right: 10px;
 
       &:hover {
         background-color: rgb(43, 43, 43);

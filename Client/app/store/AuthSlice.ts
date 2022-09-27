@@ -162,15 +162,11 @@ const AuthSlice = createSlice({
 		builder.addCase(fetchLogout.fulfilled, (state) => {
 			state.isPending = true
 			state.isLoggedIn = "first loading"
-			// state.registrationError = ''
-			// state.loginError = ''
 		})
 		builder.addCase(fetchLogout.rejected, (state) => {
 			localStorage.removeItem("accessToken")
 			state.isPending = true
 			state.isLoggedIn = "first loading"
-			// state.registrationError = ''
-			// state.loginError = ''
 		})
 	},
 })

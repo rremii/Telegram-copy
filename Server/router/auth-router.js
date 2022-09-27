@@ -10,7 +10,7 @@ router.post("/candidate", authController.createCandidate)
 // router.post('/registration', UploadMiddleware.single('profilePic'), authController.registration)
 router.post("/registration", authController.registration)
 router.post("/login", authController.login)
-router.post("/logout", AuthMiddleware, authController.logout)
+router.post("/logout", authController.logout)
 router.get("/refresh", authController.refresh)
 
 module.exports = router

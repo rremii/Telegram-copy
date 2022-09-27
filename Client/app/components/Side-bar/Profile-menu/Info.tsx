@@ -2,63 +2,67 @@ import React, {FC, useState} from "react"
 import styled from "styled-components"
 import Image from "next/image"
 import {Rem} from "../../../../styles/functions/mixins"
+import {useTypedSelector} from "../../../store/ReduxStore"
+import {API_URL_STATIC} from "../../../api"
 
 interface IInfo {
 }
 
-const ArrOfAvatars = [
-	"/dog-icon.png",
-	"/chat-background.jpg",
-]
 
 const Info: FC<IInfo> = () => {
 
-	const [currentAvatar, setCurrentAvatar] = useState(0)
+	// const [currentAvatar, setCurrentAvatar] = useState(0)
 
-	const NextAvatar = () => {
-		if (currentAvatar !== ArrOfAvatars.length - 1) {
-			setCurrentAvatar(currentAvatar + 1)
-		} else {
-			setCurrentAvatar(0)
-		}
-	}
-	const PrevAvatar = () => {
-		if (currentAvatar !== 0) {
-			setCurrentAvatar(currentAvatar - 1)
-		} else {
-			setCurrentAvatar(ArrOfAvatars.length - 1)
-		}
-	}
+	// const NextAvatar = () => {
+	// 	if (currentAvatar !== ArrOfAvatars.length - 1) {
+	// 		setCurrentAvatar(currentAvatar + 1)
+	// 	} else {
+	// 		setCurrentAvatar(0)
+	// 	}
+	// }
+	// const PrevAvatar = () => {
+	// 	if (currentAvatar !== 0) {
+	// 		setCurrentAvatar(currentAvatar - 1)
+	// 	} else {
+	// 		setCurrentAvatar(ArrOfAvatars.length - 1)
+	// 	}
+	// }
+
+	const {profilePic} = useTypedSelector(state => state.Me.me)
+	const {lastName} = useTypedSelector(state => state.Me.me)
+	const {firstName} = useTypedSelector(state => state.Me.me)
+	const {email} = useTypedSelector(state => state.Me.me)
+
 	return <InfoWrapper>
 		<div className="avatar-cont">
 			<div className="bio">
-				<h1>Artem Romanov</h1>
+				<h1>{firstName} {lastName}</h1>
 				<span>online</span>
 			</div>
-			<div className="avatar-indicator">
-				{ArrOfAvatars.map((_, i) => {
-					return <span key={i} className={currentAvatar === i ? "current" : ""}/>
-				})}
-			</div>
-			<Image src={ArrOfAvatars[currentAvatar]} layout="fill"/>
-			<button onClick={PrevAvatar} className="arrow-left">
-				<Image width={25} height={50} src="/prev.svg"/>
-			</button>
-			<button onClick={NextAvatar} className="arrow-right">
-				<Image width={25} height={50} src="/next.svg"/>
-			</button>
+			{/*<div className="avatar-indicator">*/}
+			{/*	{ArrOfAvatars.map((_, i) => {*/}
+			{/*		return <span key={i} className={currentAvatar === i ? "current" : ""}/>*/}
+			{/*	})}*/}
+			{/*</div>*/}
+			<Image src={profilePic ? API_URL_STATIC + profilePic : "/no-avatar.svg"} layout="fill"/>
+			{/*<button onClick={PrevAvatar} className="arrow-left">*/}
+			{/*	<Image width={25} height={50} src="/prev.svg"/>*/}
+			{/*</button>*/}
+			{/*<button onClick={NextAvatar} className="arrow-right">*/}
+			{/*	<Image width={25} height={50} src="/next.svg"/>*/}
+			{/*</button>*/}
 		</div>
 		<div className="padding-cont">
 			<div className="change-avatar">
-				<img src="add-photo-icon.svg" alt="add photo"/>
-				<input type="file"/>
+				<img src={"add-photo-icon.svg"} alt="add photo"/>
+				<input type="file" accept=".png,.jpeg"/>
 			</div>
 			<div className="email-cont">
 				<div className="icon">
 					<Image src="/email.svg" width={35} height={35}/>
 				</div>
 				<div className="text-cont">
-					<h1 className="email">noruto2021@gmail.com</h1>
+					<h1 className="email">{email}</h1>
 					<h2>Email</h2>
 				</div>
 			</div>

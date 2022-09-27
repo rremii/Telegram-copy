@@ -45,13 +45,7 @@ class UserAuthService {
         await CandidateAuthService.clearExpiredCandidates(email)
 
         const userDto = new UserDto(user)
-        const tokens = await TokenService.getAndSaveTokens(
-            { ...userDto },
-            isRememberMe
-        )
-        return {
-            ...tokens,
-        }
+        return await TokenService.getAndSaveTokens({ ...userDto }, isRememberMe)
     }
 
     async login(code, isRememberMe) {
@@ -79,22 +73,13 @@ class UserAuthService {
 
         const userDto = new UserDto(user)
 
-        const tokens = await TokenService.getAndSaveTokens(
-            { ...userDto },
-            isRememberMe
-        )
-        // const tokens = TokenService.generateTokens({ ...userDto }, isRememberMe)
-        // await TokenService.saveToken(userDto.user_id, tokens.refreshToken)
-        return {
-            ...tokens,
-        }
+        return await TokenService.getAndSaveTokens({ ...userDto }, isRememberMe)
     }
 
     async logout(refreshToken) {
         if (!refreshToken) {
             throw ApiError.UnauthorizedError()
         }
-
         return await TokenService.removeToken(refreshToken)
     }
 
@@ -111,13 +96,7 @@ class UserAuthService {
             where: { user_id: userData.user_id },
         })
         const userDto = new UserDto(user)
-        const tokens = await TokenService.getAndSaveTokens(
-            { ...userDto },
-            isRememberMe
-        )
-        return {
-            ...tokens,
-        }
+        return await TokenService.getAndSaveTokens({ ...userDto }, isRememberMe)
     }
 }
 

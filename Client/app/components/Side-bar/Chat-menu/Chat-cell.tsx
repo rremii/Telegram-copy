@@ -8,6 +8,7 @@ import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
 import {useRouter} from "next/router"
 import {setCurrentChatId, setCurrentMemberInfo} from "../../../store/ChatSlice"
 import {userInfo} from "../../../store/types"
+import {API_URL_STATIC} from "../../../api"
 
 interface IChatList extends userInfo {
 	chatId: number
@@ -40,7 +41,7 @@ const ChatCell: FC<IChatList> = ({
 	const title = firstName + " " + (lastName ? lastName : "")
 	return <ChatCellWrapper onClick={HandleCellClick} className="cell">
 		<div className="avatar">
-			<Image width={54} height={54} src={avatar ? avatar : "/no-avatar.svg"}/>
+			<Image width={54} height={54} src={avatar ? API_URL_STATIC + avatar : "/no-avatar.svg"}/>
 		</div>
 		<div className="text-box">
 			<div className="title-cont">

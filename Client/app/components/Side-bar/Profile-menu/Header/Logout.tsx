@@ -10,7 +10,6 @@ interface ILogout {
 
 const Logout: FC<ILogout> = () => {
 
-
 	const {
 		isLogout,
 		SetLogout,
@@ -19,13 +18,13 @@ const Logout: FC<ILogout> = () => {
 
 
 	return <LogoutWrapper isLogout={isLogout}>
-		<div onClick={() => SetLogoutPopUp(true)} className="logout-cont">
+		<button onClick={() => SetLogoutPopUp(true)} className="logout-cont">
 			<div className="icon">
 				<Image width={25} height={25} src="/logout.svg"/>
 			</div>
 			<span>Log Out</span>
-		</div>
-		<div onClick={() => SetLogout(false)} className="logout-overlay"/>
+		</button>
+		<button onClick={() => SetLogout(false)} className="logout-overlay"/>
 	</LogoutWrapper>
 }
 export default Logout
