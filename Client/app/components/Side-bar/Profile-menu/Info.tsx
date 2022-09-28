@@ -1,15 +1,19 @@
-import React, {FC, useState} from "react"
+import React, {ChangeEvent, ChangeEventHandler, FC, useState} from "react"
 import styled from "styled-components"
 import Image from "next/image"
 import {Rem} from "../../../../styles/functions/mixins"
-import {useTypedSelector} from "../../../store/ReduxStore"
+import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
 import {API_URL_STATIC} from "../../../api"
+import {changeAvatar} from "../../../store/MeSlice"
 
 interface IInfo {
 }
 
 
 const Info: FC<IInfo> = () => {
+
+	const dispatch = useAppDispatch()
+
 
 	// const [currentAvatar, setCurrentAvatar] = useState(0)
 
@@ -32,6 +36,23 @@ const Info: FC<IInfo> = () => {
 	const {lastName} = useTypedSelector(state => state.Me.me)
 	const {firstName} = useTypedSelector(state => state.Me.me)
 	const {email} = useTypedSelector(state => state.Me.me)
+	const {user_id} = useTypedSelector(state => state.Me.me)
+
+
+	const ChangeAvatar = (e: ChangeEvent<HTMLInputElement>) => {
+
+		// const profilePic = e.currentTarget.value
+
+		if (e.target.files)
+			// dispatch(changeAvatar(URL.createObjectURL(e.target.files[0])))
+
+
+			dispatch(changeAvatar({
+				profilePic: e.target.files[0],
+				user_id
+			}))
+	}
+
 
 	return <InfoWrapper>
 		<div className="avatar-cont">
@@ -55,7 +76,7 @@ const Info: FC<IInfo> = () => {
 		<div className="padding-cont">
 			<div className="change-avatar">
 				<img src={"add-photo-icon.svg"} alt="add photo"/>
-				<input type="file" accept=".png,.jpeg"/>
+				<input onChange={ChangeAvatar} type="file" accept=".png,.jpeg"/>
 			</div>
 			<div className="email-cont">
 				<div className="icon">
