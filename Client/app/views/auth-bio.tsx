@@ -74,6 +74,7 @@ const AuthBio: FC<Auth3Type> = () => {
 							onChange={HandlePictureChange}
 							ref={fileRef}
 							type="file"
+							accept="*.png,*.jpeg,*.jpg"
 						/>
 					</div>
 					<Formik

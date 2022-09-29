@@ -86,7 +86,7 @@ class AuthController {
                 sameSite: "none",
                 secure: true,
             })
-            return response.json(tokens.accessToken)
+            return response.json({ accessToken: tokens.accessToken })
         } catch (e) {
             next(e)
         }

@@ -12,7 +12,22 @@ export const fetchMe = createAsyncThunk(
 		try {
 
 			const response = await MeAPI.getMe()
-			
+
+			return response.data
+		} catch (e: any) {
+			return rejectWithValue(e.response.data.message)
+		}
+	}
+)
+export const changeAvatar = createAsyncThunk(
+	"MeSlice/changeAvatar",
+	async ({profilePic, user_id}: { profilePic: File, user_id: number }, {rejectWithValue, dispatch}) => {
+		try {
+
+			const response = await MeAPI.changeAvatar(profilePic, user_id)
+
+			dispatch(fetchMe())
+
 			return response.data
 		} catch (e: any) {
 			return rejectWithValue(e.response.data.message)

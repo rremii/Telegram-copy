@@ -15,6 +15,7 @@ interface HomeType {
 const Home: FC<HomeType> = () => {
 	const dispatch = useAppDispatch()
 
+
 	const {screenMode} = useContext(GlobalContext)
 
 	useEffect(() => {
