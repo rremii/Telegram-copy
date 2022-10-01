@@ -6,7 +6,7 @@ import {cutStringToLength} from "../../../utils/cutStringToLength"
 import useGlobalContext, {GlobalContext} from "../../../hooks/useGlobalContext"
 import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
 import {useRouter} from "next/router"
-import {setCurrentChatId, setCurrentMemberInfo} from "../../../store/ChatSlice"
+import {setCurrentChatId, setCurrentMemberInfo, setCurrentMemberOnline} from "../../../store/ChatSlice"
 import {userInfo} from "../../../store/types"
 import {API_URL_STATIC} from "../../../api"
 
@@ -33,6 +33,8 @@ const ChatCell: FC<IChatList> = ({
 	const HandleCellClick = async () => {
 		dispatch(setCurrentChatId({chatId}))
 		dispatch(setCurrentMemberInfo(memberInfo))
+		if (memberInfo.lastOnline)
+			dispatch(setCurrentMemberOnline(memberInfo.lastOnline))
 
 		await router.push("/?chatId=" + chatId)
 		SetScreenMode("chat")

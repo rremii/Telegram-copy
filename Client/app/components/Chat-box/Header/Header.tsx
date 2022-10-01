@@ -31,6 +31,22 @@ const Header: FC<IHeader> = () => {
 		SetScreenMode("info")
 	}
 
+	//////////////////////////////////
+	//TODO grab it to utils
+	const getStatusByLastOnline = (lastOnline: Date | null) => {
+		if (!lastOnline) return ""
+
+		const date = new Date(lastOnline)
+		const dateInMiliSec = date.getTime()
+		const difference = Math.round((Date.now() - dateInMiliSec) / (1000 * 60))
+		// return difference + ""
+		if (difference > 10) return difference + " min ago"
+		if (difference > 5 && difference < 10) return "last seen recently"
+		if (difference < 5) return "online"
+
+	}
+	//////////////////////////////////////////
+
 	return <HeaderWrapper screenMode={screenMode}>
 		<section className="chat-info">
 			<button onClick={HandleArrowClick} className="arrow">
@@ -43,7 +59,7 @@ const Header: FC<IHeader> = () => {
 				</div>
 				<div className="text-content">
 					<h1>{memberInfo.firstName} {memberInfo.lastName ? memberInfo.lastName : ""}</h1>
-					<h2>last seen 19 min ago</h2>
+					<h2>{getStatusByLastOnline(memberInfo.lastOnline)}</h2>
 				</div>
 			</div>
 		</section>

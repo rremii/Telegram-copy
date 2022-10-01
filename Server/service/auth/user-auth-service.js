@@ -34,7 +34,6 @@ class UserAuthService {
         const { user_id } = user.dataValues
 
         const profilePicName = await StaticService.uploadFile(profilePic)
-
         await UserBio.create({
             firstName,
             lastName,

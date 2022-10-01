@@ -1,7 +1,8 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit"
-import {Chat, message, messageData, searchUser, userInfo} from "./types"
+import {Chat, message, messageData, userInfo} from "./types"
 import {ChatAPI} from "../api/ChatApi"
 import {ChatResponse} from "../api/types"
+import {AppDispatch, RootState} from "./ReduxStore"
 
 
 // export const createChat = createAsyncThunk(
@@ -31,13 +32,26 @@ export const findOrCreateChat = createAsyncThunk(
 	}
 )
 
-export const fetchChatsByUserId = createAsyncThunk(
+export const fetchChatsByUserId = createAsyncThunk<Chat[],
+	number,
+	{
+		dispatch: AppDispatch
+		state: RootState
+	}>(
 	"ChatSlice/fetchChatsByUserId",
-	async (userId: number, {rejectWithValue}) => {
+	async (userId: number, {rejectWithValue, dispatch, getState}) => {
 		try {
 
 			const response = await ChatAPI.getChatsByUserId(userId)
 
+
+			//TODO gotta make it pretty
+			const state = getState()
+			const {currentChatId} = state.Chats
+			if (currentChatId) {
+				const currentChat = response.data.find(({chat_id}) => chat_id === currentChatId)
+				if (currentChat?.memberInfo.lastOnline) dispatch(setCurrentMemberOnline(currentChat.memberInfo.lastOnline))
+			}
 			return response.data
 		} catch (e: any) {
 			return rejectWithValue(e.response.data.message)
@@ -90,7 +104,8 @@ const initialState = {
 			profilePic: null,
 			userBio_id: 0,
 			user_id: 0,
-			email: ""
+			email: "",
+			lastOnline: null
 		},
 		messages: []
 	},
@@ -104,9 +119,14 @@ const ChatSlice = createSlice({
 		setCurrentChatId(state, action: PayloadAction<ChatResponse>) {
 			state.currentChatId = action.payload.chatId
 		},
-		setCurrentMemberInfo(state, action: PayloadAction<userInfo>) {
-			state.currentChat.memberInfo = action.payload
+		setCurrentMemberInfo(state, action: PayloadAction<Omit<userInfo, "lastOnline">>) {
+			const prevOnline = state.currentChat.memberInfo.lastOnline
+			state.currentChat.memberInfo = {...action.payload, lastOnline: prevOnline}
 		},
+		setCurrentMemberOnline(state, action: PayloadAction<Date>) {
+			state.currentChat.memberInfo.lastOnline = action.payload
+		},
+
 	},
 	extraReducers: (builder) => {
 		builder.addCase(fetchChatsByUserId.fulfilled, (state, action: PayloadAction<Chat[]>) => {
@@ -120,5 +140,5 @@ const ChatSlice = createSlice({
 		})
 	},
 })
-export const {setCurrentChatId, setCurrentMemberInfo} = ChatSlice.actions
+export const {setCurrentChatId, setCurrentMemberOnline, setCurrentMemberInfo} = ChatSlice.actions
 export default ChatSlice.reducer

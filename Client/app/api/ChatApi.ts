@@ -1,6 +1,6 @@
 import {$api, API_URL} from "./index"
 
-import {AuthUserBio, AuthUserEmail, Chat, message, messageData, searchUser} from "../store/types"
+import {AuthUserBio, AuthUserEmail, Chat, message, messageData} from "../store/types"
 import {ChatResponse} from "./types"
 
 export const ChatAPI = {

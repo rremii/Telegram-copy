@@ -1,4 +1,5 @@
 const ChatService = require("../service/chats/chat-service")
+const MeService = require("../service/me-service")
 
 class ChatController {
     // async createChat(request, response, next) {
@@ -34,6 +35,7 @@ class ChatController {
     async getChatsByUserId(request, response, next) {
         try {
             const { userId } = request.params
+            await MeService.updateOnline(userId)
 
             const chats = await ChatService.getChatsByUserId(userId)
 

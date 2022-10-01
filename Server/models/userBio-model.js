@@ -1,4 +1,12 @@
-const { INTEGER, BOOLEAN, STRING, BLOB, DataTypes } = require("sequelize")
+const {
+    INTEGER,
+    BOOLEAN,
+    STRING,
+    BLOB,
+    DataTypes,
+    DATE,
+    NOW,
+} = require("sequelize")
 const sequelize = require("../db")
 const { User } = require("./user-model")
 
@@ -17,6 +25,7 @@ const UserBio = sequelize.define(
         },
         lastName: { type: STRING },
         profilePic: { type: STRING },
+        lastOnline: { type: DATE, defaultValue: NOW },
         user_id: {
             type: INTEGER,
             allowNull: false,

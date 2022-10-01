@@ -76,7 +76,7 @@ const Info: FC<IInfo> = () => {
 		<div className="padding-cont">
 			<div className="change-avatar">
 				<img src={"add-photo-icon.svg"} alt="add photo"/>
-				<input onChange={ChangeAvatar} type="file" accept=".png,.jpeg"/>
+				<input onChange={ChangeAvatar} type="file" accept="*.png,*.jpg,*.jpeg"/>
 			</div>
 			<div className="email-cont">
 				<div className="icon">

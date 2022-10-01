@@ -2,7 +2,6 @@ import React, {useContext, useEffect} from "react"
 import styled from "styled-components"
 import ChatCell from "./Chat-cell"
 import {SideBarContext} from "../../../hooks/useSideBarContext"
-import useGlobalContext from "../../../hooks/useGlobalContext"
 import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
 import {fetchChatsByUserId} from "../../../store/ChatSlice"
 
@@ -25,7 +24,13 @@ const ChatMenu = () => {
 
 
 	useEffect(() => {
-		if (id) dispatch(fetchChatsByUserId(id))
+		if (!chats.length && id) {
+			dispatch(fetchChatsByUserId(id))
+		}
+		const interval = setInterval(() => {
+			if (id) dispatch(fetchChatsByUserId(id))
+		}, 1000 * 60)
+		return () => clearInterval(interval)
 	}, [id])
 
 

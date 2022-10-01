@@ -17,7 +17,6 @@ class MeService {
         const user = await User.findOne({
             where: { user_id },
         })
-
         const userBio = await UserBio.findOne({
             where: { user_id },
         })
@@ -31,17 +30,10 @@ class MeService {
             where: { user_id },
         })
 
-        // await fs.readFile(
-        //     path.resolve("static", userBioData.profilePic),
-        //     async (err, data) => {
-        //         if (data) {
         await fs.unlink(
             path.resolve("static", userBioData.profilePic),
             () => {}
         )
-        // }
-        // }
-        // )
         const profilePicName = await StaticService.uploadFile(profilePic)
 
         userBioData.profilePic = profilePicName
@@ -49,6 +41,14 @@ class MeService {
         await userBioData.save()
 
         return profilePicName
+    }
+    async updateOnline(user_id) {
+        const userBio = await UserBio.findOne({
+            where: { user_id },
+        })
+        return await userBio.update({
+            lastOnline: Date.now(),
+        })
     }
 }
 module.exports = new MeService()

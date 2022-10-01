@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit"
-import {AuthUserBio, AuthUserEmail, Me, searchUser} from "./types"
+import {AuthUserBio, AuthUserEmail, Me,} from "./types"
 import {AuthAPI} from "../api/AuthApi"
 import {SearchAPI} from "../api/SearchApi"
 import {ChatAPI} from "../api/ChatApi"
