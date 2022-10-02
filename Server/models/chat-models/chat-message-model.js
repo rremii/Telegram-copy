@@ -16,6 +16,10 @@ const ChatMessage = sequelize.define(
             type: STRING,
             allowNull: false,
         },
+        // isSeen: {
+        //     type: BOOLEAN,
+        //     defaultValue: false,
+        // },
         chat_id: {
             type: INTEGER,
             allowNull: false,

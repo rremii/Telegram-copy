@@ -7,6 +7,7 @@ import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
 import {useTypedSelector} from "../../../store/ReduxStore"
 import {API_URL_STATIC} from "../../../api"
+import {getStatusByLastOnline} from "../../../utils/getStatusByLastOnline"
 
 interface IHeader {
 
@@ -31,21 +32,6 @@ const Header: FC<IHeader> = () => {
 		SetScreenMode("info")
 	}
 
-	//////////////////////////////////
-	//TODO grab it to utils
-	const getStatusByLastOnline = (lastOnline: Date | null) => {
-		if (!lastOnline) return ""
-
-		const date = new Date(lastOnline)
-		const dateInMiliSec = date.getTime()
-		const difference = Math.round((Date.now() - dateInMiliSec) / (1000 * 60))
-		// return difference + ""
-		if (difference > 10) return difference + " min ago"
-		if (difference > 5 && difference < 10) return "last seen recently"
-		if (difference < 5) return "online"
-
-	}
-	//////////////////////////////////////////
 
 	return <HeaderWrapper screenMode={screenMode}>
 		<section className="chat-info">

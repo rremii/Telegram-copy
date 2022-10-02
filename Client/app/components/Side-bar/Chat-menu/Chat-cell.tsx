@@ -27,6 +27,12 @@ const ChatCell: FC<IChatList> = ({
 	const router = useRouter()
 
 
+	const {chats} = useTypedSelector(state => state.Chats)
+
+	const thisChat = chats.find(({chat_id}) => chat_id === chatId)
+	
+	const unSeenMessages = thisChat
+
 	const {SetScreenMode} = useContext(GlobalContext)
 
 

@@ -8,25 +8,6 @@ class ChatService {
     async createChat(userIds) {
         if (!userIds) throw ApiError.BadRequest("invalid id's")
         const [id1, id2] = userIds
-        ////////////////////////////////////////////////////////
-        // const chats1 = await UserChat.findAll({
-        //     where: { user_id: id1 },
-        // })
-        // const chatsIds1 = chats1.map((chat) => {
-        //     return chat.dataValues.chat_id
-        // })
-        // const chats2 = await UserChat.findAll({
-        //     where: { user_id: id2 },
-        // })
-        // const chatsIds2 = chats2.map((chat) => {
-        //     return chat.dataValues.chat_id
-        // })
-        //
-        // const haveSameChat = chatsIds1.some((id, i) => {
-        //     return chatsIds2[i] === id
-        // })
-        // if (haveSameChat) throw ApiError.BadRequest("this chat already exist")
-        ////////////////////////////////////////////////////////
 
         if (id1 === id2) throw ApiError.BadRequest("wrong ids")
 
@@ -100,6 +81,14 @@ class ChatService {
                 }
             })
         )
+    }
+    async addLastMessage(chat_id, content) {
+        const chat = await Chat.findOne({
+            where: { chat_id },
+        })
+        return await chat.update({
+            unSeenMessages: chat.unSeenMessages + 1,
+        })
     }
 }
 module.exports = new ChatService()

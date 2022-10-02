@@ -4,6 +4,7 @@ import {Rem} from "../../../styles/functions/mixins"
 import {useTypedSelector} from "../../store/ReduxStore"
 import React from "react"
 import {API_URL_STATIC} from "../../api"
+import {getStatusByLastOnline} from "../../utils/getStatusByLastOnline"
 
 const Info = () => {
 
@@ -12,6 +13,7 @@ const Info = () => {
 	const {profilePic} = useTypedSelector(state => state.Chats.currentChat.memberInfo)
 	const {firstName} = useTypedSelector(state => state.Chats.currentChat.memberInfo)
 	const {lastName} = useTypedSelector(state => state.Chats.currentChat.memberInfo)
+	const {lastOnline} = useTypedSelector(state => state.Chats.currentChat.memberInfo)
 
 	return <InfoWrapper>
 		<div className="avatar">
@@ -19,7 +21,7 @@ const Info = () => {
 			<Image layout="fill" src={profilePic ? API_URL_STATIC + profilePic : "/no-avatar.svg"}/>
 			<div className="bio">
 				<h1>{firstName} {lastName}</h1>
-				<span>online</span>
+				<span>{getStatusByLastOnline(lastOnline)}</span>
 			</div>
 		</div>
 		<div className="padding-cont">

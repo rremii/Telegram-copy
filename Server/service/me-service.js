@@ -30,10 +30,12 @@ class MeService {
             where: { user_id },
         })
 
-        await fs.unlink(
-            path.resolve("static", userBioData.profilePic),
-            () => {}
-        )
+        if (userBioData.profilePic) {
+            await fs.unlink(
+                path.resolve("static", userBioData.profilePic),
+                () => {}
+            )
+        }
         const profilePicName = await StaticService.uploadFile(profilePic)
 
         userBioData.profilePic = profilePicName

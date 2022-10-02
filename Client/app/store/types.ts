@@ -26,6 +26,8 @@ export interface Me {
 
 export interface Chat {
 	chat_id: number
+	unSeenMessages: number
+	lastMessage: string | null
 	memberInfo: userInfo
 }
 
@@ -39,5 +41,6 @@ export interface message {
 	chat_id: number
 	chat_message_id: number
 	content: string
+	isSeen: boolean
 	sender_id: number
 }

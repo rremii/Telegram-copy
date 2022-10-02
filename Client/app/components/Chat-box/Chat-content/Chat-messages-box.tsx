@@ -21,11 +21,11 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 
 
 	useEffect(() => {
-		// const interval = setInterval(() => {
-		// }, 1000)
-		// return () => clearInterval(interval)
-		if (!currentChatId) return
-		dispatch(getAllMessages(currentChatId))
+		const interval = setInterval(() => {
+			if (!currentChatId) return
+			dispatch(getAllMessages(currentChatId))
+		}, 2000)
+		return () => clearInterval(interval)
 	}, [currentChatId])
 
 	return <ChatMessagesBoxWrapper>
@@ -39,7 +39,8 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 						<Image width={19}
 							   height={16} src="/check.svg"/>
 					</div>
-					<img src="/bubble-tail-left-purple.svg" alt="bubble-tail"/>
+					<img src={user_id === sender_id ? "/bubble-tail-left-purple.svg" : "/bubble-tail-left.svg"}
+						 alt="bubble-tail"/>
 				</div>
 			</div>
 		})}

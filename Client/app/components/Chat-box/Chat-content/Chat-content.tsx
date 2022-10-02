@@ -24,6 +24,7 @@ const ChatContentWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0 10px;
 
   .chat-cont {
     flex: 0 1 728px;

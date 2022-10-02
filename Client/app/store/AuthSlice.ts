@@ -141,7 +141,6 @@ const AuthSlice = createSlice({
 			state.codeError = ""
 		})
 		builder.addCase(fetchRegistration.rejected, (state, action) => {
-			debugger
 
 			state.isPending = false
 			state.isLoggedIn = "rejected"

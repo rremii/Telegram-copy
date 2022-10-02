@@ -12,6 +12,13 @@ const Chat = sequelize.define(
             primaryKey: true,
             autoIncrement: true,
         },
+        lastMessage: {
+            type: STRING,
+        },
+        unSeenMessages: {
+            type: INTEGER,
+            defaultValue: 0,
+        },
     },
     {
         timestamps: false,

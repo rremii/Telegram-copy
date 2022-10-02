@@ -54,7 +54,6 @@ const MeSlice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder.addCase(fetchMe.fulfilled, (state, action: PayloadAction<Me>) => {
-
 			state.me = action.payload
 		})
 
