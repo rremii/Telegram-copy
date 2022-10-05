@@ -44,7 +44,6 @@ export const fetchChatsByUserId = createAsyncThunk<Chat[],
 
 			const response = await ChatAPI.getChatsByUserId(userId)
 
-
 			//TODO gotta make it pretty
 			const state = getState()
 			const {currentChatId} = state.Chats

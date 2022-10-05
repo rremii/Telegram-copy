@@ -35,10 +35,12 @@ class ChatController {
     async getChatsByUserId(request, response, next) {
         try {
             const { userId } = request.params
+
             await MeService.updateOnline(userId)
 
             const chats = await ChatService.getChatsByUserId(userId)
 
+            debugger
             response.json(chats)
         } catch (e) {
             next(e)

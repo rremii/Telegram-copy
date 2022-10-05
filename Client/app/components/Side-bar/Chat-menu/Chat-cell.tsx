@@ -7,31 +7,33 @@ import useGlobalContext, {GlobalContext} from "../../../hooks/useGlobalContext"
 import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
 import {useRouter} from "next/router"
 import {setCurrentChatId, setCurrentMemberInfo, setCurrentMemberOnline} from "../../../store/ChatSlice"
-import {userInfo} from "../../../store/types"
+import {Chat, userInfo} from "../../../store/types"
 import {API_URL_STATIC} from "../../../api"
 
-interface IChatList extends userInfo {
-	chatId: number
+interface IChatList extends Chat {
 	subTitle: string
+	chat_id: number
 }
 
 
 const ChatCell: FC<IChatList> = ({
-	chatId,
+	chat_id: chatId,
+	unSeenMessages, lastMessage,
 	subTitle = "",
-	...memberInfo
+	memberInfo
 }) => {
+
 	const {lastName, firstName, profilePic: avatar} = memberInfo
 
 	const dispatch = useAppDispatch()
 	const router = useRouter()
 
 
-	const {chats} = useTypedSelector(state => state.Chats)
-
-	const thisChat = chats.find(({chat_id}) => chat_id === chatId)
-	
-	const unSeenMessages = thisChat
+	// const {chats} = useTypedSelector(state => state.Chats)
+	//
+	// const thisChat = chats.find(({chat_id}) => chat_id === chatId)
+	//
+	// const unSeenMessages = thisChat
 
 	const {SetScreenMode} = useContext(GlobalContext)
 
@@ -65,7 +67,7 @@ const ChatCell: FC<IChatList> = ({
 			</div>
 			<div className="sub-title-cont">
 				<h2>{cutStringToLength(subTitle, 25)}</h2>
-				<span className="unseen-messages">21</span>
+				<span className="unseen-messages">{unSeenMessages}</span>
 			</div>
 		</div>
 

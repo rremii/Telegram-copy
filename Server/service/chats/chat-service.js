@@ -3,6 +3,9 @@ const { User } = require("../../models/user-model")
 const ApiError = require("../../exceptions/api-error")
 const { UserBio } = require("../../models/userBio-model")
 const { Op } = require("sequelize")
+const {
+    UnSeenMessage,
+} = require("../../models/chat-models/unSeen-message-model")
 
 class ChatService {
     async createChat(userIds) {
@@ -17,8 +20,6 @@ class ChatService {
             { chat_id: chatData.chat_id, user_id: id1 },
             { chat_id: chatData.chat_id, user_id: id2 },
         ])
-
-        debugger
 
         return { chatId: chatData.chat_id, membersIds: userIds }
     }
@@ -50,14 +51,30 @@ class ChatService {
     }
 
     async getChatsByUserId(user_id) {
-        const chats = await UserChat.findAll({
+        //TODO add some comments to it
+        const userChats = await User.findOne({
             where: { user_id },
+            include: Chat,
         })
+        const chats = userChats.chats.map((chat) => {
+            return {
+                chat_id: chat.chat_id,
+                lastMessage: chat.lastMessage,
+                unSeenMessages: chat.unSeenMessages,
+            }
+        })
+
         return await Promise.all(
             chats.map(async (chat) => {
                 //TODO add comments to this algo
-                const chat_id = chat.dataValues.chat_id
+                const chat_id = chat.chat_id
 
+                const unSeenMessage = await UnSeenMessage.findOne({
+                    where: {
+                        chat_id,
+                        sender_id: { [Op.ne]: user_id },
+                    },
+                })
                 const member = await Chat.findOne({
                     where: { chat_id },
                     include: [
@@ -77,7 +94,9 @@ class ChatService {
                         ...member.dataValues.users[0].dataValues.userBio
                             .dataValues,
                     },
-                    chat_id,
+                    unSeenMessages: unSeenMessage.amount,
+                    chat_id: chat.chat_id,
+                    lastMessage: chat.lastMessage,
                 }
             })
         )
@@ -85,9 +104,6 @@ class ChatService {
     async addLastMessage(chat_id, content) {
         const chat = await Chat.findOne({
             where: { chat_id },
-        })
-        return await chat.update({
-            unSeenMessages: chat.unSeenMessages + 1,
         })
     }
 }

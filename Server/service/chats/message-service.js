@@ -1,6 +1,9 @@
 const { ChatMessage } = require("../../models/chat-models/chat-message-model")
 const ApiError = require("../../exceptions/api-error")
 const ChatService = require("./chat-service")
+const {
+    UnSeenMessage,
+} = require("../../models/chat-models/unSeen-message-model")
 
 class MessageService {
     async addMessage({ content, chat_id, user_id }) {
@@ -10,8 +13,23 @@ class MessageService {
             sender_id: user_id,
         })
 
-        const newChat = await ChatService.addLastMessage(chat_id)
+        await ChatService.addLastMessage(chat_id)
 
+        const prevUnSeenMessage = await UnSeenMessage.findOrCreate({
+            where: {
+                chat_id,
+                sender_id: user_id,
+            },
+        })
+
+        if (prevUnSeenMessage) {
+            await UnSeenMessage.update(
+                {
+                    amount: prevUnSeenMessage[0].amount + 1,
+                },
+                { where: { chat_id, sender_id: user_id } }
+            )
+        }
         return message
     }
 

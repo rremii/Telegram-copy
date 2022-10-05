@@ -29,14 +29,17 @@ const ChatMenu = () => {
 		}
 		const interval = setInterval(() => {
 			if (id) dispatch(fetchChatsByUserId(id))
-		}, 1000 * 60)
+		}, 1000 * 2)
 		return () => clearInterval(interval)
 	}, [id])
 
 
 	return <ChatMenuWrapper isSearchOn={isSearchOn}>
-		{chats.map(({chat_id, memberInfo}) => {
-			return <ChatCell chatId={chat_id} {...memberInfo} key={chat_id}
+		{chats.map(({chat_id, lastMessage, unSeenMessages, memberInfo}) => {
+
+			return <ChatCell chat_id={chat_id} lastMessage={lastMessage} unSeenMessages={unSeenMessages}
+							 memberInfo={memberInfo}
+							 key={chat_id}
 							 subTitle={"gotta fix"}
 			/>
 		})}
