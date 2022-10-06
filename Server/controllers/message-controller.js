@@ -19,9 +19,9 @@ class MessageController {
 
     async getMessages(request, response, next) {
         try {
-            const { chat_id } = request.params
+            const { chat_id, user_id } = request.params
 
-            const messages = await MessageService.getMessages(chat_id)
+            const messages = await MessageService.getMessages(chat_id, user_id)
 
             response.json(messages)
         } catch (e) {

@@ -51,6 +51,9 @@ const MeSlice = createSlice({
 		// addUserBio(state, action: PayloadAction<AuthUserBio>) {
 		// 	state.userBio = action.payload
 		// },
+		resetMeSlice() {
+			return initialState
+		}
 	},
 	extraReducers: (builder) => {
 		builder.addCase(fetchMe.fulfilled, (state, action: PayloadAction<Me>) => {
@@ -59,5 +62,5 @@ const MeSlice = createSlice({
 
 	},
 })
-// export const {} = MeSlice.actions
+export const {resetMeSlice} = MeSlice.actions
 export default MeSlice.reducer

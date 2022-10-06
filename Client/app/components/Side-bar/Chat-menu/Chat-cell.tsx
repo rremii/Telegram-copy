@@ -67,7 +67,9 @@ const ChatCell: FC<IChatList> = ({
 			</div>
 			<div className="sub-title-cont">
 				<h2>{cutStringToLength(subTitle, 25)}</h2>
-				<span className="unseen-messages">{unSeenMessages}</span>
+				{unSeenMessages > 0 ?
+					<span className="unseen-messages">{unSeenMessages}</span>
+					: ''}
 			</div>
 		</div>
 

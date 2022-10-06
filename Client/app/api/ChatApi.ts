@@ -19,7 +19,7 @@ export const ChatAPI = {
 		return await $api.post<message>("messages", messageData)
 	},
 
-	getAllMessages: async (chat_id: number) => {
-		return await $api.get<message[]>("messages/" + chat_id)
+	getAllMessages: async (chat_id: number, user_id: number) => {
+		return await $api.get<message[]>("messages/" + chat_id + "/" + user_id)
 	}
 }

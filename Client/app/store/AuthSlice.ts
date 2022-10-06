@@ -1,6 +1,9 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit"
 import {AuthUserBio, AuthUserEmail} from "./types"
 import {AuthAPI} from "../api/AuthApi"
+import {resetChatSlice} from "./ChatSlice"
+import {resetMeSlice} from "./MeSlice"
+import {resetSearchSlice} from "./SearchSlice"
 
 export const fetchCreateCandidate = createAsyncThunk(
 	"AuthSlice/fetchPosts",
@@ -18,8 +21,12 @@ export const fetchCreateCandidate = createAsyncThunk(
 
 export const fetchLogin = createAsyncThunk(
 	"AuthSlice/fetchLogin",
-	async (code: string, {rejectWithValue}) => {
+	async (code: string, {rejectWithValue, dispatch}) => {
 		try {
+			dispatch(resetAuthSlice())
+			dispatch(resetChatSlice())
+			dispatch(resetMeSlice())
+			dispatch(resetSearchSlice())
 			const response = await AuthAPI.login(code)
 			if (!response.data.accessToken) throw new Error("server error")
 			localStorage.setItem("accessToken", response.data.accessToken)
@@ -37,9 +44,13 @@ export const fetchRegistration = createAsyncThunk(
 			lastName,
 			profilePic,
 		}: { code: string } & AuthUserBio,
-		{rejectWithValue}
+		{rejectWithValue, dispatch}
 	) => {
 		try {
+			dispatch(resetAuthSlice())
+			dispatch(resetChatSlice())
+			dispatch(resetMeSlice())
+			dispatch(resetSearchSlice())
 			const response = await AuthAPI.registration({
 				code,
 				firstName,
@@ -71,6 +82,7 @@ export const fetchLogout = createAsyncThunk(
 		try {
 			const response = await AuthAPI.logout()
 			localStorage.removeItem("accessToken")
+
 			dispatch(fetchCheckIsAuth())
 			return response.data
 		} catch (e: any) {
@@ -115,6 +127,9 @@ const AuthSlice = createSlice({
 			state.emailError = ""
 			state.codeError = ""
 		},
+		resetAuthSlice() {
+			return initialState
+		}
 	},
 	extraReducers: (builder) => {
 		builder.addCase(fetchCreateCandidate.fulfilled, (state) => {
@@ -160,16 +175,16 @@ const AuthSlice = createSlice({
 			localStorage.removeItem("accessToken")
 		})
 
-		builder.addCase(fetchLogout.fulfilled, (state) => {
-			state.isPending = true
-			state.isLoggedIn = "first loading"
-		})
+		// builder.addCase(fetchLogout.fulfilled, (state) => {
+		// 	state.isPending = true
+		// 	state.isLoggedIn = "first loading"
+		// })
 		builder.addCase(fetchLogout.rejected, (state) => {
 			localStorage.removeItem("accessToken")
-			state.isPending = true
-			state.isLoggedIn = "first loading"
+			// state.isPending = true
+			// state.isLoggedIn = "first loading"
 		})
 	},
 })
-export const {addUser, addUserBio, clearAuthErrors} = AuthSlice.actions
+export const {resetAuthSlice, addUser, addUserBio, clearAuthErrors} = AuthSlice.actions
 export default AuthSlice.reducer

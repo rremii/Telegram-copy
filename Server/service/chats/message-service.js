@@ -4,6 +4,7 @@ const ChatService = require("./chat-service")
 const {
     UnSeenMessage,
 } = require("../../models/chat-models/unSeen-message-model")
+const { Op } = require("sequelize")
 
 class MessageService {
     async addMessage({ content, chat_id, user_id }) {
@@ -33,9 +34,20 @@ class MessageService {
         return message
     }
 
-    async getMessages(chat_id) {
+    async getMessages(chat_id, user_id) {
         if (!chat_id) throw ApiError.BadRequest("invalid id")
 
+        const unseen = await UnSeenMessage.update(
+            {
+                amount: 0,
+            },
+            {
+                where: {
+                    chat_id,
+                    sender_id: { [Op.ne]: user_id },
+                },
+            }
+        )
         return await ChatMessage.findAll({
             where: { chat_id },
         })

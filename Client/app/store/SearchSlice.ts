@@ -43,9 +43,9 @@ const SearchSlice = createSlice({
 	name: "SearchSlice",
 	initialState,
 	reducers: {
-		// addUserBio(state, action: PayloadAction<AuthUserBio>) {
-		// 	state.userBio = action.payload
-		// },
+		resetSearchSlice() {
+			return initialState
+		},
 	},
 	extraReducers: (builder) => {
 		builder.addCase(fetchUsers.fulfilled, (state, action: PayloadAction<userInfo[]>) => {
@@ -55,5 +55,5 @@ const SearchSlice = createSlice({
 
 	},
 })
-// export const {} = SearchSlice.actions
+export const {resetSearchSlice} = SearchSlice.actions
 export default SearchSlice.reducer

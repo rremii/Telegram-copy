@@ -23,7 +23,7 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 	useEffect(() => {
 		const interval = setInterval(() => {
 			if (!currentChatId) return
-			dispatch(getAllMessages(currentChatId))
+			dispatch(getAllMessages({chat_id: currentChatId, user_id}))
 		}, 2000)
 		return () => clearInterval(interval)
 	}, [currentChatId])

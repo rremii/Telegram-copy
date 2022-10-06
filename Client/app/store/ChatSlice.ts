@@ -73,9 +73,9 @@ export const addMessage = createAsyncThunk(
 
 export const getAllMessages = createAsyncThunk(
 	"ChatSlice/getAllMessages",
-	async (chat_id: number, {rejectWithValue}) => {
+	async ({chat_id, user_id}: { chat_id: number, user_id: number }, {rejectWithValue}) => {
 		try {
-			const response = await ChatAPI.getAllMessages(chat_id)
+			const response = await ChatAPI.getAllMessages(chat_id, user_id)
 
 			return response.data
 		} catch (e: any) {
@@ -125,7 +125,9 @@ const ChatSlice = createSlice({
 		setCurrentMemberOnline(state, action: PayloadAction<Date>) {
 			state.currentChat.memberInfo.lastOnline = action.payload
 		},
-
+		resetChatSlice() {
+			return initialState
+		}
 	},
 	extraReducers: (builder) => {
 		builder.addCase(fetchChatsByUserId.fulfilled, (state, action: PayloadAction<Chat[]>) => {
@@ -139,5 +141,5 @@ const ChatSlice = createSlice({
 		})
 	},
 })
-export const {setCurrentChatId, setCurrentMemberOnline, setCurrentMemberInfo} = ChatSlice.actions
+export const {resetChatSlice, setCurrentChatId, setCurrentMemberOnline, setCurrentMemberInfo} = ChatSlice.actions
 export default ChatSlice.reducer

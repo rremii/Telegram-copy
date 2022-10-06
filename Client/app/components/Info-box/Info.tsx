@@ -15,6 +15,7 @@ const Info = () => {
 	const {lastName} = useTypedSelector(state => state.Chats.currentChat.memberInfo)
 	const {lastOnline} = useTypedSelector(state => state.Chats.currentChat.memberInfo)
 
+
 	return <InfoWrapper>
 		<div className="avatar">
 

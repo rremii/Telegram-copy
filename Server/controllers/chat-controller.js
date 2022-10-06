@@ -26,6 +26,7 @@ class ChatController {
     }
 
     async getChatById(request, response, next) {
+        //TODO get rid of it
         try {
             const { chatId } = request
         } catch (e) {
@@ -40,7 +41,6 @@ class ChatController {
 
             const chats = await ChatService.getChatsByUserId(userId)
 
-            debugger
             response.json(chats)
         } catch (e) {
             next(e)
