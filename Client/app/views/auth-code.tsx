@@ -28,7 +28,6 @@ const AuthCode: FC<Auth2Type> = () => {
 	const {codeError} = useTypedSelector((state) => state.Auth)
 
 	useClearErrors()
-	/////////TODO gotta check if its upduting twice
 	const {isLoginPage, mainColor} = useIsLoginPage()
 
 	const HandleSubmit = async (

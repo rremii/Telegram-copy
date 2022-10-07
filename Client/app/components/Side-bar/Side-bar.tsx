@@ -1,11 +1,10 @@
-import React, {Dispatch, FC, SetStateAction, useContext} from "react"
+import React, {FC, useContext} from "react"
 import styled from "styled-components"
 import ChatMenu from "./Chat-menu/Chat-menu"
 import ProfileMenu from "./Profile-menu/Profile-menu"
 import SearchMenu from "./Search-menu/Search-menu"
 import Header from "./Header/Header"
-import LogoutPopUp from "../Globals/Logout-pop-up"
-import useGlobalContext, {GlobalContext} from "../../hooks/useGlobalContext"
+import {GlobalContext} from "../../hooks/useGlobalContext"
 
 interface ISideBar {
 

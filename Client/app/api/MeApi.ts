@@ -1,6 +1,6 @@
-import {$api, API_URL} from "./index"
+import {$api} from "./index"
 
-import {AuthUserBio, AuthUserEmail, Me, searchUser} from "../store/types"
+import {Me} from "../store/types"
 
 export const MeAPI = {
 	getMe: async () => {

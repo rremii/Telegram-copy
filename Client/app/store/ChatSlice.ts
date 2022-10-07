@@ -44,13 +44,14 @@ export const fetchChatsByUserId = createAsyncThunk<Chat[],
 
 			const response = await ChatAPI.getChatsByUserId(userId)
 
-			//TODO gotta make it pretty
 			const state = getState()
 			const {currentChatId} = state.Chats
+			//updating a chat member online status
 			if (currentChatId) {
 				const currentChat = response.data.find(({chat_id}) => chat_id === currentChatId)
 				if (currentChat?.memberInfo.lastOnline) dispatch(setCurrentMemberOnline(currentChat.memberInfo.lastOnline))
 			}
+
 			return response.data
 		} catch (e: any) {
 			return rejectWithValue(e.response.data.message)

@@ -1,11 +1,10 @@
-import {FC, useEffect} from "react"
+import {FC} from "react"
 import styled from "styled-components"
 import {Rem} from "../../../../styles/functions/mixins"
 import Image from "next/image"
-import {Form, Formik, Field} from "formik"
+import {Field, Form, Formik} from "formik"
 import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
 import {addMessage} from "../../../store/ChatSlice"
-import {resetAuthSlice} from "../../../store/AuthSlice"
 
 interface IChatInputBox {
 
@@ -19,7 +18,7 @@ const ChatInputBox: FC<IChatInputBox> = () => {
 	const {currentChatId} = useTypedSelector(state => state.Chats)
 	const {user_id} = useTypedSelector(state => state.Me.me)
 
-	
+
 	return <ChatInputBoxWrapper>
 
 

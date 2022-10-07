@@ -1,4 +1,4 @@
-import React, {FC, useContext, useState} from "react"
+import React, {FC, useContext} from "react"
 import styled from "styled-components"
 import Image from "next/image"
 import {Rem} from "../../../../styles/functions/mixins"

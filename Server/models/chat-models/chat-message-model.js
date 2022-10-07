@@ -20,6 +20,9 @@ const ChatMessage = sequelize.define(
         //     type: BOOLEAN,
         //     defaultValue: false,
         // },
+        lastMessage: {
+            type: STRING,
+        },
         chat_id: {
             type: INTEGER,
             allowNull: false,

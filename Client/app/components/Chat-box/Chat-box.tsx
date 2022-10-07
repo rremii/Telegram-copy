@@ -1,9 +1,8 @@
-import React, {Dispatch, FC, SetStateAction, useContext, useEffect} from "react"
+import React, {FC, useContext} from "react"
 import styled from "styled-components"
 import Header from "./Header/Header"
 import ChatContent from "./Chat-content/Chat-content"
-import useGlobalContext, {GlobalContext} from "../../hooks/useGlobalContext"
-import {useRouter} from "next/router"
+import {GlobalContext} from "../../hooks/useGlobalContext"
 import {useTypedSelector} from "../../store/ReduxStore"
 
 interface ChatBoxType {

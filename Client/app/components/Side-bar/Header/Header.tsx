@@ -1,10 +1,9 @@
-import React, {useContext, useEffect, useState} from "react"
+import React, {useContext} from "react"
 import styled from "styled-components"
 import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import useRipple from "../../../hooks/useRipple"
 import Ripple from "../../../ui/Ripple"
 import Burger from "./burger"
-import {useOutside} from "../../../hooks/useOutside"
 import {SideBarContext} from "../../../hooks/useSideBarContext"
 import {fetchUsers} from "../../../store/SearchSlice"
 import {useAppDispatch} from "../../../store/ReduxStore"
@@ -66,8 +65,6 @@ const Header = () => {
 }
 export default Header
 const HeaderWrapper = styled.div<{
-
-	//TODO add it to context
 	isSearchLayout: boolean
 	isSearchOn: boolean
 }>`

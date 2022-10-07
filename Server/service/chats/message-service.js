@@ -14,7 +14,7 @@ class MessageService {
             sender_id: user_id,
         })
 
-        await ChatService.addLastMessage(chat_id)
+        await ChatService.addLastMessage(chat_id, content)
 
         const prevUnSeenMessage = await UnSeenMessage.findOrCreate({
             where: {
@@ -37,7 +37,7 @@ class MessageService {
     async getMessages(chat_id, user_id) {
         if (!chat_id) throw ApiError.BadRequest("invalid id")
 
-        const unseen = await UnSeenMessage.update(
+        await UnSeenMessage.update(
             {
                 amount: 0,
             },

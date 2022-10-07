@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit"
-import {AuthUserBio, AuthUserEmail, userInfo} from "./types"
+import {userInfo} from "./types"
 import {SearchAPI} from "../api/SearchApi"
 import {AppDispatch, RootState} from "./ReduxStore"
 

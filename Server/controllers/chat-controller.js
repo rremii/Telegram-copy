@@ -25,14 +25,13 @@ class ChatController {
         }
     }
 
-    async getChatById(request, response, next) {
-        //TODO get rid of it
-        try {
-            const { chatId } = request
-        } catch (e) {
-            next(e)
-        }
-    }
+    // async getChatById(request, response, next) {
+    //     try {
+    //         const { chatId } = request
+    //     } catch (e) {
+    //         next(e)
+    //     }
+    // }
     async getChatsByUserId(request, response, next) {
         try {
             const { userId } = request.params

@@ -22,7 +22,6 @@ interface Auth3Type {
 }
 
 const AuthBio: FC<Auth3Type> = () => {
-	//TODO add prevent default to all the forms
 	const router = useRouter()
 	const dispatch = useAppDispatch()
 
@@ -78,6 +77,7 @@ const AuthBio: FC<Auth3Type> = () => {
 						/>
 					</div>
 					<Formik
+
 						validationSchema={validSchema}
 						initialValues={
 							{

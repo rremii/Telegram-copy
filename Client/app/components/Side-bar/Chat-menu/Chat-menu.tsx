@@ -37,10 +37,10 @@ const ChatMenu = () => {
 	return <ChatMenuWrapper isSearchOn={isSearchOn}>
 		{chats.map(({chat_id, lastMessage, unSeenMessages, memberInfo}) => {
 
-			return <ChatCell chat_id={chat_id} lastMessage={lastMessage} unSeenMessages={unSeenMessages}
+			return <ChatCell chat_id={chat_id} lastMessage={lastMessage}
+							 unSeenMessages={unSeenMessages}
 							 memberInfo={memberInfo}
 							 key={chat_id}
-							 subTitle={"gotta fix"}
 			/>
 		})}
 	</ChatMenuWrapper>

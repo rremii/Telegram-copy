@@ -21,6 +21,7 @@ const useIsAuth = () => {
 			}
 		}
 	}, [])
+
 	useEffect(() => {
 		// if login\refresh was rejected
 		if (isLoggedIn === "rejected" || !localStorage.getItem("accessToken")) router.push("./auth")

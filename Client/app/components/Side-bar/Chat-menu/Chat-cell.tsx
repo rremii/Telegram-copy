@@ -3,23 +3,21 @@ import styled from "styled-components"
 import Image from "next/image"
 import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import {cutStringToLength} from "../../../utils/cutStringToLength"
-import useGlobalContext, {GlobalContext} from "../../../hooks/useGlobalContext"
-import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
+import {GlobalContext} from "../../../hooks/useGlobalContext"
+import {useAppDispatch} from "../../../store/ReduxStore"
 import {useRouter} from "next/router"
 import {setCurrentChatId, setCurrentMemberInfo, setCurrentMemberOnline} from "../../../store/ChatSlice"
-import {Chat, userInfo} from "../../../store/types"
+import {Chat} from "../../../store/types"
 import {API_URL_STATIC} from "../../../api"
 
 interface IChatList extends Chat {
-	subTitle: string
 	chat_id: number
 }
 
 
 const ChatCell: FC<IChatList> = ({
 	chat_id: chatId,
-	unSeenMessages, lastMessage,
-	subTitle = "",
+	unSeenMessages, lastMessage = "",
 	memberInfo
 }) => {
 
@@ -62,14 +60,14 @@ const ChatCell: FC<IChatList> = ({
 					</div>
 					<span className="date">
 							12:06
-						</span>
+					</span>
 				</div>
 			</div>
 			<div className="sub-title-cont">
-				<h2>{cutStringToLength(subTitle, 25)}</h2>
+				<h2>{cutStringToLength(lastMessage ? lastMessage : "", 25)}</h2>
 				{unSeenMessages > 0 ?
 					<span className="unseen-messages">{unSeenMessages}</span>
-					: ''}
+					: ""}
 			</div>
 		</div>
 

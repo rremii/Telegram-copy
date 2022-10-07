@@ -16,7 +16,7 @@ class ChatService {
 
         const { dataValues: chatData } = await Chat.create()
 
-        const userChatInfo = await UserChat.bulkCreate([
+        await UserChat.bulkCreate([
             { chat_id: chatData.chat_id, user_id: id1 },
             { chat_id: chatData.chat_id, user_id: id2 },
         ])
@@ -94,7 +94,7 @@ class ChatService {
                         ...member.dataValues.users[0].dataValues.userBio
                             .dataValues,
                     },
-                    unSeenMessages: unSeenMessage.amount,
+                    unSeenMessages: unSeenMessage ? unSeenMessage.amount : 0,
                     chat_id: chat.chat_id,
                     lastMessage: chat.lastMessage,
                 }
@@ -102,8 +102,18 @@ class ChatService {
         )
     }
     async addLastMessage(chat_id, content) {
-        const chat = await Chat.findOne({
-            where: { chat_id },
+        const chat = await Chat.update(
+            {
+                lastMessage: content,
+            },
+            {
+                where: { chat_id },
+            }
+        )
+        await Chat.findOne({
+            where: {
+                chat_id,
+            },
         })
     }
 }

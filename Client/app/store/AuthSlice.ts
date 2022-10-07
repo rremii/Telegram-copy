@@ -13,7 +13,6 @@ export const fetchCreateCandidate = createAsyncThunk(
 
 			return response.data
 		} catch (e: any) {
-			//TODO check if it works and integrate
 			return rejectWithValue(e.response.data.message)
 		}
 	}

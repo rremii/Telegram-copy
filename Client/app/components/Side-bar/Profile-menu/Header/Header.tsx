@@ -6,8 +6,6 @@ import React, {useContext} from "react"
 import useRipple from "../../../../hooks/useRipple"
 import {SideBarContext} from "../../../../hooks/useSideBarContext"
 import Logout from "./Logout"
-import {useOutside} from "../../../../hooks/useOutside"
-import LogoutPopUp from "../../../Globals/Logout-pop-up"
 
 const Header = () => {
 

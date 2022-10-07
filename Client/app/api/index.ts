@@ -37,6 +37,7 @@ $api.interceptors.response.use(
 				localStorage.setItem("accessToken", response.data.accessToken)
 				return await $api.request(originalRequest)
 			} catch (e) {
+				window.location.href = "/"
 				localStorage.removeItem("accessToken")
 			}
 		}

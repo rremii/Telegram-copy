@@ -1,10 +1,9 @@
-import React, {useContext, useEffect, useState} from "react"
+import React, {useContext, useState} from "react"
 import styled from "styled-components"
 import {Rem} from "../../../../styles/functions/mixins"
 import SearchCell from "./Search-cell"
 import {SideBarContext} from "../../../hooks/useSideBarContext"
-import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
-import {fetchUsers} from "../../../store/SearchSlice"
+import {useTypedSelector} from "../../../store/ReduxStore"
 
 
 // const Users = [

@@ -1,4 +1,4 @@
-import React, {ChangeEvent, ChangeEventHandler, FC, useState} from "react"
+import React, {ChangeEvent, FC} from "react"
 import styled from "styled-components"
 import Image from "next/image"
 import {Rem} from "../../../../styles/functions/mixins"

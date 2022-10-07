@@ -9,7 +9,6 @@ export interface AuthUserEmail {
 	type: string
 }
 
-//TODO gotta fix types cuc most of em are same
 
 export interface userInfo extends Me {
 	lastOnline: Date | null

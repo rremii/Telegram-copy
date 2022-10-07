@@ -1,25 +1,13 @@
-import {$api, API_URL} from "./index"
-
-import {AuthUserBio, AuthUserEmail, searchUser} from "../store/types"
+import {$api} from "./index"
+import {userInfo} from "../store/types"
+import {ParseSearchString} from "../utils/parseSearchString"
 
 export const SearchAPI = {
 	getUsers: async (searchString: string) => {
 
-//TODO put it in a utils
-		let email
-		let firstName
-		let lastName
+		const {firstName, lastName, email} = ParseSearchString(searchString)
 
-		if (searchString.includes("@")) {
-			email = searchString
-		} else {
-			const splittedString = searchString.split(" ")
-			firstName = splittedString[0]
-			lastName = splittedString[1]
-		}
-
-
-		return await $api.get<searchUser[]>(`users/search?email=${email ? email : ""}${firstName ? "&firstName=" + firstName : ""}${lastName ? "&lastName=" + lastName : ""}`)
+		return await $api.get<userInfo[]>(`users/search?email=${email ? email : ""}${firstName ? "&firstName=" + firstName : ""}${lastName ? "&lastName=" + lastName : ""}`)
 	},
 
 }
