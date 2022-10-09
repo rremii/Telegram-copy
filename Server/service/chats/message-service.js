@@ -15,7 +15,7 @@ class MessageService {
         })
 
         await ChatService.addLastMessage(chat_id, content)
-
+        //TODO put in in another method
         const prevUnSeenMessage = await UnSeenMessage.findOrCreate({
             where: {
                 chat_id,
@@ -31,6 +31,7 @@ class MessageService {
                 { where: { chat_id, sender_id: user_id } }
             )
         }
+        /////
         return message
     }
 

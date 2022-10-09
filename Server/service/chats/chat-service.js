@@ -6,6 +6,7 @@ const { Op } = require("sequelize")
 const {
     UnSeenMessage,
 } = require("../../models/chat-models/unSeen-message-model")
+const { LastMessage } = require("../../models/chat-models/last-message-model")
 
 class ChatService {
     async createChat(userIds) {
@@ -54,12 +55,18 @@ class ChatService {
         //TODO add some comments to it
         const userChats = await User.findOne({
             where: { user_id },
-            include: Chat,
+            include: {
+                model: Chat,
+                include: LastMessage,
+            },
         })
         const chats = userChats.chats.map((chat) => {
             return {
                 chat_id: chat.chat_id,
-                lastMessage: chat.lastMessage,
+                lastMessage: {
+                    content: chat.lastMessage.content,
+                    updatedAt: chat.lastMessage.updatedAt,
+                },
                 unSeenMessages: chat.unSeenMessages,
             }
         })
@@ -102,19 +109,12 @@ class ChatService {
         )
     }
     async addLastMessage(chat_id, content) {
-        const chat = await Chat.update(
-            {
-                lastMessage: content,
-            },
-            {
-                where: { chat_id },
-            }
-        )
-        await Chat.findOne({
-            where: {
-                chat_id,
-            },
+        const [lastMessage] = await LastMessage.findOrCreate({
+            where: { chat_id },
         })
+        lastMessage.content = content
+
+        return await lastMessage.save()
     }
 }
 module.exports = new ChatService()
