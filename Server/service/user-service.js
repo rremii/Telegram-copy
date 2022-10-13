@@ -4,26 +4,30 @@ const { Op } = require("sequelize")
 
 class UserService {
     async findAll({ firstName = null, lastName = null, email = null }) {
-        //TODO add comments to this algo
+        //looking for users by email or first and last name
         if (email) {
+            //looking for the email that contains email from search
             const users = await User.findAll({
                 where: { email: { [Op.like]: `%${email}%` } },
+                include: {
+                    model: UserBio,
+                    as: "userBio",
+                },
             })
-            const userBio = await Promise.all(
-                users.map(async (user) => {
-                    return await UserBio.findOne({
-                        where: {
-                            user_id: user.dataValues.user_id,
-                        },
-                    })
-                })
-            )
-            return users.map((user, i) => ({
-                ...user.dataValues,
-                ...userBio[i].dataValues,
-            }))
+            return users.map((user) => {
+                return {
+                    user_id: user.user_id,
+                    email: user.email,
+                    userBio_id: user.userBio.userBio_id,
+                    firstName: user.userBio.firstName,
+                    lastName: user.userBio.lastName,
+                    profilePic: user.userBio.profilePic,
+                    lastOnline: user.userBio.lastOnline,
+                }
+            })
         }
         if (firstName || lastName) {
+            //looking for the user whose first or last name contain first/last name from search
             const userInfo = await UserBio.findAll({
                 where: {
                     [Op.or]: [
@@ -33,12 +37,16 @@ class UserService {
                 },
                 include: User,
             })
-
-            return userInfo.map((userInfo) => {
-                const { user, ...userData } = userInfo.dataValues
+            return userInfo.map((userBio) => {
+                const user = userBio.user
                 return {
-                    ...user.dataValues,
-                    ...userData,
+                    user_id: user.user_id,
+                    email: user.email,
+                    userBio_id: userBio.userBio_id,
+                    firstName: userBio.firstName,
+                    lastName: userBio.lastName,
+                    profilePic: userBio.profilePic,
+                    lastOnline: userBio.lastOnline,
                 }
             })
         } else return []

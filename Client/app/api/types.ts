@@ -6,7 +6,6 @@ export interface TokenResponse {
 	accessToken: string
 }
 
-
 export interface ChatResponse {
 	chatId: number
 }

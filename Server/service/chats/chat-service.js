@@ -9,50 +9,64 @@ const {
 const { LastMessage } = require("../../models/chat-models/last-message-model")
 
 class ChatService {
-    async createChat(userIds) {
+    static async #createChat(userIds) {
         if (!userIds) throw ApiError.BadRequest("invalid id's")
         const [id1, id2] = userIds
 
         if (id1 === id2) throw ApiError.BadRequest("wrong ids")
 
-        const { dataValues: chatData } = await Chat.create()
+        const chat = await Chat.create()
 
         await UserChat.bulkCreate([
-            { chat_id: chatData.chat_id, user_id: id1 },
-            { chat_id: chatData.chat_id, user_id: id2 },
+            {
+                chat_id: chat.chat_id,
+                user_id: id1,
+            },
+            {
+                chat_id: chat.chat_id,
+                user_id: id2,
+            },
         ])
 
-        return { chatId: chatData.chat_id, membersIds: userIds }
+        return {
+            chatId: chat.chat_id,
+            membersIds: userIds,
+        }
+    }
+
+    static async #findChatByIds(userIds) {
+        const [id1, id2] = userIds
+
+        const chats1 = await UserChat.findAll({
+            where: { user_id: id1 },
+        })
+
+        const chats2 = await UserChat.findAll({
+            where: { user_id: id2 },
+        })
+
+        //looking for same chats that both users have
+        return chats1.find((chat1, i) => chats2[i].chat_id === chat1.chat_id)
     }
 
     async findOrCreate(userIds) {
         if (!userIds) throw ApiError.BadRequest("invalid id's")
-        const [id1, id2] = userIds
-        ////////////////////////////////////////////////////////
-        const chats1 = await UserChat.findAll({
-            where: { user_id: id1 },
-        })
-        const chatsIds1 = chats1.map((chat) => {
-            return chat.dataValues.chat_id
-        })
-        const chats2 = await UserChat.findAll({
-            where: { user_id: id2 },
-        })
-        const chatsIds2 = chats2.map((chat) => {
-            return chat.dataValues.chat_id
-        })
 
-        const sameChatId = chatsIds1.find((id, i) => {
-            return chatsIds2[i] === id && id
-        })
-        ////////////////////////////////////////////////////////
+        const chat = await ChatService.#findChatByIds(userIds)
+        const chatId = chat.chat_id
 
-        if (sameChatId) return { chatId: sameChatId, memberIds: userIds }
-        await this.createChat(userIds)
+        if (chatId) {
+            return {
+                chatId,
+                memberIds: userIds,
+            }
+        }
+
+        await ChatService.#createChat(userIds)
     }
 
     async getChatsByUserId(user_id) {
-        //TODO add some comments to it
+        //looking for all the chat that user has
         const userChats = await User.findOne({
             where: { user_id },
             include: {
@@ -60,46 +74,51 @@ class ChatService {
                 include: LastMessage,
             },
         })
+
+        //converting chats for a better looking
         const chats = userChats.chats.map((chat) => {
             return {
                 chat_id: chat.chat_id,
                 lastMessage: {
-                    content: chat.lastMessage.content,
-                    updatedAt: chat.lastMessage.updatedAt,
+                    content: chat.lastMessage ? chat.lastMessage.content : null,
+                    updatedAt: chat.lastMessage
+                        ? chat.lastMessage.updatedAt
+                        : null,
                 },
-                unSeenMessages: chat.unSeenMessages,
+                unSeenMessages: chat.unSeenMessages ? chat.unSeenMessages : 0,
             }
         })
 
         return await Promise.all(
             chats.map(async (chat) => {
-                //TODO add comments to this algo
                 const chat_id = chat.chat_id
 
+                //find the chat user's unseen messages
                 const unSeenMessage = await UnSeenMessage.findOne({
                     where: {
                         chat_id,
                         sender_id: { [Op.ne]: user_id },
                     },
                 })
-                const member = await Chat.findOne({
+                //find the chat user's partner
+                const currentChat = await Chat.findOne({
                     where: { chat_id },
-                    include: [
-                        {
-                            model: User,
-                            where: { user_id: { [Op.ne]: user_id } },
-                            include: {
-                                as: "userBio",
-                                model: UserBio,
-                            },
+                    include: {
+                        model: User,
+                        where: { user_id: { [Op.ne]: user_id } },
+                        include: {
+                            as: "userBio",
+                            model: UserBio,
                         },
-                    ],
+                    },
                 })
+
+                const member = currentChat.users[0]
+
                 return {
                     memberInfo: {
-                        email: member.dataValues.users[0].dataValues.email,
-                        ...member.dataValues.users[0].dataValues.userBio
-                            .dataValues,
+                        email: member.email,
+                        ...member.userBio.dataValues,
                     },
                     unSeenMessages: unSeenMessage ? unSeenMessage.amount : 0,
                     chat_id: chat.chat_id,
@@ -108,6 +127,7 @@ class ChatService {
             })
         )
     }
+
     async addLastMessage(chat_id, content) {
         const [lastMessage] = await LastMessage.findOrCreate({
             where: { chat_id },
@@ -117,4 +137,5 @@ class ChatService {
         return await lastMessage.save()
     }
 }
+
 module.exports = new ChatService()

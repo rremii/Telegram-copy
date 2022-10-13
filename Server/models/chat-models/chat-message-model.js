@@ -33,7 +33,7 @@ const ChatMessage = sequelize.define(
         },
     },
     {
-        timestamps: false,
+        timestamps: true,
     }
 )
 

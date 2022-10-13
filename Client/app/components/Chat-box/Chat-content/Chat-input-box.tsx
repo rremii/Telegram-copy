@@ -59,6 +59,11 @@ const ChatInputBoxWrapper = styled.div`
   position: relative;
   margin-top: 5px;
 
+  form {
+    width: 100%;
+    height: 100%;
+  }
+
   .input-cont {
     width: 100%;
     padding: 5px 8px;
@@ -72,6 +77,7 @@ const ChatInputBoxWrapper = styled.div`
       caret-color: rgb(135, 116, 225);
       color: white;
       font-size: ${Rem(18)};
+      word-wrap: anywhere;
 
       ::placeholder {
         font-family: Roboto, sans-serif;

@@ -8,6 +8,9 @@ const { Op } = require("sequelize")
 
 class MessageService {
     async addMessage({ content, chat_id, user_id }) {
+        if (!content || !chat_id || !user_id)
+            throw ApiError("invalid data provided")
+
         const message = await ChatMessage.create({
             content: content + "",
             chat_id,
@@ -15,7 +18,12 @@ class MessageService {
         })
 
         await ChatService.addLastMessage(chat_id, content)
-        //TODO put in in another method
+
+        await MessageService.#addUnSeenMessage(chat_id, user_id)
+
+        return message
+    }
+    static async #addUnSeenMessage(chat_id, user_id) {
         const prevUnSeenMessage = await UnSeenMessage.findOrCreate({
             where: {
                 chat_id,
@@ -24,19 +32,17 @@ class MessageService {
         })
 
         if (prevUnSeenMessage) {
-            await UnSeenMessage.update(
+            return await UnSeenMessage.update(
                 {
                     amount: prevUnSeenMessage[0].amount + 1,
                 },
                 { where: { chat_id, sender_id: user_id } }
             )
         }
-        /////
-        return message
     }
 
     async getMessages(chat_id, user_id) {
-        if (!chat_id) throw ApiError.BadRequest("invalid id")
+        if (!chat_id || !user_id) throw ApiError.BadRequest("invalid id")
 
         await UnSeenMessage.update(
             {

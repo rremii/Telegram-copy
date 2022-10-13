@@ -9,6 +9,7 @@ import {useRouter} from "next/router"
 import {setCurrentChatId, setCurrentMemberInfo, setCurrentMemberOnline} from "../../../store/ChatSlice"
 import {Chat} from "../../../store/types"
 import {API_URL_STATIC} from "../../../api"
+import {getMessageDate} from "../../../utils/getMessageDate"
 
 interface IChatList extends Chat {
 	chat_id: number
@@ -17,7 +18,7 @@ interface IChatList extends Chat {
 
 const ChatCell: FC<IChatList> = ({
 	chat_id: chatId,
-	unSeenMessages, lastMessage = "",
+	unSeenMessages, lastMessage,
 	memberInfo
 }) => {
 
@@ -26,12 +27,6 @@ const ChatCell: FC<IChatList> = ({
 	const dispatch = useAppDispatch()
 	const router = useRouter()
 
-
-	// const {chats} = useTypedSelector(state => state.Chats)
-	//
-	// const thisChat = chats.find(({chat_id}) => chat_id === chatId)
-	//
-	// const unSeenMessages = thisChat
 
 	const {SetScreenMode} = useContext(GlobalContext)
 
@@ -45,7 +40,6 @@ const ChatCell: FC<IChatList> = ({
 		await router.push("/?chatId=" + chatId)
 		SetScreenMode("chat")
 	}
-
 	const title = firstName + " " + (lastName ? lastName : "")
 	return <ChatCellWrapper onClick={HandleCellClick} className="cell">
 		<div className="avatar">
@@ -53,18 +47,18 @@ const ChatCell: FC<IChatList> = ({
 		</div>
 		<div className="text-box">
 			<div className="title-cont">
-				<h1>{cutStringToLength(title, 17)}</h1>
+				<h1>{cutStringToLength(title, 15)}</h1>
 				<div className="message-info-cont">
-					<div className="is-checked">
-						<Image width={23} height={23} src="/double-check.svg"/>
-					</div>
+					{/*<div className="is-checked">*/}
+					{/*	<Image width={23} height={23} src="/double-check.svg"/>*/}
+					{/*</div>*/}
 					<span className="date">
-							12:06
+						 {getMessageDate(lastMessage.updatedAt)}
 					</span>
 				</div>
 			</div>
 			<div className="sub-title-cont">
-				<h2>{cutStringToLength(lastMessage ? lastMessage : "", 25)}</h2>
+				<h2>{cutStringToLength(lastMessage.content, 19)}</h2>
 				{unSeenMessages > 0 ?
 					<span className="unseen-messages">{unSeenMessages}</span>
 					: ""}
@@ -107,7 +101,8 @@ const ChatCellWrapper = styled.div`
     height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    justify-content: center;
+    gap: 7px;
 
     .title-cont {
       display: flex;

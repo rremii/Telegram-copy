@@ -4,7 +4,6 @@ const ApiError = require("../exceptions/api-error")
 const TokenService = require("./token-service")
 const { UserBio } = require("../models/userBio-model")
 const StaticService = require("../service/static-service")
-const { unlink } = require("node:fs/promises")
 const fs = require("fs")
 const path = require("path")
 
@@ -16,16 +15,25 @@ class MeService {
         const { user_id } = userData
         const user = await User.findOne({
             where: { user_id },
+            include: {
+                model: UserBio,
+                as: "userBio",
+            },
         })
-        const userBio = await UserBio.findOne({
-            where: { user_id },
-        })
+
         return {
-            ...user.dataValues,
-            ...userBio.dataValues,
+            user_id: user.user_id,
+            email: user.email,
+            userBio_id: user.userBio.userBio_id,
+            firstName: user.userBio.firstName,
+            lastName: user.userBio.lastName,
+            profilePic: user.userBio.profilePic,
+            lastOnline: user.userBio.lastOnline,
         }
     }
     async changeAvatar(profilePic, user_id) {
+        if (!profilePic || !user_id) throw ApiError("invalid id or profile pic")
+
         const userBioData = await UserBio.findOne({
             where: { user_id },
         })
@@ -45,6 +53,8 @@ class MeService {
         return profilePicName
     }
     async updateOnline(user_id) {
+        if (!user_id) throw ApiError("invalid id")
+
         const userBio = await UserBio.findOne({
             where: { user_id },
         })

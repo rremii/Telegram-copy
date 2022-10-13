@@ -4,6 +4,7 @@ import {Rem} from "../../../../styles/functions/mixins"
 import Image from "next/image"
 import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
 import {getAllMessages} from "../../../store/ChatSlice"
+import {getMessageDate} from "../../../utils/getMessageDate"
 
 interface IChatMessagesBox {
 
@@ -29,12 +30,12 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 
 	return <ChatMessagesBoxWrapper>
 
-		{messages.map(({content, sender_id}, i) => {
+		{messages.map(({content, sender_id, createdAt}, i) => {
 			return <div key={i} className="message-cont">
 				<div className={`message ${user_id === sender_id ? "your-message" : "other-message"}`}>
 					{content}
 					<div className="extra-info">
-						<span className="created-at">19:54</span>
+						<span className="created-at">{getMessageDate(createdAt)}</span>
 						<Image width={19}
 							   height={16} src="/check.svg"/>
 					</div>
@@ -76,6 +77,7 @@ const ChatMessagesBoxWrapper = styled.div`
       min-width: min-content;
       max-width: min(80vw, 350px);
       position: relative;
+      word-wrap: anywhere;
 
       .extra-info {
         display: flex;
