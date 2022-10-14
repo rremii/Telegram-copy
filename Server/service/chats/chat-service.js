@@ -44,7 +44,7 @@ class ChatService {
         const chats2 = await UserChat.findAll({
             where: { user_id: id2 },
         })
-
+        if (!chats1 || !chats2) return null
         //looking for same chats that both users have
         return chats1.find((chat1, i) => chats2[i].chat_id === chat1.chat_id)
     }
@@ -53,7 +53,7 @@ class ChatService {
         if (!userIds) throw ApiError.BadRequest("invalid id's")
 
         const chat = await ChatService.#findChatByIds(userIds)
-        const chatId = chat.chat_id
+        const chatId = chat?.chat_id
 
         if (chatId) {
             return {
@@ -62,7 +62,7 @@ class ChatService {
             }
         }
 
-        await ChatService.#createChat(userIds)
+        return await ChatService.#createChat(userIds)
     }
 
     async getChatsByUserId(user_id) {

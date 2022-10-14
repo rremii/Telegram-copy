@@ -4,7 +4,7 @@ import {useContext} from "react"
 import {GlobalContext} from "../../hooks/useGlobalContext"
 
 const Header = () => {
-	const {screenMode, SetScreenMode} = useContext(GlobalContext)
+	const {SetScreenMode} = useContext(GlobalContext)
 
 
 	return <HeaderWrapper>

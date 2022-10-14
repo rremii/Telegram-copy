@@ -49,9 +49,6 @@ const ChatCell: FC<IChatList> = ({
 			<div className="title-cont">
 				<h1>{cutStringToLength(title, 15)}</h1>
 				<div className="message-info-cont">
-					{/*<div className="is-checked">*/}
-					{/*	<Image width={23} height={23} src="/double-check.svg"/>*/}
-					{/*</div>*/}
 					<span className="date">
 						 {getMessageDate(lastMessage.updatedAt)}
 					</span>
@@ -73,7 +70,6 @@ const ChatCellWrapper = styled.div`
 
   border-radius: 10px;
   width: 100%;
-  //background-color: rgb(135, 116, 225);
 
   flex: 0 0 72px;
   padding: 9px;

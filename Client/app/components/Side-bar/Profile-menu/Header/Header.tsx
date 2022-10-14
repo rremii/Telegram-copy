@@ -15,7 +15,7 @@ const Header = () => {
 	const {X: XEdit, Y: YEdit, isRipple: isRippleEdit, SetIsRipple: SetIsRippleEdit} = useRipple()
 	const {X: XMore, Y: YMore, isRipple: isRippleMore, SetIsRipple: SetIsRippleMore} = useRipple()
 
-	const HandleArrowClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+	const HandleArrowClick = () => {
 		SetIsProfile(!isProfile)
 	}
 	const HandleMoreClick = (e: React.MouseEvent<HTMLButtonElement>) => {

@@ -45,9 +45,6 @@ const MeSlice = createSlice({
 	name: "MeSlice",
 	initialState,
 	reducers: {
-		// addUserBio(state, action: PayloadAction<AuthUserBio>) {
-		// 	state.userBio = action.payload
-		// },
 		resetMeSlice() {
 			return initialState
 		}

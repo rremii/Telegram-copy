@@ -6,14 +6,6 @@ import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
 import {fetchChatsByUserId} from "../../../store/ChatSlice"
 
 
-// const chat = [
-// 	{
-// 		avatar: "/dog-icon.png",
-// 		title: "Go StudyGo StudyGo StudyGo Study",
-// 		subTitle: "some message from Go Study some message from Go Study"
-// 	}
-// ]
-
 const ChatMenu = () => {
 	const dispatch = useAppDispatch()
 

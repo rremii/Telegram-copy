@@ -41,6 +41,7 @@ const ChatInputBox: FC<IChatInputBox> = () => {
 				<div className="tail-cont">
 					<Image width={20} height={20} layout="fill" className="tail" src={"/bubble-tail-left.svg"} alt=""/>
 				</div>
+
 			</Form>
 		</Formik>
 

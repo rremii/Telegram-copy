@@ -174,14 +174,9 @@ const AuthSlice = createSlice({
 			localStorage.removeItem("accessToken")
 		})
 
-		// builder.addCase(fetchLogout.fulfilled, (state) => {
-		// 	state.isPending = true
-		// 	state.isLoggedIn = "first loading"
-		// })
-		builder.addCase(fetchLogout.rejected, (state) => {
+		builder.addCase(fetchLogout.rejected, () => {
 			localStorage.removeItem("accessToken")
-			// state.isPending = true
-			// state.isLoggedIn = "first loading"
+
 		})
 	},
 })

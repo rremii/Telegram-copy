@@ -4,7 +4,7 @@ import styled from "styled-components"
 import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import {API_URL_STATIC} from "../../../api"
 import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
-import {findOrCreateChat, setCurrentMemberInfo} from "../../../store/ChatSlice"
+import {fetchChatsByUserId, findOrCreateChat, setCurrentMemberInfo} from "../../../store/ChatSlice"
 import {userInfo} from "../../../store/types"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
 import {SideBarContext} from "../../../hooks/useSideBarContext"
@@ -23,11 +23,14 @@ const SearchCell: FC<userInfo> = (userInfo) => {
 
 	const FindOrCreateChat = () => {
 		dispatch(findOrCreateChat([user_id, id]))
+		dispatch(fetchChatsByUserId(id))
 		dispatch(setCurrentMemberInfo(userInfo))
 		SetIsSearch(false)
 		SetScreenMode("chat")
 	}
 
+
+	//TODO check that all state clears after logout(searchSlice)
 
 	return <CellWrapper onClick={FindOrCreateChat}>
 		<div className="avatar">

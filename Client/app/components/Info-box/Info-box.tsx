@@ -10,7 +10,7 @@ interface InfoBoxType {
 
 const InfoBox: FC<InfoBoxType> = () => {
 
-	const {screenMode, SetScreenMode} = useContext(GlobalContext)
+	const {screenMode} = useContext(GlobalContext)
 
 
 	return <InfoBoxWrapper isOpen={screenMode === "info"}>

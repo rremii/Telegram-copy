@@ -6,14 +6,6 @@ import {SideBarContext} from "../../../hooks/useSideBarContext"
 import {useTypedSelector} from "../../../store/ReduxStore"
 
 
-// const Users = [
-// 	{
-// 		avatar: "/dog-icon.png",
-// 		title: "Artem Romanov",
-// 		subTitle: "noruto2021@gmail.com"
-// 	}
-// ]
-
 type  searchingFilter = "people" | "groups"
 
 const SearchMenu = () => {

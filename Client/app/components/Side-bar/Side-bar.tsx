@@ -5,6 +5,7 @@ import ProfileMenu from "./Profile-menu/Profile-menu"
 import SearchMenu from "./Search-menu/Search-menu"
 import Header from "./Header/Header"
 import {GlobalContext} from "../../hooks/useGlobalContext"
+import {SideBarContext} from "../../hooks/useSideBarContext"
 
 interface ISideBar {
 

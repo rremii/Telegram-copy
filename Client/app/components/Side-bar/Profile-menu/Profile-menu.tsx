@@ -12,8 +12,8 @@ const ProfileMenu: FC<IProfileMenu> = () => {
 
 	const {isProfile, SetLogout} = useContext(SideBarContext)
 
-	return <ProfileMenuWrapper onMouseLeave={() => SetLogout(false)} isProfile={isProfile}>
-		<div className="profileMenu-cont">
+	return <ProfileMenuWrapper isProfile={isProfile}>
+		<div onMouseLeave={() => SetLogout(false)} className="profileMenu-cont">
 			<Header/>
 			<Info/>
 			<Settings/>

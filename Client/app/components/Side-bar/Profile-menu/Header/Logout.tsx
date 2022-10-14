@@ -34,7 +34,7 @@ const LogoutWrapper = styled.div<{
   padding: 5px;
   position: absolute;
   top: 100%;
-  left: 50%;
+  right: 15px;
   background-color: rgb(72, 72, 72);
   z-index: 20;
   border-radius: 10px;
@@ -56,7 +56,7 @@ const LogoutWrapper = styled.div<{
     width: 200vw;
     height: 200vh;
     display: ${({isLogout}) => isLogout ? "initial" : "none"};
-
+    cursor: initial;
     background-color: transparent;
     z-index: -1;
   }

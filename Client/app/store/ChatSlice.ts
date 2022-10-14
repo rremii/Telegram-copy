@@ -5,19 +5,6 @@ import {ChatResponse} from "../api/types"
 import {AppDispatch, RootState} from "./ReduxStore"
 
 
-// export const createChat = createAsyncThunk(
-// 	"ChatSlice/createChat",
-// 	async (ids: number[], {rejectWithValue}) => {
-// 		try {
-//
-// 			const response = await ChatAPI.createChat(ids)
-//
-// 			return response.data
-// 		} catch (e: any) {
-// 			return rejectWithValue(e.response.data.message)
-// 		}
-// 	}
-// )
 export const findOrCreateChat = createAsyncThunk(
 	"ChatSlice/findOrCreateChat",
 	async (ids: number[], {rejectWithValue}) => {

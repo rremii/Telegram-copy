@@ -20,7 +20,7 @@ const Burger: FC<IBurgerMenu> = () => {
 		isDarkMode
 	} = useContext(SideBarContext)
 
-	const handleSettings = () => {
+	const HandleSettings = () => {
 		SetIsProfile(true)
 		SetIsBurger(false)
 	}
@@ -47,7 +47,7 @@ const Burger: FC<IBurgerMenu> = () => {
 				<span>Contacts</span>
 			</div>
 		</div>
-		<div onClick={handleSettings} className="row">
+		<div onClick={HandleSettings} className="row">
 			<div className="icon">
 				<Image width={21} height={21} src="/setting.svg"/>
 			</div>
