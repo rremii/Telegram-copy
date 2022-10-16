@@ -5,6 +5,8 @@ import Image from "next/image"
 import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
 import {getAllMessages} from "../../../store/ChatSlice"
 import {getMessageDate} from "../../../utils/getMessageDate"
+import {useGetAllMessagesQuery} from "../../../api/ChatApiRtk"
+import {UseIsPreroll} from "../../../hooks/useIsPreroll"
 
 interface IChatMessagesBox {
 
@@ -17,20 +19,30 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 
 	const {currentChatId} = useTypedSelector(state => state.Chats)
 	const {user_id} = useTypedSelector(state => state.Me.me)
-	const {messages} = useTypedSelector(state => state.Chats.currentChat)
+	// const {messages} = useTypedSelector(state => state.Chats.currentChat)
 
 
-	useEffect(() => {
-		const interval = setInterval(() => {
-			if (!currentChatId) return
-			dispatch(getAllMessages({chat_id: currentChatId, user_id}))
-		}, 2000)
-		return () => clearInterval(interval)
-	}, [currentChatId])
+	// useEffect(() => {
+	// 	const interval = setInterval(() => {
+	// 		if (!currentChatId) return
+	// 		dispatch(getAllMessages({chat_id: currentChatId, user_id}))
+	// 	}, 2000)
+	// 	return () => clearInterval(interval)
+	// }, [currentChatId])
+
+
+	const {
+		data: messages,
+		isLoading,
+	} = useGetAllMessagesQuery({chat_id: currentChatId, user_id}, {
+		pollingInterval: 2000,
+		skip: !currentChatId
+	})
 
 	return <ChatMessagesBoxWrapper>
+		{isLoading && <div>Im a preroll looooool</div>}
 
-		{messages.map(({content, sender_id, createdAt}, i) => {
+		{messages?.map(({content, sender_id, createdAt}, i) => {
 			return <div key={i} className="message-cont">
 				<div className={`message ${user_id === sender_id ? "your-message" : "other-message"}`}>
 					{content}

@@ -11,7 +11,7 @@ export const useClearErrors = () => {
 		if (codeError || emailError) {
 			const timeout = setTimeout(() => {
 				dispatch(clearAuthErrors())
-			}, 3000)
+			}, 1500)
 			return () => clearTimeout(timeout)
 		}
 	}, [codeError, emailError])

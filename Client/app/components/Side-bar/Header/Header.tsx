@@ -1,4 +1,4 @@
-import React, {useContext} from "react"
+import React, {useContext, useEffect, useState} from "react"
 import styled from "styled-components"
 import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import useRipple from "../../../hooks/useRipple"
@@ -7,10 +7,10 @@ import Burger from "./burger"
 import {SideBarContext} from "../../../hooks/useSideBarContext"
 import {fetchUsers} from "../../../store/SearchSlice"
 import {useAppDispatch} from "../../../store/ReduxStore"
+import useDebounce from "../../../hooks/useDebounce"
 
 
 const Header = () => {
-
 	const dispatch = useAppDispatch()
 
 	const {
@@ -24,13 +24,23 @@ const Header = () => {
 
 
 	const {X, Y, isRipple, SetIsRipple} = useRipple()
+	const [searchString, setSearchString] = useState<string>("")
+	const debouncedSearchString = useDebounce<string>(searchString, 300)
+
+
+	useEffect(() => {
+
+		dispatch(fetchUsers(debouncedSearchString))
+
+	}, [debouncedSearchString])
+
 
 	const HandleSearchFocus = () => {
 		SetIsSearchLayout(true)
 		SetIsSearch(true)
 	}
 	const HandleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		dispatch(fetchUsers(e.currentTarget.value))
+		setSearchString(e.currentTarget.value)
 	}
 
 	const HandleBurgerClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -53,7 +63,7 @@ const Header = () => {
 			{isRipple && <Ripple X={X} Y={Y}/>}
 		</button>
 		<div className="search-cont">
-			<input onChange={HandleSearchChange} onBlur={() => SetIsSearchLayout(false)}
+			<input value={searchString} onChange={HandleSearchChange} onBlur={() => SetIsSearchLayout(false)}
 				   onFocus={HandleSearchFocus} placeholder="Search"
 				   type="text" autoComplete="false"/>
 			<div className="search-icon">

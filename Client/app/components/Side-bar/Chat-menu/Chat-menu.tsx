@@ -4,31 +4,38 @@ import ChatCell from "./Chat-cell"
 import {SideBarContext} from "../../../hooks/useSideBarContext"
 import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
 import {fetchChatsByUserId} from "../../../store/ChatSlice"
+import {useGetAllMessagesQuery, useGetChatsByUserIdQuery} from "../../../api/ChatApiRtk"
 
 
 const ChatMenu = () => {
 	const dispatch = useAppDispatch()
 
 	const id = useTypedSelector(state => state.Me.me.user_id)
-	const {chats} = useTypedSelector(state => state.Chats)
+	// const {chats} = useTypedSelector(state => state.Chats)
 
 	const {isSearchOn} = useContext(SideBarContext)
 
 
-	useEffect(() => {
-		if (!chats.length && id) {
-			dispatch(fetchChatsByUserId(id))
-		}
-		const interval = setInterval(() => {
-			if (id) dispatch(fetchChatsByUserId(id))
-		}, 1000 * 2)
-		return () => clearInterval(interval)
-	}, [id])
+	// useEffect(() => {
+	// 	if (!chats.length && id) {
+	// 		dispatch(fetchChatsByUserId(id))
+	// 	}
+	// 	const interval = setInterval(() => {
+	// 		if (id) dispatch(fetchChatsByUserId(id))
+	// 	}, 1000 * 5)
+	// 	return () => clearInterval(interval)
+	// }, [id])
 
+	const {
+		data: chats,
+		isLoading,
+	} = useGetChatsByUserIdQuery({user_id: id}, {
+		pollingInterval: 2000,
+		skip: !id
+	})
 
 	return <ChatMenuWrapper isSearchOn={isSearchOn}>
-		{chats.map(({chat_id, lastMessage, unSeenMessages, memberInfo}) => {
-
+		{chats?.map(({chat_id, lastMessage, unSeenMessages, memberInfo}) => {
 			return <ChatCell chat_id={chat_id} lastMessage={lastMessage}
 							 unSeenMessages={unSeenMessages}
 							 memberInfo={memberInfo}

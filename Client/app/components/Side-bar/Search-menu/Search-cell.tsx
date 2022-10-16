@@ -23,7 +23,7 @@ const SearchCell: FC<userInfo> = (userInfo) => {
 
 	const FindOrCreateChat = () => {
 		dispatch(findOrCreateChat([user_id, id]))
-		dispatch(fetchChatsByUserId(id))
+		dispatch(fetchChatsByUserId(user_id))
 		dispatch(setCurrentMemberInfo(userInfo))
 		SetIsSearch(false)
 		SetScreenMode("chat")
