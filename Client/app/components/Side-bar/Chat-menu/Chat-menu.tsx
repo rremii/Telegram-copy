@@ -5,6 +5,7 @@ import {SideBarContext} from "../../../hooks/useSideBarContext"
 import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
 import {fetchChatsByUserId} from "../../../store/ChatSlice"
 import {useGetAllMessagesQuery, useGetChatsByUserIdQuery} from "../../../api/ChatApiRtk"
+import Preroll from "../../../ui/Preroll"
 
 
 const ChatMenu = () => {
@@ -35,6 +36,9 @@ const ChatMenu = () => {
 	})
 
 	return <ChatMenuWrapper isSearchOn={isSearchOn}>
+
+		{isLoading && <Preroll/>}
+
 		{chats?.map(({chat_id, lastMessage, unSeenMessages, memberInfo}) => {
 			return <ChatCell chat_id={chat_id} lastMessage={lastMessage}
 							 unSeenMessages={unSeenMessages}

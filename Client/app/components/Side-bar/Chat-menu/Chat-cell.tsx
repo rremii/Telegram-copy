@@ -66,11 +66,8 @@ const ChatCell: FC<IChatList> = ({
 }
 export default ChatCell
 const ChatCellWrapper = styled.div`
-
-
   border-radius: 10px;
   width: 100%;
-
   flex: 0 0 72px;
   padding: 9px;
   display: flex;

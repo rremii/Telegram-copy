@@ -44,7 +44,7 @@ const AuthBio: FC<Auth3Type> = () => {
 	}
 	return (
 		<Auth3Wrapper isActive={!!img} className="Auth3__wrapper">
-			<div className="Auth3__container">
+			<div className="Auth__container">
 				<div className="title">
 					Please enter your name and add a profile picture
 				</div>
@@ -119,21 +119,25 @@ const Auth3Wrapper = styled.div<{ isActive: boolean }>`
   align-items: center;
   background-color: rgb(33, 33, 33);
 
-  .Auth3__container {
+  .Auth__container {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    align-items: center;
 
     .title {
       color: white;
+      display: flex;
       font-family: Roboto, sans-serif;
       font-size: ${Rem(16)};
+      text-align: center;
     }
 
     section {
       display: flex;
-
+      justify-content: center;
       gap: 30px;
+      flex-wrap: wrap;
 
       .img-upload-cont {
         width: 100px;

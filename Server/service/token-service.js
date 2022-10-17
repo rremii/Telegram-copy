@@ -6,12 +6,12 @@ class TokenService {
         const accessToken = jwt.sign(
             payload,
             process.env.JWT_ACCESS_SECRET_KEY,
-            { expiresIn: "10m" }
+            { expiresIn: "20s" }
         )
         const refreshToken = jwt.sign(
             payload,
             process.env.JWT_REFRESH_SECRET_KEY,
-            { expiresIn: isRememberMe === "true" ? "1d" : "20m" }
+            { expiresIn: isRememberMe === "true" ? "1d" : "30s" }
         )
         return {
             accessToken,
