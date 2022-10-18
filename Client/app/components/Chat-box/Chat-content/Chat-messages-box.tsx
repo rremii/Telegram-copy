@@ -39,12 +39,16 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 		skip: !currentChatId
 	})
 
-	return <ChatMessagesBoxWrapper>
-		{isLoading && <div>Im a preroll looooool</div>}
+	return <ChatMessagesBoxWrapper length={messages?.length ? messages?.length : 0}>
 
 		{messages?.map(({content, sender_id, createdAt}, i) => {
+			//calculation delay for last 20 messages
+			let delayNum = 1
+			if (i > messages.length - 20) delayNum = messages.length - i + 1
 			return <div key={i} className="message-cont">
-				<div className={`message ${user_id === sender_id ? "your-message" : "other-message"}`}>
+				<div style={{
+					animationDelay: delayNum * 0.1 + "s"
+				}} className={`message delay${delayNum} ${user_id === sender_id ? "your-message" : "other-message"}`}>
 					{content}
 					<div className="extra-info">
 						<span className="created-at">{getMessageDate(createdAt)}</span>
@@ -60,7 +64,9 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 	</ChatMessagesBoxWrapper>
 }
 export default ChatMessagesBox
-const ChatMessagesBoxWrapper = styled.div`
+const ChatMessagesBoxWrapper = styled.div<{
+	length: number
+}>`
   width: 100%;
   height: calc(100vh - 140px);
   overflow-y: auto;
@@ -68,6 +74,7 @@ const ChatMessagesBoxWrapper = styled.div`
   //background-color: green;
   display: flex;
   flex-direction: column;
+
   gap: 10px;
 
   padding: 8px;
@@ -76,6 +83,7 @@ const ChatMessagesBoxWrapper = styled.div`
     width: 0;
   }
 
+  
   .message-cont {
     width: 100%;
     display: grid;
@@ -90,6 +98,21 @@ const ChatMessagesBoxWrapper = styled.div`
       max-width: min(80vw, 350px);
       position: relative;
       word-wrap: anywhere;
+      animation: fadeOut 1s forwards;
+      opacity: 0;
+      //animation-delay: 2s;
+
+
+      @keyframes fadeOut {
+        0% {
+          opacity: 0;
+          transform: scaleY(0.5);
+        }
+        100% {
+          opacity: 1;
+          transform: scaleY(1);
+        }
+      }
 
       .extra-info {
         display: flex;

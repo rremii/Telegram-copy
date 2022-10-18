@@ -22,6 +22,16 @@ const PrerollWrapper = styled.div`
   font-family: Roboto, sans-serif;
   border-radius: 10px;
   position: relative;
+  animation: fade 0.2s;
+  transform-origin: top;
+  @keyframes fade {
+    0% {
+      transform: scaleY(0);
+    }
+    100% {
+      transform: scaleY(1);
+    }
+  }
 
   .spinner {
     position: absolute;
