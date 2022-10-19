@@ -1,12 +1,12 @@
-import {FC, useEffect} from "react"
+import {FC, useEffect, useState} from "react"
 import styled from "styled-components"
 import {Rem} from "../../../../styles/functions/mixins"
 import Image from "next/image"
 import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
-import {getAllMessages} from "../../../store/ChatSlice"
 import {getMessageDate} from "../../../utils/getMessageDate"
 import {useGetAllMessagesQuery} from "../../../api/ChatApiRtk"
 import {UseIsPreroll} from "../../../hooks/useIsPreroll"
+import {message} from "../../../store/types"
 
 interface IChatMessagesBox {
 
@@ -15,40 +15,37 @@ interface IChatMessagesBox {
 
 const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 
-	const dispatch = useAppDispatch()
 
 	const {currentChatId} = useTypedSelector(state => state.Chats)
 	const {user_id} = useTypedSelector(state => state.Me.me)
-	// const {messages} = useTypedSelector(state => state.Chats.currentChat)
-
-
-	// useEffect(() => {
-	// 	const interval = setInterval(() => {
-	// 		if (!currentChatId) return
-	// 		dispatch(getAllMessages({chat_id: currentChatId, user_id}))
-	// 	}, 2000)
-	// 	return () => clearInterval(interval)
-	// }, [currentChatId])
 
 
 	const {
 		data: messages,
-		isLoading,
 	} = useGetAllMessagesQuery({chat_id: currentChatId, user_id}, {
 		pollingInterval: 2000,
 		skip: !currentChatId
 	})
 
-	return <ChatMessagesBoxWrapper length={messages?.length ? messages?.length : 0}>
+
+	useEffect(() => {
+		const scrollBox = document.getElementById("scroll-cont")
+		if (scrollBox) {
+			scrollBox.scrollTo(0, scrollBox.scrollHeight)
+		}
+
+	}, [messages])
+
+	return <ChatMessagesBoxWrapper id="scroll-cont" length={messages?.length ? messages?.length : 0}>
 
 		{messages?.map(({content, sender_id, createdAt}, i) => {
-			//calculation delay for last 20 messages
+			//calculation an animation delay
 			let delayNum = 1
-			if (i > messages.length - 20) delayNum = messages.length - i + 1
-			return <div key={i} className="message-cont">
+			delayNum = messages.length - i + 1 //as farther el as less the delay
+			return <div key={createdAt} className="message-cont">
 				<div style={{
-					animationDelay: delayNum * 0.1 + "s"
-				}} className={`message delay${delayNum} ${user_id === sender_id ? "your-message" : "other-message"}`}>
+					animationDelay: delayNum * 0.02 + "s"
+				}} className={`message ${content}  ${user_id === sender_id ? "your-message" : "other-message"}`}>
 					{content}
 					<div className="extra-info">
 						<span className="created-at">{getMessageDate(createdAt)}</span>
@@ -74,7 +71,7 @@ const ChatMessagesBoxWrapper = styled.div<{
   //background-color: green;
   display: flex;
   flex-direction: column;
-
+  //scroll-behavior: smooth;
   gap: 10px;
 
   padding: 8px;
@@ -83,7 +80,7 @@ const ChatMessagesBoxWrapper = styled.div<{
     width: 0;
   }
 
-  
+
   .message-cont {
     width: 100%;
     display: grid;
@@ -98,9 +95,9 @@ const ChatMessagesBoxWrapper = styled.div<{
       max-width: min(80vw, 350px);
       position: relative;
       word-wrap: anywhere;
-      animation: fadeOut 1s forwards;
+      animation: fadeOut 0.5s forwards;
       opacity: 0;
-      //animation-delay: 2s;
+      animation-delay: 0.5s;
 
 
       @keyframes fadeOut {
