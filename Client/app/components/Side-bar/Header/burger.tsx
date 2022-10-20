@@ -99,6 +99,7 @@ const BurgerWrapper = styled.div<{
 
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#272C2B", endColorstr="#272727", GradientType=1);
 
+
   .burger-overlay {
     display: ${({isBurger}) => isBurger ? "initial" : "none"};
     position: fixed;
