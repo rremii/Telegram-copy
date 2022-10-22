@@ -4,13 +4,15 @@ import Image from "next/image"
 import {Rem} from "../../../../styles/functions/mixins"
 import Toggle from "../../../ui/Toggle"
 import {SideBarContext} from "../../../hooks/useSideBarContext"
+import {GlobalContext} from "../../../hooks/useGlobalContext"
+import {useRouter} from "next/router"
 
 interface IBurgerMenu {
 }
 
 
 const Burger: FC<IBurgerMenu> = () => {
-
+	const router = useRouter()
 
 	const {
 		SetIsProfile,
@@ -19,7 +21,14 @@ const Burger: FC<IBurgerMenu> = () => {
 		SetDarkMode,
 		isDarkMode
 	} = useContext(SideBarContext)
+	const {screenMode, SetScreenMode} = useContext(GlobalContext)
 
+
+	const HandleFeatures = async () => {
+		SetScreenMode("chat")
+		SetIsBurger(false)
+		await router.push("?TelegramTips")
+	}
 	const HandleSettings = () => {
 		SetIsProfile(true)
 		SetIsBurger(false)
@@ -39,12 +48,12 @@ const Burger: FC<IBurgerMenu> = () => {
 				<span>Saved Messages</span>
 			</div>
 		</div>
-		<div className="row">
+		<div onClick={HandleFeatures} className="row">
 			<div className="icon">
 				<Image width={21} height={21} src="/contact.svg"/>
 			</div>
 			<div className="setting-text">
-				<span>Contacts</span>
+				<span>Telegram Features</span>
 			</div>
 		</div>
 		<div onClick={HandleSettings} className="row">

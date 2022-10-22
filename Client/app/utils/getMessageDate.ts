@@ -12,11 +12,11 @@ export const getMessageDate = (stringDate: string | null) => {
 			+ new Date(stringDate).getMinutes().toString().padStart(2, "0")
 	}
 	if (difference > twentyFourHours) {
-		return new Date(stringDate).getDate().toString().padStart(2, "0")
-			+ "/"
-			+ new Date(stringDate).getMonth().toString().padStart(2, "0")
-			+ "/"
-			+ new Date(stringDate).getFullYear().toString()
+
+		const arrOfDate = new Date(stringDate).toDateString().split(" ")
+
+		return arrOfDate[1] + " " + arrOfDate[2] //time + month + day
+
 	}
 
 	return ""

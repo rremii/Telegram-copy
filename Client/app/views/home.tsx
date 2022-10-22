@@ -7,6 +7,8 @@ import LogoutPopUp from "../components/Globals/Logout-pop-up"
 import {fetchMe} from "../store/MeSlice"
 import {useAppDispatch} from "../store/ReduxStore"
 import {GlobalContext} from "../hooks/useGlobalContext"
+import {useRouter} from "next/router"
+import TelegramFeatures from "../components/TelegramFeatures/TelegramFeatures"
 
 interface HomeType {
 }
@@ -14,7 +16,7 @@ interface HomeType {
 
 const Home: FC<HomeType> = () => {
 	const dispatch = useAppDispatch()
-
+	const router = useRouter()
 
 	const {screenMode} = useContext(GlobalContext)
 
@@ -22,13 +24,20 @@ const Home: FC<HomeType> = () => {
 		dispatch(fetchMe())
 	}, [])
 
+	const queryPath = router.asPath
+
+
 	return (
 		<HomeWrapper isOpen={screenMode === "info"} className="home__wrapper">
 
 			<div className="home__container">
 				<SideBar/>
-				<ChatBox/>
-				<InfoBox/>
+				{queryPath === "/?TelegramTips" ? <TelegramFeatures/> :
+					<>
+						<ChatBox/>
+						<InfoBox/>
+					</>
+				}
 				<LogoutPopUp/>
 			</div>
 

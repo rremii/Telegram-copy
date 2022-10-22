@@ -10,6 +10,7 @@ import {setCurrentChatId, setCurrentMemberInfo, setCurrentMemberOnline} from "..
 import {Chat} from "../../../store/types"
 import {API_URL_STATIC} from "../../../api"
 import {getMessageDate} from "../../../utils/getMessageDate"
+import {getStatusByLastOnline} from "../../../utils/getStatusByLastOnline"
 
 interface IChatList extends Chat {
 	chat_id: number
@@ -44,6 +45,10 @@ const ChatCell: FC<IChatList> = ({
 	return <ChatCellWrapper onClick={HandleCellClick} className="cell">
 		<div className="avatar">
 			<Image width={54} height={54} src={avatar ? API_URL_STATIC + avatar : "/no-avatar.svg"}/>
+
+			{getStatusByLastOnline(memberInfo.lastOnline) === "online" &&
+				<div className="online-sign"/>
+			}
 		</div>
 		<div className="text-box">
 			<div className="title-cont">
@@ -82,7 +87,17 @@ const ChatCellWrapper = styled.div`
 
   .avatar {
     border-radius: 50%;
+    position: relative;
 
+    .online-sign {
+      width: 12px;
+      height: 12px;
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      background-color: green;
+      border-radius: 50%;
+    }
 
     img, span {
       border-radius: inherit;

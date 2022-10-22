@@ -7,6 +7,7 @@ import {getMessageDate} from "../../../utils/getMessageDate"
 import {useGetAllMessagesQuery} from "../../../api/ChatApiRtk"
 import {UseIsPreroll} from "../../../hooks/useIsPreroll"
 import {message} from "../../../store/types"
+import ChatMessageSettings from "./Chat-message-settings"
 
 interface IChatMessagesBox {
 
@@ -36,16 +37,22 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 
 	}, [messages])
 
-	return <ChatMessagesBoxWrapper id="scroll-cont" length={messages?.length ? messages?.length : 0}>
 
-		{messages?.map(({content, sender_id, createdAt}, i) => {
+	const HandleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+
+	}
+
+	return <ChatMessagesBoxWrapper id="scroll-cont" length={messages?.length ? messages?.length : 0}>
+		<ChatMessageSettings X={0} Y={0}/>
+		{messages?.map(({content, sender_id, createdAt, chat_message_id}, i) => {
 			//calculation an animation delay
 			let delayNum = 1
 			delayNum = messages.length - i + 1 //as farther el as less the delay
-			return <div key={createdAt} className="message-cont">
+			return <div onContextMenu={(e: React.MouseEvent<HTMLDivElement>) => HandleClick(e)} key={createdAt}
+						className="message-cont">
 				<div style={{
 					animationDelay: delayNum * 0.02 + "s"
-				}} className={`message ${content}  ${user_id === sender_id ? "your-message" : "other-message"}`}>
+				}} className={`message  ${user_id === sender_id ? "your-message" : "other-message"}`}>
 					{content}
 					<div className="extra-info">
 						<span className="created-at">{getMessageDate(createdAt)}</span>
@@ -73,7 +80,7 @@ const ChatMessagesBoxWrapper = styled.div<{
   flex-direction: column;
   //scroll-behavior: smooth;
   gap: 10px;
-
+  position: relative;
   padding: 8px;
 
   ::-webkit-scrollbar {
