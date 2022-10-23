@@ -2,11 +2,9 @@ import {FC, useEffect, useState} from "react"
 import styled from "styled-components"
 import {Rem} from "../../../../styles/functions/mixins"
 import Image from "next/image"
-import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
+import {useTypedSelector} from "../../../store/ReduxStore"
 import {getMessageDate} from "../../../utils/getMessageDate"
 import {useGetAllMessagesQuery} from "../../../api/ChatApiRtk"
-import {UseIsPreroll} from "../../../hooks/useIsPreroll"
-import {message} from "../../../store/types"
 import ChatMessageSettings from "./Chat-message-settings"
 
 interface IChatMessagesBox {
@@ -28,6 +26,10 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 		skip: !currentChatId
 	})
 
+	const [chosenId, setId] = useState<number | null>(null)
+	const [X, setX] = useState<number>(0)
+	const [Y, setY] = useState<number>(0)
+
 
 	useEffect(() => {
 		const scrollBox = document.getElementById("scroll-cont")
@@ -38,21 +40,44 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 	}, [messages])
 
 
-	const HandleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+	const HandleClick = (e: React.MouseEvent<HTMLDivElement>, chatId: number, sender_id: number) => {
+		if (user_id !== sender_id) return
 
+		const settingsBoxWidth = 150
+		const inputBoxHeight = 150
+
+		//calculating X and Y depending on where click was done,
+		//in order settingsBox doesn't cross window's borders
+		if (e.clientX + settingsBoxWidth >= window.innerWidth) {
+			setX(e.clientX - settingsBoxWidth - 20)
+		} else {
+			setX(e.clientX)
+		}
+		if (e.clientY + inputBoxHeight >= window.innerHeight) {
+			setY(e.clientY - 90)
+		} else {
+			setY(e.clientY)
+		}
+		setId(chatId)
 	}
 
 	return <ChatMessagesBoxWrapper id="scroll-cont" length={messages?.length ? messages?.length : 0}>
-		<ChatMessageSettings X={0} Y={0}/>
+
+		<ChatMessageSettings chosenId={chosenId} setId={setId} X={X} Y={Y}/>
+		{chosenId && <div onClick={() => setId(null)} className="settings-overlay"/>}
+
 		{messages?.map(({content, sender_id, createdAt, chat_message_id}, i) => {
 			//calculation an animation delay
 			let delayNum = 1
 			delayNum = messages.length - i + 1 //as farther el as less the delay
-			return <div onContextMenu={(e: React.MouseEvent<HTMLDivElement>) => HandleClick(e)} key={createdAt}
-						className="message-cont">
+			return <div
+				key={createdAt}
+				className="message-cont">
 				<div style={{
 					animationDelay: delayNum * 0.02 + "s"
-				}} className={`message  ${user_id === sender_id ? "your-message" : "other-message"}`}>
+				}}
+					 onClick={(e: React.MouseEvent<HTMLDivElement>) => HandleClick(e, chat_message_id, sender_id)}
+					 className={`message  ${user_id === sender_id ? "your-message" : "other-message"}`}>
 					{content}
 					<div className="extra-info">
 						<span className="created-at">{getMessageDate(createdAt)}</span>
@@ -87,6 +112,14 @@ const ChatMessagesBoxWrapper = styled.div<{
     width: 0;
   }
 
+  .settings-overlay {
+    top: 0;
+    left: 0;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+  }
 
   .message-cont {
     width: 100%;
@@ -105,7 +138,6 @@ const ChatMessagesBoxWrapper = styled.div<{
       animation: fadeOut 0.5s forwards;
       opacity: 0;
       animation-delay: 0.5s;
-
 
       @keyframes fadeOut {
         0% {
@@ -149,6 +181,7 @@ const ChatMessagesBoxWrapper = styled.div<{
       justify-self: end;
       background-color: rgb(135, 116, 225);
       position: relative;
+      cursor: pointer;
 
       img {
         bottom: 0;

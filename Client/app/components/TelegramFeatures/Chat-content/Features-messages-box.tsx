@@ -1,6 +1,8 @@
 import {FC} from "react"
 import styled from "styled-components"
 import {Rem} from "../../../../styles/functions/mixins"
+import {getMessageDate} from "../../../utils/getMessageDate"
+import Image from "next/image"
 
 interface IFeaturesMessages {
 
@@ -37,6 +39,11 @@ const FeaturesMessages: FC<IFeaturesMessages> = () => {
 				hello there that&apos;s a just a copy of telegram
 				no commerce, made only for fun,all rights belong to
 				telegram
+				<div className="extra-info">
+					<span className="created-at">Oct 22</span>
+					<Image width={19}
+						   height={16} src="/check.svg"/>
+				</div>
 				<img src="/bubble-tail-left.svg"
 					 alt="bubble-tail"/>
 			</div>
@@ -45,6 +52,11 @@ const FeaturesMessages: FC<IFeaturesMessages> = () => {
 			<div style={{animationDelay: 0.02 + "s"}} className={`message other-message `}>
 				My nickname so you can find me here is Artem
 				feel free to write me
+				<div className="extra-info">
+					<span className="created-at">Oct 22</span>
+					<Image width={19}
+						   height={16} src="/check.svg"/>
+				</div>
 				<img src="/bubble-tail-left.svg"
 					 alt="bubble-tail"/>
 			</div>
@@ -53,6 +65,25 @@ const FeaturesMessages: FC<IFeaturesMessages> = () => {
 			<div style={{animationDelay: 0.02 + "s"}} className={`message other-message `}>
 				you can find me on {//TODO and media
 			}
+				<div className="extra-info">
+					<span className="created-at">Oct 22</span>
+					<Image width={19}
+						   height={16} src="/check.svg"/>
+				</div>
+				<img src="/bubble-tail-left.svg"
+					 alt="bubble-tail"/>
+			</div>
+		</div>
+		<div className="message-cont">
+			<div style={{animationDelay: 0.02 + "s"}} className={`message other-message `}>Hey, now you can deal we the
+				messages you send, hopefully you like that
+				{//TODO add an image
+				}
+				<div className="extra-info">
+					<span className="created-at">Oct 23</span>
+					<Image width={19}
+						   height={16} src="/check.svg"/>
+				</div>
 				<img src="/bubble-tail-left.svg"
 					 alt="bubble-tail"/>
 			</div>

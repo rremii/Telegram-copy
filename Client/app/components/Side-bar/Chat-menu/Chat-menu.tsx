@@ -34,6 +34,7 @@ const ChatMenu = () => {
 		pollingInterval: 2000,
 		skip: !id
 	})
+	//TODO add member info on each iteration
 
 	return <ChatMenuWrapper isSearchOn={isSearchOn}>
 

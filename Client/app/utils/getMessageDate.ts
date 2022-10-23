@@ -15,7 +15,7 @@ export const getMessageDate = (stringDate: string | null) => {
 
 		const arrOfDate = new Date(stringDate).toDateString().split(" ")
 
-		return arrOfDate[1] + " " + arrOfDate[2] //time + month + day
+		return arrOfDate[1] + " " + arrOfDate[2] // month + day
 
 	}
 

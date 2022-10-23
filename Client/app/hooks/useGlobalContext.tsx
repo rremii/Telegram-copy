@@ -3,6 +3,8 @@ import {createContext, useState} from "react"
 export interface IGlobalContext {
 	screenMode: "sideBar" | "chat" | "info"
 	SetScreenMode: (values: "sideBar" | "chat" | "info") => void
+	// isMessageSettings:boolean
+	// setMessageSettings:(values:boolean)=>
 }
 
 
@@ -10,6 +12,7 @@ export const GlobalContext = createContext<IGlobalContext>({
 	screenMode: "sideBar",
 	SetScreenMode: (values) => {
 	},
+
 })
 
 
