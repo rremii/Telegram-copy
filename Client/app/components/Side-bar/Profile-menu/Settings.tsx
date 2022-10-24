@@ -1,10 +1,16 @@
 import styled from "styled-components"
 import Image from "next/image"
 import {Rem} from "../../../../styles/functions/mixins"
+import {useContext} from "react"
+import {SideBarContext} from "../../../hooks/useSideBarContext"
 
 const Settings = () => {
+
+	const {isSettings, SetIsSettings} = useContext(SideBarContext)
+
+
 	return <SettingsWrapper>
-		<div className="cell">
+		<div onClick={() => SetIsSettings(true)} className="cell">
 			<div className="icon">
 				<Image width={35} height={35} src="/setting-gray.svg"/>
 			</div>

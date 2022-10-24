@@ -13,10 +13,12 @@ class CandidateAuthService {
         const registeredUser = await User.findOne({
             where: { email },
         })
-        if (type === "register" && registeredUser)
+        if (type === "register" && registeredUser) {
             throw ApiError.BadRequest("User with this email already exist")
-        if (type === "login" && !registeredUser)
+        }
+        if (type === "login" && !registeredUser) {
             throw ApiError.BadRequest("User with this email was not found")
+        }
 
         // const code = uuid.v4().slice(0, 6)
         const code = "111111"

@@ -5,7 +5,7 @@ import ProfileMenu from "./Profile-menu/Profile-menu"
 import SearchMenu from "./Search-menu/Search-menu"
 import Header from "./Header/Header"
 import {GlobalContext} from "../../hooks/useGlobalContext"
-import {SideBarContext} from "../../hooks/useSideBarContext"
+import GeneralSettings from "./General-settings/General-settings"
 
 interface ISideBar {
 
@@ -20,6 +20,7 @@ const SideBar: FC<ISideBar> = () => {
 	return <SideBarWrapper screenMode={screenMode}>
 
 		<ProfileMenu/>
+		<GeneralSettings/>
 		<div className="layout">
 			<Header/>
 			<ChatMenu/>
