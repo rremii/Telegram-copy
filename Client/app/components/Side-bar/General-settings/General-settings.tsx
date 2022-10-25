@@ -41,7 +41,7 @@ const GeneralSettingsWrapper = styled.div<{
     width: 100%;
     height: 100%;
     background-color: rgb(22, 22, 22);
-    gap: 2px;
+    gap: 1px;
     display: flex;
     flex-direction: column;
 
