@@ -17,6 +17,8 @@ export interface ISideBarContext {
 	SetLogoutPopUp: (values: boolean) => void
 	isSettings: boolean
 	SetIsSettings: (values: boolean) => void
+	isBackgroundSettings: boolean
+	SetBackgroundSettings: (values: boolean) => void
 }
 
 
@@ -29,6 +31,7 @@ export const SideBarContext = createContext<ISideBarContext>({
 	isLogout: false,
 	isLogoutPopUp: false,
 	isSettings: false,
+	isBackgroundSettings: false,
 	SetIsBurger: (values) => {
 	},
 	SetIsProfile: (values) => {
@@ -45,6 +48,8 @@ export const SideBarContext = createContext<ISideBarContext>({
 	},
 	SetIsSettings: (values) => {
 	},
+	SetBackgroundSettings: (values) => {
+	},
 })
 
 
@@ -57,6 +62,7 @@ const useSideBarContext = (): ISideBarContext => {
 	const [isLogout, setLogout] = useState(false)
 	const [isLogoutPopUp, setLogoutPopUp] = useState(false)
 	const [isSettings, setIsSettings] = useState(false)
+	const [isBackgroundSettings, setBackgroundSettings] = useState(false)
 
 
 	const SetIsBurger = (value: boolean) => setIsBurger(value)
@@ -67,6 +73,7 @@ const useSideBarContext = (): ISideBarContext => {
 	const SetLogout = (value: boolean) => setLogout(value)
 	const SetLogoutPopUp = (value: boolean) => setLogoutPopUp(value)
 	const SetIsSettings = (value: boolean) => setIsSettings(value)
+	const SetBackgroundSettings = (value: boolean) => setBackgroundSettings(value)
 
 	return {
 		isProfile,
@@ -84,7 +91,9 @@ const useSideBarContext = (): ISideBarContext => {
 		isLogoutPopUp,
 		SetLogoutPopUp,
 		isSettings,
-		SetIsSettings
+		SetIsSettings,
+		isBackgroundSettings,
+		SetBackgroundSettings
 	}
 
 }

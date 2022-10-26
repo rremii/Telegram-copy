@@ -3,6 +3,7 @@ import Image from "next/image"
 import {Rem} from "../../../../styles/functions/mixins"
 import {ChangeEvent, useContext} from "react"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
+import {SideBarContext} from "../../../hooks/useSideBarContext"
 
 const maxFontSize = 20
 const minFontSize = 12
@@ -17,6 +18,7 @@ const SettingsBox = () => {
 	// const [messageFontSize, setFontSize] = useState<string | null>(localStorage.getItem("message-font-size"))
 
 	const {messageFontSize, SetMessageFontSize} = useContext(GlobalContext)
+	const {isBackgroundSettings, SetBackgroundSettings} = useContext(SideBarContext)
 
 
 	const HandleOnRangeChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +40,7 @@ const SettingsBox = () => {
 			<input value={currentFontSize} min={minFontSize} step={1} max={maxFontSize}
 				   onChange={HandleOnRangeChange} type="range"/>
 		</div>
-		<div className="bg-box">
+		<div onClick={() => SetBackgroundSettings(true)} className="bg-box">
 			<Image width={29} height={29} src="/gallery-icon.svg"/>
 			<span>Chat Background</span>
 		</div>

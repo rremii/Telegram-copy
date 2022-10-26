@@ -1,24 +1,24 @@
 import styled from "styled-components"
 import Header from "./Header"
-import SettingsBox from "./Settings-box"
+import GridBox from "./Grid-box"
 import {useContext} from "react"
 import {SideBarContext} from "../../../hooks/useSideBarContext"
 
-const GeneralSettings = () => {
+const BackgroundSettings = () => {
 
-	const {isSettings, SetIsSettings} = useContext(SideBarContext)
+	const {isBackgroundSettings, SetBackgroundSettings} = useContext(SideBarContext)
 
 
-	return <GeneralSettingsWrapper isSettings={isSettings}>
-		<div className="GeneralSettings-cont">
+	return <BackgroundSettingsWrapper isBackground={isBackgroundSettings}>
+		<div className="BackgroundSettings-cont">
 			<Header/>
-			<SettingsBox/>
+			<GridBox/>
 		</div>
-	</GeneralSettingsWrapper>
+	</BackgroundSettingsWrapper>
 }
-export default GeneralSettings
-const GeneralSettingsWrapper = styled.div<{
-	isSettings: boolean
+export default BackgroundSettings
+const BackgroundSettingsWrapper = styled.div<{
+	isBackground: boolean
 }>`
 
   position: absolute;
@@ -31,13 +31,13 @@ const GeneralSettingsWrapper = styled.div<{
   pointer-events: none;
   overflow: hidden;
 
-  .GeneralSettings-cont {
+  .BackgroundSettings-cont {
     transition: .4s;
     pointer-events: initial;
     position: absolute;
     left: 100%;
     top: 0;
-    transform: ${({isSettings}) => isSettings ? "translateX(-100%)" : "translateX(0)"};
+    transform: ${({isBackground}) => isBackground ? "translateX(-100%)" : "translateX(0)"};
     width: 100%;
     height: 100%;
     background-color: rgb(22, 22, 22);
