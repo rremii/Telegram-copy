@@ -1,7 +1,8 @@
 import styled from "styled-components"
 import Image from "next/image"
 import {Rem} from "../../../../styles/functions/mixins"
-import {ChangeEvent, useState} from "react"
+import {ChangeEvent, useContext} from "react"
+import {GlobalContext} from "../../../hooks/useGlobalContext"
 
 const maxFontSize = 20
 const minFontSize = 12
@@ -13,19 +14,28 @@ const CalcPercentOfRange = (messageFontSize: number) => {
 const SettingsBox = () => {
 
 
-	const [messageFontSize, setFontSize] = useState<string | null>(localStorage.getItem("message-font-size"))
+	// const [messageFontSize, setFontSize] = useState<string | null>(localStorage.getItem("message-font-size"))
+
+	const {messageFontSize, SetMessageFontSize} = useContext(GlobalContext)
 
 
 	const HandleOnRangeChange = (e: ChangeEvent<HTMLInputElement>) => {
 		localStorage.setItem("message-font-size", e.currentTarget.value)
-		setFontSize(e.currentTarget.value)
+		SetMessageFontSize(e.currentTarget.value)
 	}
-	return <SettingsBoxWrapper fontSize={CalcPercentOfRange(messageFontSize ? +messageFontSize : 16)}>
+
+
+	const currentFontSize = messageFontSize ? messageFontSize : localStorage.getItem("message-font-size") || "16"
+
+	return <SettingsBoxWrapper fontSize={CalcPercentOfRange(+currentFontSize)}>
 
 		<h1 className="title">Settings</h1>
 		<div className="text-size-box">
-			<h2 className="sub-title">Message Text Size <span>{messageFontSize}</span></h2>
-			<input value={messageFontSize ? +messageFontSize : 16} min={minFontSize} step={1} max={maxFontSize}
+			<h2 className="sub-title">
+				Message Text Size
+				<span>{currentFontSize}</span>
+			</h2>
+			<input value={currentFontSize} min={minFontSize} step={1} max={maxFontSize}
 				   onChange={HandleOnRangeChange} type="range"/>
 		</div>
 		<div className="bg-box">
@@ -40,6 +50,7 @@ const SettingsBoxWrapper = styled.div<{
 }>`
   background-color: rgb(33, 33, 33);
   padding: 8px 6px 20px;
+
 
   .title {
     color: #8774e1;

@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from "react"
+import {FC, useContext, useEffect, useState} from "react"
 import styled from "styled-components"
 import {Rem} from "../../../../styles/functions/mixins"
 import Image from "next/image"
@@ -6,6 +6,7 @@ import {useTypedSelector} from "../../../store/ReduxStore"
 import {getMessageDate} from "../../../utils/getMessageDate"
 import {useGetAllMessagesQuery} from "../../../api/ChatApiRtk"
 import ChatMessageSettings from "./Chat-message-settings"
+import {GlobalContext} from "../../../hooks/useGlobalContext"
 
 interface IChatMessagesBox {
 
@@ -30,13 +31,14 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 	const [X, setX] = useState<number>(0)
 	const [Y, setY] = useState<number>(0)
 
+	const {messageFontSize} = useContext(GlobalContext)
+
 
 	useEffect(() => {
 		const scrollBox = document.getElementById("scroll-cont")
 		if (scrollBox) {
 			scrollBox.scrollTo(0, scrollBox.scrollHeight)
 		}
-
 	}, [messages])
 
 
@@ -61,7 +63,9 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 		setId(chatId)
 	}
 
-	return <ChatMessagesBoxWrapper id="scroll-cont" length={messages?.length ? messages?.length : 0}>
+
+	return <ChatMessagesBoxWrapper id="scroll-cont"
+								   length={messages?.length ? messages?.length : 0}>
 
 		<ChatMessageSettings chosenId={chosenId} setId={setId} X={X} Y={Y}/>
 		{chosenId && <div onClick={() => setId(null)} className="settings-overlay"/>}
@@ -70,14 +74,16 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 			//calculation an animation delay
 			let delayNum = 1
 			delayNum = messages.length - i + 1 //as farther el as less the delay
-			return <div
+			return <MessageWrapper
+				fontSize={messageFontSize ? messageFontSize : localStorage.getItem("message-font-size")}
 				key={createdAt}
-				className="message-cont">
-				<div style={{
-					animationDelay: delayNum * 0.02 + "s"
-				}}
-					 onClick={(e: React.MouseEvent<HTMLDivElement>) => HandleClick(e, chat_message_id, sender_id)}
-					 className={`message  ${user_id === sender_id ? "your-message" : "other-message"}`}>
+			>
+				<div
+					style={{
+						animationDelay: delayNum * 0.02 + "s",
+					}}
+					onClick={(e: React.MouseEvent<HTMLDivElement>) => HandleClick(e, chat_message_id, sender_id)}
+					className={`message  ${user_id === sender_id ? "your-message" : "other-message"}`}>
 					{content}
 					<div className="extra-info">
 						<span className="created-at">{getMessageDate(createdAt)}</span>
@@ -87,7 +93,7 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 					<img src={user_id === sender_id ? "/bubble-tail-left-purple.svg" : "/bubble-tail-left.svg"}
 						 alt="bubble-tail"/>
 				</div>
-			</div>
+			</MessageWrapper>
 		})}
 
 	</ChatMessagesBoxWrapper>
@@ -97,14 +103,14 @@ const ChatMessagesBoxWrapper = styled.div<{
 	length: number
 }>`
   width: 100%;
+  //flex: 1 1 auto;
   height: calc(100vh - 140px);
   overflow-y: auto;
   overflow-x: hidden;
-  //background-color: green;
   display: flex;
   flex-direction: column;
   //scroll-behavior: smooth;
-  gap: 10px;
+  //gap: 10px;
   position: relative;
   padding: 8px;
 
@@ -121,86 +127,103 @@ const ChatMessagesBoxWrapper = styled.div<{
     z-index: 1;
   }
 
-  .message-cont {
-    width: 100%;
-    display: grid;
-    gap: 10px;
 
-    .message {
-      color: white;
-      font-size: ${Rem(16)};
-      font-family: Roboto, sans-serif;
-      padding: 8px 10px 8px 10px;
-      min-width: min-content;
-      max-width: min(80vw, 350px);
-      position: relative;
-      word-wrap: anywhere;
-      animation: fadeOut 0.5s forwards;
+
+
+`
+
+const MessageWrapper = styled.div<{
+	fontSize: string | null
+}>`
+  width: 100%;
+  display: grid;
+  font-family: Roboto, sans-serif;
+  padding: 4px 10px;
+
+  position: relative;
+  word-wrap: anywhere;
+  animation: fadeOut 0.5s forwards;
+  opacity: 0;
+  animation-delay: 0.5s;
+  //align-items: center;
+  flex: 1 1 auto;
+  @keyframes fadeOut {
+    0% {
       opacity: 0;
-      animation-delay: 0.5s;
+      transform: scaleY(0.5);
+    }
+    100% {
+      opacity: 1;
+      transform: scaleY(1);
+    }
+  }
 
-      @keyframes fadeOut {
-        0% {
-          opacity: 0;
-          transform: scaleY(0.5);
-        }
-        100% {
-          opacity: 1;
-          transform: scaleY(1);
-        }
-      }
-
-      .extra-info {
-        display: flex;
-        align-items: center;
-        margin-left: 5px;
-        transform: translateY(6px);
-        float: right;
-        gap: 5px;
-
-        .created-at {
-          color: rgba(255, 255, 255, 0.6);
-          font-size: ${Rem(12)};
-          font-family: Roboto, sans-serif;
-        }
-
-      }
+  .message {
+    min-width: min-content;
+    max-width: min(80vw, 350px);
+    color: white;
+    font-size: ${({fontSize}) => fontSize ? fontSize + "px" : "16px"};
+    font-family: Roboto, sans-serif;
+    padding: 8px 10px 8px 10px;
+    position: relative;
+    word-wrap: anywhere;
+    animation: fadeOut 0.5s forwards;
+    opacity: 0;
+    animation-delay: 0.5s;
+    height: 100%;
 
 
-      img {
-        width: 20px;
-        height: 20px;
-        position: absolute;
+    .extra-info {
+      display: flex;
+      align-items: center;
+      margin-left: 5px;
+      transform: translateY(6px);
+      float: right;
+      gap: 5px;
+
+      .created-at {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: ${Rem(12)};
+        font-family: Roboto, sans-serif;
       }
 
     }
 
-
-    .your-message {
-      border-radius: 12px 12px 0 12px;
-      justify-self: end;
-      background-color: rgb(135, 116, 225);
-      position: relative;
-      cursor: pointer;
-
-      img {
-        bottom: 0;
-        transform: rotateY(180deg) translateX(7px);
-        left: 100%;
-      }
+    img {
+      width: 20px;
+      height: 20px;
+      position: absolute;
     }
 
-    .other-message {
-      justify-self: start;
-      border-radius: 12px 12px 12px 0;
-      background-color: rgb(33, 33, 33);
-
-      img {
-        bottom: 0;
-        transform: translateX(7px);
-        right: 100%;
-      }
-    }
 
   }
+
+  .your-message {
+    border-radius: 12px 12px 0 12px;
+    justify-self: end;
+    background-color: rgb(135, 116, 225);
+    position: relative;
+    cursor: pointer;
+
+    img {
+      bottom: 0;
+      transform: rotateY(180deg) translateX(7px);
+      left: 100%;
+    }
+  }
+
+  .other-message {
+    justify-self: start;
+    border-radius: 12px 12px 12px 0;
+    background-color: rgb(33, 33, 33);
+
+    img {
+      bottom: 0;
+      transform: translateX(7px);
+      right: 100%;
+    }
+  }
+
+
+
 `
