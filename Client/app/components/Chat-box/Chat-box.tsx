@@ -10,12 +10,12 @@ interface ChatBoxType {
 }
 
 const ChatBox: FC<ChatBoxType> = () => {
-	const {screenMode} = useContext(GlobalContext)
-
+	const {screenMode, background} = useContext(GlobalContext)
 	const {currentChatId} = useTypedSelector(state => state.Chats)
 
-
-	return <ChatBoxWrapper currentChatId={currentChatId} screenMode={screenMode}>
+	const currentBackground = background ? background : localStorage.getItem("background") || "forest.png"
+	return <ChatBoxWrapper background={currentBackground}
+						   currentChatId={currentChatId} screenMode={screenMode}>
 		<div className="chat-box-content">
 
 			<Header/>
@@ -27,11 +27,12 @@ export default ChatBox
 const ChatBoxWrapper = styled.div<{
 	screenMode: "sideBar" | "chat" | "info"
 	currentChatId: number | null
+	background: string
 }>`
   height: 100%;
   padding: 0;
   background-color: rgb(33, 33, 33);
-  background-image: url("/chat-background.jpg");
+  background-image: ${({background}) => ("url(/backgrounds/" + background + ")")};
   background-size: cover;
   flex: 1 1 auto;
   z-index: 15;
