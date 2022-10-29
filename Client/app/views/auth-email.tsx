@@ -179,7 +179,6 @@ const Auth1Wrapper = styled.div<{ mainColor: string }>`
         width: 100%;
         position: relative;
         margin-bottom: 30px;
-        position: relative;
         outline: none;
 
         &:hover input {
@@ -217,7 +216,6 @@ const Auth1Wrapper = styled.div<{ mainColor: string }>`
           padding: 15px 11px;
           border-radius: 12px;
           transition: 0.3s;
-          position: relative;
           overflow: visible;
           color: transparent;
 

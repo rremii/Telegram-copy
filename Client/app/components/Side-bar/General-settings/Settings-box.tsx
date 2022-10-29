@@ -27,17 +27,15 @@ const SettingsBox = () => {
 	}
 
 
-	const currentFontSize = messageFontSize ? messageFontSize : localStorage.getItem("message-font-size") || "16"
-
-	return <SettingsBoxWrapper fontSize={CalcPercentOfRange(+currentFontSize)}>
+	return <SettingsBoxWrapper fontSize={CalcPercentOfRange(+messageFontSize)}>
 
 		<h1 className="title">Settings</h1>
 		<div className="text-size-box">
 			<h2 className="sub-title">
 				Message Text Size
-				<span>{currentFontSize}</span>
+				<span>{+messageFontSize}</span>
 			</h2>
-			<input value={currentFontSize} min={minFontSize} step={1} max={maxFontSize}
+			<input value={+messageFontSize} min={minFontSize} step={1} max={maxFontSize}
 				   onChange={HandleOnRangeChange} type="range"/>
 		</div>
 		<div onClick={() => SetBackgroundSettings(true)} className="bg-box">

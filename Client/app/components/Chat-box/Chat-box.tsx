@@ -10,11 +10,10 @@ interface ChatBoxType {
 }
 
 const ChatBox: FC<ChatBoxType> = () => {
-	const {screenMode, background} = useContext(GlobalContext)
+	const {screenMode, background, isBackgroundBlur} = useContext(GlobalContext)
 	const {currentChatId} = useTypedSelector(state => state.Chats)
 
-	const currentBackground = background ? background : localStorage.getItem("background") || "forest.png"
-	return <ChatBoxWrapper background={currentBackground}
+	return <ChatBoxWrapper isBackgroundBlur={isBackgroundBlur === "true"} background={background}
 						   currentChatId={currentChatId} screenMode={screenMode}>
 		<div className="chat-box-content">
 
@@ -28,6 +27,7 @@ const ChatBoxWrapper = styled.div<{
 	screenMode: "sideBar" | "chat" | "info"
 	currentChatId: number | null
 	background: string
+	isBackgroundBlur: boolean
 }>`
   height: 100%;
   padding: 0;
@@ -36,6 +36,7 @@ const ChatBoxWrapper = styled.div<{
   background-size: cover;
   flex: 1 1 auto;
   z-index: 15;
+  position: relative;
   @media screen and (max-width: 920px) {
     z-index: 15;
     position: absolute;
@@ -51,6 +52,18 @@ const ChatBoxWrapper = styled.div<{
     width: 100vw;
     transition: .4s left;
     left: ${({screenMode}) => screenMode !== "sideBar" ? 0 : "100%"};
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transition: 0.5s;
+    backdrop-filter: ${({isBackgroundBlur}) => isBackgroundBlur ? "blur(4px)" : ""};
+    z-index: -1;
   }
 
   .chat-box-content {
