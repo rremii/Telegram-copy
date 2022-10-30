@@ -9,7 +9,7 @@ import Logout from "./Logout"
 
 const Header = () => {
 
-	const {isProfile, SetIsProfile, SetLogout, isLogout} = useContext(SideBarContext)
+	const {isProfile, SetIsProfile, SetLogout, isLogout, SetEditProfile} = useContext(SideBarContext)
 
 
 	const {X: XEdit, Y: YEdit, isRipple: isRippleEdit, SetIsRipple: SetIsRippleEdit} = useRipple()
@@ -22,6 +22,10 @@ const Header = () => {
 		SetLogout(!isLogout)
 		SetIsRippleMore(e)
 	}
+	const HandleEditClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+		SetEditProfile(true)
+		SetIsRippleEdit(e)
+	}
 
 
 	return <HeaderWrapper>
@@ -32,7 +36,7 @@ const Header = () => {
 			<h1>Settings</h1>
 		</section>
 		<section>
-			<button onClick={SetIsRippleEdit} className="edit">
+			<button onClick={HandleEditClick} className="edit">
 				<Image width={22} height={22} src="/pencil-icon.svg"/>
 				{isRippleEdit && <Ripple X={XEdit} Y={YEdit}/>}
 			</button>

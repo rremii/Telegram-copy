@@ -149,6 +149,7 @@ const Auth2Wrapper = styled.div<{ mainColor: string }>`
   }
 
   form {
+
     width: 100%;
 
     .form-field-cont {

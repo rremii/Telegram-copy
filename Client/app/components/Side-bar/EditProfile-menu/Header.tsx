@@ -7,18 +7,18 @@ import {SideBarContext} from "../../../hooks/useSideBarContext"
 const Header = () => {
 
 
-	const {isSettings, SetIsSettings} = useContext(SideBarContext)
+	const {SetEditProfile} = useContext(SideBarContext)
 
 
 	const HandleArrowClick = () => {
-		SetIsSettings(false)
+		SetEditProfile(false)
 	}
 
 	return <HeaderWrapper>
 		<button onClick={HandleArrowClick} className="arrow">
 			<Image width={24} height={24} src="/arrow-left-icon.svg"/>
 		</button>
-		<h1>General</h1>
+		<h1>Edit Profile</h1>
 	</HeaderWrapper>
 }
 export default Header
