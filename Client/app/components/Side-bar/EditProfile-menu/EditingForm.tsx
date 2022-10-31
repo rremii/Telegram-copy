@@ -3,18 +3,29 @@ import Image from "next/image"
 import React, {ChangeEvent, useRef, useState} from "react"
 import {Field, Form, Formik} from "formik"
 import {Rem} from "../../../../styles/functions/mixins"
+import {useTypedSelector} from "../../../store/ReduxStore"
+import {API_URL_STATIC} from "../../../api"
+import * as Yup from "yup"
 
 interface formValues {
 	firstName: string,
 	lastName: string
 }
 
+const validSchema = Yup.object().shape({
+	firstName: Yup.string().required().min(3).max(25),
+	lastName: Yup.string(),
+})
+
 const EditingForm = () => {
+
+	const {profilePic} = useTypedSelector(state => state.Me.me)
+	const {firstName} = useTypedSelector(state => state.Me.me)
+	const {lastName} = useTypedSelector(state => state.Me.me)
 
 
 	const [img, setImg] = useState<string>()
 	const fileRef = useRef<HTMLInputElement>(null)
-
 	// const HandleSubmit = async (values: FormValues) => {
 	// 	if (fileRef?.current?.files) {
 	// 		await dispatch(
@@ -30,33 +41,37 @@ const EditingForm = () => {
 		if (e.target.files) setImg(URL.createObjectURL(e.target.files[0]))
 	}
 
-
 	return <EditingFormWrapper>
-		<div className="avatar-cont">
-			<div className="avatar">
-				<Image layout="fill" src={img ? img : ""}/>
-				<div className="add-photo">
-					<Image layout="fill" src="/add-photo-icon.svg"/>
-				</div>
-				<input onChange={HandlePictureChange} ref={fileRef} type="file"/>
-			</div>
-		</div>
 		<Formik
 			onSubmit={(values: formValues) => {
 
 
 			}}
+			validationSchema={validSchema}
+			enableReinitialize={true}
 			initialValues={{
-				firstName: "",
-				lastName: ""
-			}}>
-			{(helpers) => (
+				firstName: firstName as string,
+				lastName: lastName ? lastName : ""
+			}}
+
+		>
+			{({dirty, isValid}) => (
 				<Form autoComplete="off">
+					<div className="avatar-cont">
+						<div className="avatar">
+							<Image layout="fill" src={img ? img : API_URL_STATIC + profilePic}/>
+							<div className="add-photo">
+								<Image layout="fill" src="/add-photo-icon.svg"/>
+							</div>
+							<input onChange={HandlePictureChange} ref={fileRef} type="file"/>
+						</div>
+					</div>
 					<div className="form-field-cont">
 						<Field
 							// onChange={(
 							// 	e: ChangeEvent<HTMLInputElement>
-							// ) => HandleOnChange(e, helpers)}
+							/*) => handleChange(e)}*/
+							// value={!initialValues.firstName ? firstName : initialValues.firstName}
 							type="text"
 							autoComplete="off"
 							className="form-field"
@@ -80,14 +95,14 @@ const EditingForm = () => {
 							Last Name
 						</label>
 					</div>
-					<button className="submit">
+					{dirty && isValid && <button className="submit">
 						<span/>
-					</button>
+					</button>}
 				</Form>
 			)}
 		</Formik>
 		<h3 className="helper-text">
-			You can use a-z, 0-9 and underscores. Minimum length is 5 characters.
+			You can use a-z, 0-9 and underscores. Minimum length is 3 characters.
 		</h3>
 	</EditingFormWrapper>
 }
@@ -97,59 +112,60 @@ const EditingFormWrapper = styled.div`
 
   background-color: rgb(24, 24, 24);
 
-  .avatar-cont {
-    padding: 32px 0;
-    background-color: rgb(34, 34, 34);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-
-
-    .avatar {
-      border-radius: 50%;
-      overflow: hidden;
-      width: 120px;
-      height: 120px;
-      position: relative;
-      cursor: pointer;
-
-      img, span {
-        border-radius: inherit;
-      }
-
-      &:hover .add-photo {
-        transform: translate(-50%, -50%) scale(1.2);
-      }
-
-      .add-photo {
-        width: 48px;
-        height: 48px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 1;
-        transition: 0.5s;
-        pointer-events: none;
-      }
-
-      input {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        opacity: 0;
-        border-radius: inherit;
-        cursor: pointer;
-      }
-    }
-
-  }
-
   form {
     background-color: rgb(34, 34, 34);
     padding: 12px;
     width: 100%;
+
+    .avatar-cont {
+      padding: 32px 0;
+      background-color: rgb(34, 34, 34);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+
+
+      .avatar {
+        border-radius: 50%;
+        overflow: hidden;
+        width: 120px;
+        height: 120px;
+        position: relative;
+        cursor: pointer;
+
+        img, span {
+          border-radius: inherit;
+        }
+
+        &:hover .add-photo {
+          transform: translate(-50%, -50%) scale(1.2);
+        }
+
+        .add-photo {
+          width: 48px;
+          height: 48px;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          z-index: 1;
+          transition: 0.5s;
+          pointer-events: none;
+        }
+
+        input {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+          border-radius: inherit;
+          cursor: pointer;
+        }
+      }
+
+    }
+
 
     .form-field-cont {
 

@@ -20,7 +20,6 @@ class MeService {
                 as: "userBio",
             },
         })
-
         return {
             user_id: user.user_id,
             email: user.email,
