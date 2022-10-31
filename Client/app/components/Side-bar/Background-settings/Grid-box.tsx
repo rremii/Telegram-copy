@@ -39,7 +39,7 @@ const GridBox = () => {
 
 			<div onClick={ChangeBackgroundBlur} className="blur-setting">
 				<div className="check-box">
-					<input checked={isBackgroundBlur === "true"} type="checkbox"/>
+					<input readOnly={true} checked={isBackgroundBlur === "true"} type="checkbox"/>
 					<span/>
 				</div>
 				<h2>Blur Wallpaper Image</h2>
@@ -101,6 +101,7 @@ const GridBoxWrapper = styled.div<{
         position: relative;
 
         input {
+          cursor: pointer;
           position: relative;
           width: 18px;
           height: 18px;

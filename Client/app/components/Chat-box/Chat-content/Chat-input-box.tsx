@@ -39,7 +39,7 @@ const ChatInputBox: FC<IChatInputBox> = () => {
 					<Field name="content" placeholder="Message" type="text"/>
 				</div>
 				<div className="tail-cont">
-					<Image width={20} height={20} layout="fill" className="tail" src={"/bubble-tail-left.svg"} alt=""/>
+					<Image layout="fill" className="tail" src={"/bubble-tail-left.svg"} alt=""/>
 				</div>
 
 			</Form>

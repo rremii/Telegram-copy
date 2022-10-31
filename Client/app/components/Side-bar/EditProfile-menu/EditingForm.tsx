@@ -50,8 +50,8 @@ const EditingForm = () => {
 			validationSchema={validSchema}
 			enableReinitialize={true}
 			initialValues={{
-				firstName: firstName as string,
-				lastName: lastName ? lastName : ""
+				firstName: firstName ? firstName : "" as string,
+				lastName: lastName ? lastName : "" as string
 			}}
 
 		>
