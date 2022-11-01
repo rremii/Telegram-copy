@@ -22,7 +22,7 @@ const SettingsBox = () => {
 
 
 	const HandleOnRangeChange = (e: ChangeEvent<HTMLInputElement>) => {
-		localStorage.setItem("message-font-size", e.currentTarget.value)
+		// localStorage.setItem("message-font-size", e.currentTarget.value)
 		SetMessageFontSize(e.currentTarget.value)
 	}
 
