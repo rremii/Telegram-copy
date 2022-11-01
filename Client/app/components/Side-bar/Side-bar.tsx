@@ -8,6 +8,7 @@ import {GlobalContext} from "../../hooks/useGlobalContext"
 import BackgroundSettings from "./Background-settings/Background-settings"
 import GeneralSettings from "./General-settings/General-settings"
 import EditProfileMenu from "./EditProfile-menu/EditProfile-menu"
+import LanguageSettings from "./Language-settings/Language-settings"
 
 interface ISideBar {
 
@@ -25,6 +26,7 @@ const SideBar: FC<ISideBar> = () => {
 		<GeneralSettings/>
 		<BackgroundSettings/>
 		<EditProfileMenu/>
+		<LanguageSettings/>
 		<div className="layout">
 			<Header/>
 			<ChatMenu/>

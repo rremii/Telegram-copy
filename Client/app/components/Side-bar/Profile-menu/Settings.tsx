@@ -6,7 +6,7 @@ import {SideBarContext} from "../../../hooks/useSideBarContext"
 
 const Settings = () => {
 
-	const {isSettings, SetIsSettings} = useContext(SideBarContext)
+	const {isSettings, SetIsSettings, SetLanguageSettings} = useContext(SideBarContext)
 
 
 	return <SettingsWrapper>
@@ -18,7 +18,7 @@ const Settings = () => {
 				General Settings
 			</h1>
 		</div>
-		<div className="cell">
+		<div onClick={() => SetLanguageSettings(true)} className="cell">
 			<div className="icon">
 				<Image width={35} height={35} src="/language-icon.svg"/>
 			</div>

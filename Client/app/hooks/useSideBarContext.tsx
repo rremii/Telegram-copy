@@ -21,6 +21,8 @@ export interface ISideBarContext {
 	SetBackgroundSettings: (values: boolean) => void
 	isEditProfile: boolean
 	SetEditProfile: (values: boolean) => void
+	isLanguageSettings: boolean
+	SetLanguageSettings: (values: boolean) => void
 }
 
 
@@ -35,6 +37,7 @@ export const SideBarContext = createContext<ISideBarContext>({
 	isSettings: false,
 	isBackgroundSettings: false,
 	isEditProfile: false,
+	isLanguageSettings: false,
 	SetIsBurger: (values) => {
 	},
 	SetIsProfile: (values) => {
@@ -55,6 +58,8 @@ export const SideBarContext = createContext<ISideBarContext>({
 	},
 	SetEditProfile: (values) => {
 	},
+	SetLanguageSettings: (values) => {
+	},
 })
 
 
@@ -69,6 +74,7 @@ const useSideBarContext = (): ISideBarContext => {
 	const [isSettings, setIsSettings] = useState(false)
 	const [isBackgroundSettings, setBackgroundSettings] = useState(false)
 	const [isEditProfile, setEditProfile] = useState(false)
+	const [isLanguageSettings, setLanguageSettings] = useState(false)
 
 
 	const SetIsBurger = (value: boolean) => setIsBurger(value)
@@ -81,6 +87,7 @@ const useSideBarContext = (): ISideBarContext => {
 	const SetIsSettings = (value: boolean) => setIsSettings(value)
 	const SetBackgroundSettings = (value: boolean) => setBackgroundSettings(value)
 	const SetEditProfile = (value: boolean) => setEditProfile(value)
+	const SetLanguageSettings = (value: boolean) => setLanguageSettings(value)
 
 	return {
 		isProfile,
@@ -102,7 +109,9 @@ const useSideBarContext = (): ISideBarContext => {
 		isBackgroundSettings,
 		SetBackgroundSettings,
 		isEditProfile,
-		SetEditProfile
+		SetEditProfile,
+		isLanguageSettings,
+		SetLanguageSettings
 	}
 
 }

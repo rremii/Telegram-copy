@@ -4,19 +4,20 @@ import SettingsBox from "./Settings-box"
 import {useContext} from "react"
 import {SideBarContext} from "../../../hooks/useSideBarContext"
 
-const GeneralSettings = () => {
+const LanguageSettings = () => {
 
-	const {isSettings, SetIsSettings} = useContext(SideBarContext)
+	const {isLanguageSettings, SetLanguageSettings} = useContext(SideBarContext)
 
-	return <GeneralSettingsWrapper isSettings={isSettings}>
-		<div className="GeneralSettings-cont">
+
+	return <LanguageSettingsWrapper isSettings={isLanguageSettings}>
+		<div className="LanguageSettings-cont">
 			<Header/>
 			<SettingsBox/>
 		</div>
-	</GeneralSettingsWrapper>
+	</LanguageSettingsWrapper>
 }
-export default GeneralSettings
-const GeneralSettingsWrapper = styled.div<{
+export default LanguageSettings
+const LanguageSettingsWrapper = styled.div<{
 	isSettings: boolean
 }>`
 
@@ -29,8 +30,9 @@ const GeneralSettingsWrapper = styled.div<{
   background-color: transparent;
   pointer-events: none;
   overflow: hidden;
+  gap: 1px;
 
-  .GeneralSettings-cont {
+  .LanguageSettings-cont {
     transition: .4s;
     pointer-events: initial;
     position: absolute;
