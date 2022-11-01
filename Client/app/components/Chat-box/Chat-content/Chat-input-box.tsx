@@ -5,11 +5,15 @@ import Image from "next/image"
 import {Field, Form, Formik} from "formik"
 import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
 import {addMessage} from "../../../store/ChatSlice"
+import * as Yup from "yup"
 
 interface IChatInputBox {
 
 }
 
+const validSchema = Yup.object().shape({
+	content: Yup.string().required()
+})
 
 const ChatInputBox: FC<IChatInputBox> = () => {
 
@@ -26,79 +30,123 @@ const ChatInputBox: FC<IChatInputBox> = () => {
 			initialValues={{
 				content: "" as string
 			}}
+			validationSchema={validSchema}
 			onSubmit={(({content}, {resetForm}) => {
 				if (!currentChatId) return
 				dispatch(addMessage({content, user_id, chat_id: currentChatId}))
 				resetForm()
 			})}
 		>
-			<Form>
+			{({dirty, isValid, handleSubmit}) => (
+				<Form>
 
+					<div className="input-box">
+						<div className="input-cont">
+							<Field name="content" placeholder="Message" type="text"/>
+						</div>
+						<div className="tail-cont">
+							<Image layout="fill" className="tail" src={"/bubble-tail-left.svg"} alt=""/>
+						</div>
+					</div>
 
-				<div className="input-cont">
-					<Field name="content" placeholder="Message" type="text"/>
-				</div>
-				<div className="tail-cont">
-					<Image layout="fill" className="tail" src={"/bubble-tail-left.svg"} alt=""/>
-				</div>
-
-			</Form>
+					<button className={`send-btn ${dirty && isValid ? "active" : ""}`}>
+						<Image src="/telegram-icon-purple.svg" layout="fill"/>
+					</button>
+				</Form>
+			)}
 		</Formik>
 
 	</ChatInputBoxWrapper>
 }
 export default ChatInputBox
 const ChatInputBoxWrapper = styled.div`
-  background-color: rgb(33, 33, 33);
   flex: 0 0 54px;
   display: flex;
   align-items: center;
   width: calc(100% - 15px);
   border-radius: 12px 12px 0 12px;
   font-family: Roboto, sans-serif;
-  padding: 0 50px;
   position: relative;
   margin-top: 5px;
 
   form {
-    width: 100%;
-    height: 100%;
-  }
-
-  .input-cont {
-    width: 100%;
-    padding: 5px 8px;
-    height: 100%;
+    border-radius: inherit;
     position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 70px;
+  }
 
-    input {
+  .input-box {
+    border-radius: inherit;
+    //padding-left: 50px;
+    background-color: rgb(33, 33, 33);
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .input-cont {
       width: 100%;
+      padding: 5px 8px;
       height: 100%;
-      background-color: transparent;
-      caret-color: rgb(135, 116, 225);
-      color: white;
-      font-size: ${Rem(18)};
-      word-wrap: anywhere;
+      position: relative;
 
-      ::placeholder {
-        font-family: Roboto, sans-serif;
-        color: rgb(101, 106, 110);
+      input {
+        padding-left: 50px;
+        width: 100%;
+        height: 100%;
+        background-color: transparent;
+        caret-color: rgb(135, 116, 225);
+        color: white;
+        font-size: ${Rem(18)};
+        word-wrap: anywhere;
+
+        ::placeholder {
+          font-family: Roboto, sans-serif;
+          color: rgb(101, 106, 110);
+        }
+
       }
+    }
 
+    .tail-cont {
+
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      left: 100%;
+      bottom: 0;
+      transform: translateX(-7px) rotateY(180deg);
+
+      .tail {
+      }
     }
   }
 
-  .tail-cont {
-
-    width: 20px;
-    height: 20px;
+  .send-btn {
+    cursor: pointer;
     position: absolute;
-    left: 100%;
-    bottom: 0;
-    transform: translateX(-7px) rotateY(180deg);
+    top: 50%;
+    right: 0;
+    transform: translate(-10px, -50%);
+    width: 54px;
+    height: 54px;
+    background-color: white;
+    border-radius: 50%;
+    opacity: 0;
+    transition: .3s;
+    pointer-events: none;
+  }
 
-    .tail {
-    }
+  .active {
+    pointer-events: initial;
+    opacity: 1;
   }
 
 

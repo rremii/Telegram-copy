@@ -10,6 +10,8 @@ export interface IGlobalContext {
 	SetBackground: (values: string) => void
 	isBackgroundBlur: "true" | "false"
 	SetBackgroundBlur: (values: "true" | "false") => void
+	language: string
+	SetLanguage: (values: string) => void
 }
 
 
@@ -25,8 +27,10 @@ export const GlobalContext = createContext<IGlobalContext>({
 	},
 	isBackgroundBlur: "false",
 	SetBackgroundBlur: (values: "true" | "false") => {
+	},
+	language: "English",
+	SetLanguage: (values: string) => {
 	}
-
 })
 
 
@@ -36,6 +40,7 @@ const useGlobalContext = (): IGlobalContext => {
 	const [messageFontSize, setMessageFontSize] = useLocalStorage("message-font-size", "16")
 	const [background, setBackground] = useLocalStorage("background", "forest.png")
 	const [isBackgroundBlur, setBackgroundBlur] = useLocalStorage("backgroundBlur", "false")
+	const [language, setLanguage] = useLocalStorage("language", "English")
 
 	const SetScreenMode = (value: "sideBar" | "chat" | "info") => {
 		setScreenMode(value)
@@ -49,6 +54,9 @@ const useGlobalContext = (): IGlobalContext => {
 	const SetBackgroundBlur = (value: "true" | "false") => {
 		setBackgroundBlur(value)
 	}
+	const SetLanguage = (value: string) => {
+		setLanguage(value)
+	}
 	return {
 		screenMode,
 		SetScreenMode,
@@ -57,7 +65,9 @@ const useGlobalContext = (): IGlobalContext => {
 		background,
 		SetBackground,
 		isBackgroundBlur,
-		SetBackgroundBlur
+		SetBackgroundBlur,
+		SetLanguage,
+		language
 	}
 }
 export default useGlobalContext

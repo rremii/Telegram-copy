@@ -1,6 +1,8 @@
 import styled from "styled-components"
 import {Rem} from "../../../../styles/functions/mixins"
-import {useState} from "react"
+import {useContext, useState} from "react"
+import {SideBarContext} from "../../../hooks/useSideBarContext"
+import {GlobalContext} from "../../../hooks/useGlobalContext"
 
 
 const Languages = [
@@ -10,11 +12,15 @@ const Languages = [
 
 const SettingsBox = () => {
 
-	const [language, setLanguage] = useState("Russian")
+	const {language, SetLanguage} = useContext(GlobalContext)
+
+	const ChangeLanguage = (newLanguage: string) => {
+		SetLanguage(newLanguage)
+	}
 
 	return <SettingsBoxWrapper>
 		{Languages.map(({engName, nativeName}, i) => {
-			return <div onClick={() => setLanguage(engName)} key={i}
+			return <div onClick={() => ChangeLanguage(engName)} key={i}
 						className={`cell ${language === engName ? "active" : ""}`}>
 				<div className="radio">
 					<span/>

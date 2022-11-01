@@ -80,7 +80,7 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 			>
 				<div
 					style={{
-						animationDelay: delayNum * 0.02 + "s",
+						animationDelay: delayNum * 0.04 + "s",
 					}}
 					onClick={(e: React.MouseEvent<HTMLDivElement>) => HandleClick(e, chat_message_id, sender_id)}
 					className={`message  ${user_id === sender_id ? "your-message" : "other-message"}`}>
@@ -150,7 +150,7 @@ const MessageWrapper = styled.div<{
   @keyframes fadeOut {
     0% {
       opacity: 0;
-      transform: scaleY(0.5);
+      transform: scaleY(0.6);
     }
     100% {
       opacity: 1;
