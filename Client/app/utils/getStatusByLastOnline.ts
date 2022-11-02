@@ -4,7 +4,9 @@ export const getStatusByLastOnline = (lastOnline: Date | null) => {
 	const date = new Date(lastOnline)
 	const dateInMilliSec = date.getTime()
 	const difference = Math.round((Date.now() - dateInMilliSec) / (1000 * 60))
-
+	// return difference + "sec ago"
+	//
+	//
 	if (difference / 60 > 12) return "a log time ago"
 	if (difference > 59) return Math.round(difference / 60) + " hours ago"
 	if (difference > 5) return difference + " min ago"

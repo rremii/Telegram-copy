@@ -3,8 +3,8 @@ import styled from "styled-components"
 import ChatCell from "./Chat-cell"
 import {SideBarContext} from "../../../hooks/useSideBarContext"
 import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
-import {fetchChatsByUserId} from "../../../store/ChatSlice"
-import {useGetAllMessagesQuery, useGetChatsByUserIdQuery} from "../../../api/ChatApiRtk"
+import {setCurrentMemberOnline} from "../../../store/ChatSlice"
+import {useGetChatsByUserIdQuery} from "../../../api/ChatApiRtk"
 import Preroll from "../../../ui/Preroll"
 
 
@@ -12,6 +12,7 @@ const ChatMenu = () => {
 	const dispatch = useAppDispatch()
 
 	const id = useTypedSelector(state => state.Me.me.user_id)
+	const {currentChatId} = useTypedSelector(state => state.Chats)
 	// const {chats} = useTypedSelector(state => state.Chats)
 
 	const {isSearchOn} = useContext(SideBarContext)
@@ -30,10 +31,20 @@ const ChatMenu = () => {
 	const {
 		data: chats,
 		isLoading,
+		isFetching
 	} = useGetChatsByUserIdQuery({user_id: id}, {
 		pollingInterval: 2000,
 		skip: !id
 	})
+
+
+	useEffect(() => {
+		//TODO grab it to hook
+		if (currentChatId && chats) {
+			const currentChat = chats.find(({chat_id}) => chat_id === currentChatId)
+			if (currentChat?.memberInfo.lastOnline) dispatch(setCurrentMemberOnline(currentChat.memberInfo.lastOnline))
+		}
+	}, [isFetching])
 	//TODO add member info on each iteration
 
 	return <ChatMenuWrapper isSearchOn={isSearchOn}>
