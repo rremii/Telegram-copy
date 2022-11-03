@@ -11,7 +11,7 @@ export interface AuthUserEmail {
 
 
 export interface userInfo extends Me {
-	lastOnline: Date | null
+	lastOnline: string | null
 }
 
 export interface Me {
@@ -26,6 +26,7 @@ export interface Me {
 export interface Chat {
 	chat_id: number
 	unSeenMessages: number
+
 	lastMessage: {
 		content: string | null
 		updatedAt: string | null

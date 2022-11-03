@@ -19,32 +19,32 @@ export const findOrCreateChat = createAsyncThunk(
 	}
 )
 
-export const fetchChatsByUserId = createAsyncThunk<Chat[],
-	number,
-	{
-		dispatch: AppDispatch
-		state: RootState
-	}>(
-	"ChatSlice/fetchChatsByUserId",
-	async (userId: number, {rejectWithValue, dispatch, getState}) => {
-		try {
-
-			const response = await ChatAPI.getChatsByUserId(userId)
-
-			const state = getState()
-			const {currentChatId} = state.Chats
-			//updating a chat member online status
-			if (currentChatId) {
-				const currentChat = response.data.find(({chat_id}) => chat_id === currentChatId)
-				if (currentChat?.memberInfo.lastOnline) dispatch(setCurrentMemberOnline(currentChat.memberInfo.lastOnline))
-			}
-
-			return response.data
-		} catch (e: any) {
-			return rejectWithValue(e.response.data.message)
-		}
-	}
-)
+// export const fetchChatsByUserId = createAsyncThunk<Chat[],
+// 	number,
+// 	{
+// 		dispatch: AppDispatch
+// 		state: RootState
+// 	}>(
+// 	"ChatSlice/fetchChatsByUserId",
+// 	async (userId: number, {rejectWithValue, dispatch, getState}) => {
+// 		try {
+//
+// 			const response = await ChatAPI.getChatsByUserId(userId)
+//
+// 			const state = getState()
+// 			const {currentChatId} = state.Chats
+// 			//updating a chat member online status
+// 			if (currentChatId) {
+// 				const currentChat = response.data.find(({chat_id}) => chat_id === currentChatId)
+// 				if (currentChat?.memberInfo.lastOnline) dispatch(setCurrentMemberOnline(currentChat.memberInfo.lastOnline))
+// 			}
+//
+// 			return response.data
+// 		} catch (e: any) {
+// 			return rejectWithValue(e.response.data.message)
+// 		}
+// 	}
+// )
 export const addMessage = createAsyncThunk(
 	"ChatSlice/addMessage",
 	async (messageData: messageData, {rejectWithValue}) => {
@@ -110,17 +110,22 @@ const ChatSlice = createSlice({
 			const prevOnline = state.currentChat.memberInfo.lastOnline
 			state.currentChat.memberInfo = {...action.payload, lastOnline: prevOnline}
 		},
-		setCurrentMemberOnline(state, action: PayloadAction<Date>) {
-			state.currentChat.memberInfo.lastOnline = action.payload
+		setCurrentMemberOnline(state, action: PayloadAction<string>) {
+			const lastOnline = action.payload
+			const date = new Date(lastOnline)
+			const dateInMilliSec = date.getTime()
+			state.currentChat.memberInfo.lastOnline = "" + Math.round((Date.now() - dateInMilliSec) / (1000 * 60))
+
+
 		},
 		resetChatSlice() {
 			return initialState
 		}
 	},
 	extraReducers: (builder) => {
-		builder.addCase(fetchChatsByUserId.fulfilled, (state, action: PayloadAction<Chat[]>) => {
-			state.chats = action.payload
-		})
+		// builder.addCase(fetchChatsByUserId.fulfilled, (state, action: PayloadAction<Chat[]>) => {
+		// 	state.chats = action.payload
+		// })
 		builder.addCase(findOrCreateChat.fulfilled, (state, action: PayloadAction<ChatResponse>) => {
 			state.currentChatId = action.payload.chatId
 		})
