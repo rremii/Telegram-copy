@@ -1,6 +1,6 @@
-import {FC, useContext, useEffect, useState} from "react"
+import {Dispatch, FC, SetStateAction, useContext, useEffect, useState} from "react"
 import styled from "styled-components"
-import {Rem} from "../../../../styles/functions/mixins"
+import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import Image from "next/image"
 import {useTypedSelector} from "../../../store/ReduxStore"
 import {getMessageDate} from "../../../utils/getMessageDate"
@@ -11,11 +11,12 @@ import useScrollArrow from "../../../hooks/useScrollArrow"
 import {ScrollChatToBottom} from "../../../utils/ScrollToChatBottom"
 
 interface IChatMessagesBox {
-
+	SetEditingContent: Dispatch<SetStateAction<string>>
+	editingMessageContent: string
 }
 
 
-const ChatMessagesBox: FC<IChatMessagesBox> = () => {
+const ChatMessagesBox: FC<IChatMessagesBox> = ({SetEditingContent, editingMessageContent}) => {
 
 
 	const {currentChatId} = useTypedSelector(state => state.Chats)
@@ -41,7 +42,9 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 	}, [messages])
 
 
-	const HandleClick = (e: React.MouseEvent<HTMLDivElement>, chatId: number, sender_id: number) => {
+	const HandleClick = (e: React.MouseEvent<HTMLDivElement>, chatId: number, sender_id: number, content: string) => {
+		SetEditingContent(content)
+
 		if (user_id !== sender_id) return
 
 		const settingsBoxWidth = 150
@@ -66,7 +69,8 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 	return <ChatMessagesBoxWrapper id="scroll-cont"
 								   length={messages?.length ? messages?.length : 0}>
 
-		<ChatMessageSettings chosenId={chosenId} setId={setId} X={X} Y={Y}/>
+		<ChatMessageSettings editingMessageContent={editingMessageContent} chosenId={chosenId} setId={setId} X={X}
+							 Y={Y}/>
 
 		{chosenId && <div onClick={() => setId(null)} className="settings-overlay"/>}
 
@@ -83,7 +87,7 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 					style={{
 						animationDelay: delayNum * 0.04 + 1 + "s",
 					}}
-					onClick={(e: React.MouseEvent<HTMLDivElement>) => HandleClick(e, chat_message_id, sender_id)}
+					onClick={(e: React.MouseEvent<HTMLDivElement>) => HandleClick(e, chat_message_id, sender_id, content)}
 					className={`message  ${user_id === sender_id ? "your-message" : "other-message"}`}>
 					{content}
 					<div className="extra-info">
@@ -104,8 +108,8 @@ const ChatMessagesBoxWrapper = styled.div<{
 	length: number
 }>`
   width: 100%;
-  //flex: 1 1 auto;
-  height: calc(100vh - 140px);
+  flex: 1 1 auto;
+  height: calc(100vh - ${AdaptiveValue(140, 140)});
   overflow-y: auto;
   overflow-x: hidden;
   display: flex;

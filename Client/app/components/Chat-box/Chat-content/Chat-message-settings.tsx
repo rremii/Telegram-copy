@@ -1,47 +1,50 @@
 import styled from "styled-components"
-import {Dispatch, FC, SetStateAction, useEffect, useState} from "react"
+import {Dispatch, FC, SetStateAction, useContext} from "react"
 import Image from "next/image"
 import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
+import {useDeleteMessageMutation} from "../../../api/ChatApiRtk"
+import {GlobalContext} from "../../../hooks/useGlobalContext"
 
 interface IChatMessageSettings {
 	X: number,
 	Y: number,
 	setId: Dispatch<SetStateAction<number | null>>
 	chosenId: number | null
+	editingMessageContent: string
 }
 
-const ChatMessageSettings: FC<IChatMessageSettings> = ({X, Y, chosenId, setId}) => {
-
-	// const [currentX, setX] = useState(X)
-	// const [currentY, setY] = useState(Y)
+const ChatMessageSettings: FC<IChatMessageSettings> = ({editingMessageContent, X, Y, chosenId, setId}) => {
 
 
-	useEffect(() => {
+	const {SetEditingMode} = useContext(GlobalContext)
 
-		// const windowRec = window.cli
-		// if (X + 150 >= window.innerWidth) {
-		// 	setX(X - 180)
-		// } else {
-		// 	setX(X)
-		// }
+	const [deleteMessage] = useDeleteMessageMutation()
 
-
-	}, [chosenId])
 
 	const HandleMouseLeave = () => {
+		setId(null)
+	}
+
+	const DeleteMessage = () => {
+		if (chosenId)
+			deleteMessage(chosenId)
+		setId(null)
+	}
+	const CopyMessage = () => {
+		navigator.clipboard.writeText(editingMessageContent)
 		setId(null)
 	}
 
 	return <MessageSettings chosenId={chosenId} X={X} Y={Y} onMouseLeave={HandleMouseLeave}>
 		<div className="content-cont">
 
-			<div className="option">
+			<div onClick={() => SetEditingMode(true)} className="option">
 				<Image width={20} height={20} src="/pencil-icon.svg"/> <span>Edit</span>
 			</div>
-			<div className="option">
+			<div onClick={CopyMessage} className="option">
 				<Image width={20} height={20} src="/copy-icon.svg"/> <span>Copy</span>
 			</div>
-			<div className="option">
+			<div onClick={DeleteMessage} className="option">
 				<Image width={20} height={20} src="/trash-bin.svg"/> <span>Delete</span>
 			</div>
 		</div>

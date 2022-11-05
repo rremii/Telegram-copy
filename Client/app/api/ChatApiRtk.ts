@@ -51,7 +51,7 @@ export const ChatApiRtk = createApi({
 		// }
 		// }
 		// ),
-		tagTypes: [""],
+		tagTypes: ["Message"],
 		endpoints: (build) => ({
 			getAllMessages: build.query <message[], { chat_id: number | null, user_id: number }>({
 				query: ({chat_id, user_id}) => ({
@@ -64,15 +64,16 @@ export const ChatApiRtk = createApi({
 				query: ({user_id}) => ({
 					url: `chatsByUserId/${user_id}`,
 					method: "GET"
-				})
-				// providesTags: ['Post'],
+				}),
+				providesTags: ["Message"],
 			}),
-			//   login: builder.mutation<any, Partial<string>>({
-			//     query: (code) => ({
-			//       url: '/login',
-			//       body: { code },
-			//       method: 'POST'
-			//     }),
+			deleteMessage: build.mutation<message, number>({
+				query: (id) => ({
+					url: "/messages/" + id,
+					method: "DELETE"
+				}),
+				invalidatesTags: ["Message"]
+			})
 			//
 			//     transformResponse (values: BaseQueryResult<any>) {
 			//       debugger
@@ -100,5 +101,6 @@ export const ChatApiRtk = createApi({
 export const {getAllMessages} = ChatApiRtk.endpoints
 export const {
 	useGetChatsByUserIdQuery,
-	useGetAllMessagesQuery
+	useGetAllMessagesQuery,
+	useDeleteMessageMutation
 } = ChatApiRtk

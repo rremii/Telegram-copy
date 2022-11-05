@@ -1,6 +1,6 @@
-import {FC} from "react"
+import {FC, useContext} from "react"
 import styled from "styled-components"
-import {Rem} from "../../../../styles/functions/mixins"
+import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import Image from "next/image"
 import {Field, Form, Formik} from "formik"
 import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
@@ -8,16 +8,18 @@ import {addMessage} from "../../../store/ChatSlice"
 import * as Yup from "yup"
 import useScrollArrow from "../../../hooks/useScrollArrow"
 import {ScrollChatToBottom} from "../../../utils/ScrollToChatBottom"
+import {GlobalContext} from "../../../hooks/useGlobalContext"
+import {cutStringToLength} from "../../../utils/cutStringToLength"
 
 interface IChatInputBox {
-
+	editingContent: string
 }
 
 const validSchema = Yup.object().shape({
 	content: Yup.string().required()
 })
 
-const ChatInputBox: FC<IChatInputBox> = () => {
+const ChatInputBox: FC<IChatInputBox> = ({editingContent}) => {
 
 	const dispatch = useAppDispatch()
 
@@ -25,10 +27,16 @@ const ChatInputBox: FC<IChatInputBox> = () => {
 	const {user_id} = useTypedSelector(state => state.Me.me)
 
 
+	const {isEditingMode, SetEditingMode} = useContext(GlobalContext)
 	const {isScrollArrow} = useScrollArrow()
 
 
-	return <ChatInputBoxWrapper>
+	const CloseEditingMode = () => {
+		SetEditingMode(false)
+
+	}
+
+	return <ChatInputBoxWrapper isEditingMode={isEditingMode}>
 		<div onClick={ScrollChatToBottom} className={`scroll-down-btn ${isScrollArrow ? "active" : ""} `}>
 			<div className="arrow-cont">
 				<Image layout="fill" src="/arrow-left-icon.svg"/>
@@ -37,19 +45,35 @@ const ChatInputBox: FC<IChatInputBox> = () => {
 
 		<Formik
 			initialValues={{
-				content: "" as string
+				content: isEditingMode ? editingContent : "" as string
 			}}
+			enableReinitialize={true}
 			validationSchema={validSchema}
 			onSubmit={(({content}, {resetForm}) => {
 				if (!currentChatId) return
 				dispatch(addMessage({content, user_id, chat_id: currentChatId}))
+				CloseEditingMode()
 				resetForm()
 			})}
 		>
 			{({dirty, isValid, handleSubmit}) => (
 				<Form>
-
 					<div className="input-box">
+
+						<EditingBox isEditingMode={isEditingMode}>
+							<div className="pencil-box">
+								<Image width={22} height={22} src="/pencil-icon-purple.svg"/>
+							</div>
+							<div className="text-box">
+								<h2>Editing</h2>
+								<h1>{editingContent}</h1>
+							</div>
+							<div onClick={CloseEditingMode} className="cross">
+								<span/>
+								<span/>
+							</div>
+						</EditingBox>
+
 						<div className="input-cont">
 							<Field name="content" placeholder="Message" type="text"/>
 						</div>
@@ -68,22 +92,25 @@ const ChatInputBox: FC<IChatInputBox> = () => {
 	</ChatInputBoxWrapper>
 }
 export default ChatInputBox
-const ChatInputBoxWrapper = styled.div`
-  flex: 0 0 54px;
+const ChatInputBoxWrapper = styled.div<{
+	isEditingMode: boolean
+}>`
+  flex: 0 0 ${AdaptiveValue(54, 46)};
   display: flex;
   align-items: center;
   width: calc(100% - 15px);
-  border-radius: 12px 12px 0 12px;
+  border-radius: ${({isEditingMode}) => isEditingMode ? "0 0 0 12px" : "12px 12px 0 12px"};
   font-family: Roboto, sans-serif;
   position: relative;
   margin-top: 5px;
-
+  z-index: 15;
+  transition: .3s;
 
   .scroll-down-btn {
     position: absolute;
     background-color: rgb(33, 33, 33);
-    width: 54px;
-    height: 54px;
+    width: ${AdaptiveValue(54, 45)};
+    height: ${AdaptiveValue(54, 45)};
     top: -65px;
     right: 10px;
     display: flex;
@@ -120,7 +147,8 @@ const ChatInputBoxWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-right: 70px;
+    padding-right: ${AdaptiveValue(70, 58)};
+
   }
 
   .input-box {
@@ -141,7 +169,7 @@ const ChatInputBoxWrapper = styled.div`
       position: relative;
 
       input {
-        padding-left: 50px;
+        padding-left: ${AdaptiveValue(50, 10)};
         width: 100%;
         height: 100%;
         background-color: transparent;
@@ -178,8 +206,8 @@ const ChatInputBoxWrapper = styled.div`
     top: 50%;
     right: 0;
     transform: translate(-10px, -50%);
-    width: 54px;
-    height: 54px;
+    width: ${AdaptiveValue(54, 46)};
+    height: ${AdaptiveValue(54, 46)};
     background-color: white;
     border-radius: 50%;
     opacity: 0;
@@ -193,4 +221,100 @@ const ChatInputBoxWrapper = styled.div`
   }
 
 
+`
+const EditingBox = styled.div<{
+	isEditingMode: boolean
+}>`
+  border-radius: 12px 12px 0 0;
+  background-color: rgb(33, 33, 33);
+  position: absolute;
+  width: 100%;
+  height: ${AdaptiveValue(50, 46)};
+  bottom: ${({isEditingMode}) => isEditingMode ? "100%" : "0"};
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 10px 7px;
+  z-index: -1;
+  transition: .5s;
+
+  .pencil-box {
+    flex: 0 0 36px;
+    border-right: 2px #8774e1 solid;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    //padding: 0 15px;
+    padding-right: 10px;
+    box-sizing: content-box;
+  }
+
+  .text-box {
+    height: 100%;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3px;
+    padding-left: 10px;
+    overflow: hidden;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 100%;
+      width: 20px;
+      background-color: rgb(33, 33, 33);
+      box-shadow: rgb(33, 33, 33) 0px 0px 50px 50px;
+    }
+
+    h1 {
+      color: white;
+      font-family: Roboto, sans-serif;
+      font-size: ${Rem(14)};
+    }
+
+    h2 {
+      color: #8774e1;
+      font-family: Roboto, sans-serif;
+      font-size: ${Rem(14)};
+    }
+  }
+
+  .cross {
+    flex: 0 0 36px;
+    height: 36px;
+    position: relative;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: .3s;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    span {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 20px;
+      height: 2px;
+      border-radius: 50px;
+      background-color: rgb(170, 170, 170);
+    }
+
+    span:nth-of-type(1) {
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    span:nth-of-type(2) {
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+  }
 `

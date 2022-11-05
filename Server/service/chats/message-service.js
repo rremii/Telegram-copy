@@ -8,8 +8,9 @@ const { Op } = require("sequelize")
 
 class MessageService {
     async addMessage({ content, chat_id, user_id }) {
-        if (!content || !chat_id || !user_id)
+        if (!content || !chat_id || !user_id) {
             throw ApiError("invalid data provided")
+        }
 
         const message = await ChatMessage.create({
             content: content + "",
@@ -23,6 +24,7 @@ class MessageService {
 
         return message
     }
+
     static async #addUnSeenMessage(chat_id, user_id) {
         const prevUnSeenMessage = await UnSeenMessage.findOrCreate({
             where: {
@@ -36,7 +38,12 @@ class MessageService {
                 {
                     amount: prevUnSeenMessage[0].amount + 1,
                 },
-                { where: { chat_id, sender_id: user_id } }
+                {
+                    where: {
+                        chat_id,
+                        sender_id: user_id,
+                    },
+                }
             )
         }
     }
@@ -59,5 +66,16 @@ class MessageService {
             where: { chat_id },
         })
     }
+
+    async deleteMessage(id) {
+        if (!id) throw ApiError("incorrect message id")
+
+        return ChatMessage.destroy({
+            where: {
+                chat_message_id: +id,
+            },
+        })
+    }
 }
+
 module.exports = new MessageService()

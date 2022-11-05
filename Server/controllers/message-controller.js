@@ -28,5 +28,16 @@ class MessageController {
             next(e)
         }
     }
+    async deleteMessage(request, response, next) {
+        try {
+            const { id } = request.params
+
+            const deletedMessage = await MessageService.deleteMessage(id)
+
+            response.json(deletedMessage)
+        } catch (e) {
+            next(e)
+        }
+    }
 }
 module.exports = new MessageController()
