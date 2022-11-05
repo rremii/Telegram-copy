@@ -6,6 +6,8 @@ import {Field, Form, Formik} from "formik"
 import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
 import {addMessage} from "../../../store/ChatSlice"
 import * as Yup from "yup"
+import useScrollArrow from "../../../hooks/useScrollArrow"
+import {ScrollChatToBottom} from "../../../utils/ScrollToChatBottom"
 
 interface IChatInputBox {
 
@@ -23,8 +25,15 @@ const ChatInputBox: FC<IChatInputBox> = () => {
 	const {user_id} = useTypedSelector(state => state.Me.me)
 
 
-	return <ChatInputBoxWrapper>
+	const {isScrollArrow} = useScrollArrow()
 
+
+	return <ChatInputBoxWrapper>
+		<div onClick={ScrollChatToBottom} className={`scroll-down-btn ${isScrollArrow ? "active" : ""} `}>
+			<div className="arrow-cont">
+				<Image layout="fill" src="/arrow-left-icon.svg"/>
+			</div>
+		</div>
 
 		<Formik
 			initialValues={{
@@ -68,6 +77,40 @@ const ChatInputBoxWrapper = styled.div`
   font-family: Roboto, sans-serif;
   position: relative;
   margin-top: 5px;
+
+
+  .scroll-down-btn {
+    position: absolute;
+    background-color: rgb(33, 33, 33);
+    width: 54px;
+    height: 54px;
+    top: -65px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1;
+    opacity: 0;
+    pointer-events: none;
+    transition: .4s;
+
+    .arrow-cont {
+      cursor: pointer;
+      transform: rotate(-90deg);
+      border-radius: 50%;
+      position: relative;
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .active {
+    opacity: 1;
+    pointer-events: initial;
+  }
+
 
   form {
     border-radius: inherit;

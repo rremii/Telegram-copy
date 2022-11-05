@@ -7,6 +7,8 @@ import {getMessageDate} from "../../../utils/getMessageDate"
 import {useGetAllMessagesQuery} from "../../../api/ChatApiRtk"
 import ChatMessageSettings from "./Chat-message-settings"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
+import useScrollArrow from "../../../hooks/useScrollArrow"
+import {ScrollChatToBottom} from "../../../utils/ScrollToChatBottom"
 
 interface IChatMessagesBox {
 
@@ -35,10 +37,7 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 
 
 	useEffect(() => {
-		const scrollBox = document.getElementById("scroll-cont")
-		if (scrollBox) {
-			scrollBox.scrollTo(0, scrollBox.scrollHeight)
-		}
+		ScrollChatToBottom()
 	}, [messages])
 
 
@@ -68,7 +67,9 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 								   length={messages?.length ? messages?.length : 0}>
 
 		<ChatMessageSettings chosenId={chosenId} setId={setId} X={X} Y={Y}/>
+
 		{chosenId && <div onClick={() => setId(null)} className="settings-overlay"/>}
+
 
 		{messages?.map(({content, sender_id, createdAt, chat_message_id}, i) => {
 			//calculation an animation delay
@@ -80,7 +81,7 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 			>
 				<div
 					style={{
-						animationDelay: delayNum * 0.04 + "s",
+						animationDelay: delayNum * 0.04 + 1 + "s",
 					}}
 					onClick={(e: React.MouseEvent<HTMLDivElement>) => HandleClick(e, chat_message_id, sender_id)}
 					className={`message  ${user_id === sender_id ? "your-message" : "other-message"}`}>
@@ -109,7 +110,7 @@ const ChatMessagesBoxWrapper = styled.div<{
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
-  //scroll-behavior: smooth;
+  scroll-behavior: smooth;
   //gap: 10px;
   position: relative;
   padding: 8px;
@@ -126,7 +127,6 @@ const ChatMessagesBoxWrapper = styled.div<{
     height: 100vh;
     z-index: 1;
   }
-
 
 
 

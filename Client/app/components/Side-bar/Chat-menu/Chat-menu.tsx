@@ -6,6 +6,7 @@ import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
 import {setCurrentMemberOnline} from "../../../store/ChatSlice"
 import {useGetChatsByUserIdQuery} from "../../../api/ChatApiRtk"
 import Preroll from "../../../ui/Preroll"
+import useUpdateMemberOnline from "../../../hooks/useUpdateMemberOnline"
 
 
 const ChatMenu = () => {
@@ -37,15 +38,8 @@ const ChatMenu = () => {
 		skip: !id
 	})
 
+	useUpdateMemberOnline(chats, isFetching)
 
-	useEffect(() => {
-		//TODO grab it to hook
-		if (currentChatId && chats) {
-			const currentChat = chats.find(({chat_id}) => chat_id === currentChatId)
-			if (currentChat?.memberInfo.lastOnline) dispatch(setCurrentMemberOnline(currentChat.memberInfo.lastOnline))
-		}
-	}, [isFetching])
-	//TODO add member info on each iteration
 
 	return <ChatMenuWrapper isSearchOn={isSearchOn}>
 
