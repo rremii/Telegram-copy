@@ -49,3 +49,8 @@ export interface message {
 	updatedAt: string
 	sender_id: number
 }
+
+export interface EditingMessage {
+	content: string,
+	id: null | number
+}

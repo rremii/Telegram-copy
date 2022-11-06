@@ -39,5 +39,17 @@ class MessageController {
             next(e)
         }
     }
+
+    async editMessage(request, response, next) {
+        try {
+            const { newContent, id } = request.body
+            debugger
+            const updatedMessage = MessageService.editMessage(newContent, id)
+
+            response.json(updatedMessage)
+        } catch (e) {
+            next(e)
+        }
+    }
 }
 module.exports = new MessageController()

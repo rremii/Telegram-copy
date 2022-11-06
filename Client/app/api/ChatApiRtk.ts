@@ -73,6 +73,14 @@ export const ChatApiRtk = createApi({
 					method: "DELETE"
 				}),
 				invalidatesTags: ["Message"]
+			}),
+			editMessage: build.mutation<message, { newContent: string, id: number }>({
+				query: (body) => ({
+					url: "/messages/",
+					body,
+					method: "PUT"
+				}),
+				invalidatesTags: ["Message"]
 			})
 			//
 			//     transformResponse (values: BaseQueryResult<any>) {
@@ -102,5 +110,6 @@ export const {getAllMessages} = ChatApiRtk.endpoints
 export const {
 	useGetChatsByUserIdQuery,
 	useGetAllMessagesQuery,
-	useDeleteMessageMutation
+	useDeleteMessageMutation,
+	useEditMessageMutation
 } = ChatApiRtk

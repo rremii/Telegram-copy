@@ -2,25 +2,26 @@ import {Dispatch, FC, SetStateAction, useContext, useEffect, useState} from "rea
 import styled from "styled-components"
 import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import Image from "next/image"
-import {useTypedSelector} from "../../../store/ReduxStore"
+import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
 import {getMessageDate} from "../../../utils/getMessageDate"
 import {useGetAllMessagesQuery} from "../../../api/ChatApiRtk"
 import ChatMessageSettings from "./Chat-message-settings"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
 import useScrollArrow from "../../../hooks/useScrollArrow"
 import {ScrollChatToBottom} from "../../../utils/ScrollToChatBottom"
+import {resetEditingMessage, setEditingMessage} from "../../../store/ChatSlice"
 
 interface IChatMessagesBox {
-	SetEditingContent: Dispatch<SetStateAction<string>>
-	editingMessageContent: string
+
 }
 
 
-const ChatMessagesBox: FC<IChatMessagesBox> = ({SetEditingContent, editingMessageContent}) => {
-
+const ChatMessagesBox: FC<IChatMessagesBox> = () => {
+	const dispatch = useAppDispatch()
 
 	const {currentChatId} = useTypedSelector(state => state.Chats)
 	const {user_id} = useTypedSelector(state => state.Me.me)
+	const {id: messageId} = useTypedSelector(state => state.Chats.editingMessage)
 
 
 	const {
@@ -30,11 +31,11 @@ const ChatMessagesBox: FC<IChatMessagesBox> = ({SetEditingContent, editingMessag
 		skip: !currentChatId
 	})
 
-	const [chosenId, setId] = useState<number | null>(null)
+	// const [chosenId, setId] = useState<number | null>(null)
 	const [X, setX] = useState<number>(0)
 	const [Y, setY] = useState<number>(0)
 
-	const {messageFontSize} = useContext(GlobalContext)
+	const {messageFontSize, SetMessageSettings, isMessageSettings} = useContext(GlobalContext)
 
 
 	useEffect(() => {
@@ -42,8 +43,9 @@ const ChatMessagesBox: FC<IChatMessagesBox> = ({SetEditingContent, editingMessag
 	}, [messages])
 
 
-	const HandleClick = (e: React.MouseEvent<HTMLDivElement>, chatId: number, sender_id: number, content: string) => {
-		SetEditingContent(content)
+	const HandleClick = (e: React.MouseEvent<HTMLDivElement>, messageId: number, sender_id: number, content: string) => {
+		dispatch(setEditingMessage({content, id: messageId}))
+		SetMessageSettings(true)
 
 		if (user_id !== sender_id) return
 
@@ -62,17 +64,20 @@ const ChatMessagesBox: FC<IChatMessagesBox> = ({SetEditingContent, editingMessag
 		} else {
 			setY(e.clientY)
 		}
-		setId(chatId)
+
+	}
+	const ResetEditingMessage = () => {
+		dispatch(resetEditingMessage())
 	}
 
 
 	return <ChatMessagesBoxWrapper id="scroll-cont"
 								   length={messages?.length ? messages?.length : 0}>
 
-		<ChatMessageSettings editingMessageContent={editingMessageContent} chosenId={chosenId} setId={setId} X={X}
+		<ChatMessageSettings X={X}
 							 Y={Y}/>
 
-		{chosenId && <div onClick={() => setId(null)} className="settings-overlay"/>}
+		{isMessageSettings && <div onClick={() => SetMessageSettings(false)} className="settings-overlay"/>}
 
 
 		{messages?.map(({content, sender_id, createdAt, chat_message_id}, i) => {

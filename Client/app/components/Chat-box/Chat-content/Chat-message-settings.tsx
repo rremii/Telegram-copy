@@ -1,41 +1,46 @@
 import styled from "styled-components"
-import {Dispatch, FC, SetStateAction, useContext} from "react"
+import {FC, useContext, useEffect} from "react"
 import Image from "next/image"
 import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import {useDeleteMessageMutation} from "../../../api/ChatApiRtk"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
+import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
 
 interface IChatMessageSettings {
 	X: number,
 	Y: number,
-	setId: Dispatch<SetStateAction<number | null>>
-	chosenId: number | null
-	editingMessageContent: string
+
 }
 
-const ChatMessageSettings: FC<IChatMessageSettings> = ({editingMessageContent, X, Y, chosenId, setId}) => {
+const ChatMessageSettings: FC<IChatMessageSettings> = ({X, Y}) => {
+	const dispatch = useAppDispatch()
 
 
-	const {SetEditingMode} = useContext(GlobalContext)
+	const {id: messageId} = useTypedSelector(state => state.Chats.editingMessage)
+	const {content: messageContent} = useTypedSelector(state => state.Chats.editingMessage)
 
+
+	const {SetEditingMode, SetMessageSettings, isMessageSettings} = useContext(GlobalContext)
 	const [deleteMessage] = useDeleteMessageMutation()
 
 
 	const HandleMouseLeave = () => {
-		setId(null)
+		// dispatch(resetEditingMessage())
+		SetMessageSettings(false)
 	}
 
 	const DeleteMessage = () => {
-		if (chosenId)
-			deleteMessage(chosenId)
-		setId(null)
+		if (messageId)
+			deleteMessage(messageId)
+		SetMessageSettings(false)
 	}
 	const CopyMessage = () => {
-		navigator.clipboard.writeText(editingMessageContent)
-		setId(null)
-	}
+		navigator.clipboard.writeText(messageContent)
+		SetMessageSettings(false)
 
-	return <MessageSettings chosenId={chosenId} X={X} Y={Y} onMouseLeave={HandleMouseLeave}>
+	}
+	
+	return <MessageSettings isMessageSettings={isMessageSettings} X={X} Y={Y} onMouseLeave={HandleMouseLeave}>
 		<div className="content-cont">
 
 			<div onClick={() => SetEditingMode(true)} className="option">
@@ -54,13 +59,13 @@ export default ChatMessageSettings
 const MessageSettings = styled.div<{
 	X: number
 	Y: number
-	chosenId: number | null
+	isMessageSettings: boolean
 }>`
   position: fixed;
   top: ${({Y}) => Y}px !important;
   left: ${({X}) => X}px !important;
-  transform: ${({chosenId}) => chosenId ? "translate(-15px, -15px) scale(1)" : "translate(0, 0) scale(0.7)"};
-  pointer-events: ${({chosenId}) => chosenId ? "initial" : "none"};
+  transform: ${({isMessageSettings}) => isMessageSettings ? "translate(-15px, -15px) scale(1)" : "translate(0, 0) scale(0.7)"};
+  pointer-events: ${({isMessageSettings}) => isMessageSettings ? "initial" : "none"};
   transition: 0.3s transform;
   //right: 0;
   z-index: 10;
@@ -76,7 +81,7 @@ const MessageSettings = styled.div<{
   //width: 300px;
   //}
   .content-cont {
-    opacity: ${({chosenId}) => chosenId ? 1 : 0};
+    opacity: ${({isMessageSettings}) => isMessageSettings ? 1 : 0};
     width: ${AdaptiveValue(180, 150)};
     //height: 230px;
     background-color: rgba(33, 33, 33, 0.5);

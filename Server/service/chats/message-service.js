@@ -76,6 +76,23 @@ class MessageService {
             },
         })
     }
+
+    async editMessage(newContent, id) {
+        if (!newContent || !id) {
+            throw ApiError("wrong id or content to update message")
+        }
+
+        return ChatMessage.update(
+            {
+                content: newContent,
+            },
+            {
+                where: {
+                    chat_message_id: id,
+                },
+            }
+        )
+    }
 }
 
 module.exports = new MessageService()

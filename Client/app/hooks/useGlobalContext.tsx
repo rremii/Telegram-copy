@@ -12,7 +12,9 @@ export interface IGlobalContext {
 	SetBackgroundBlur: (values: "true" | "false") => void
 	language: string
 	SetLanguage: (values: string) => void
-	isEditingMode: boolean,
+	isMessageSettings: boolean
+	SetMessageSettings: (values: boolean) => void
+	isEditingMode: boolean
 	SetEditingMode: (values: boolean) => void
 }
 
@@ -33,6 +35,9 @@ export const GlobalContext = createContext<IGlobalContext>({
 	language: "English",
 	SetLanguage: (values: string) => {
 	},
+	isMessageSettings: false,
+	SetMessageSettings: (values) => {
+	},
 	isEditingMode: false,
 	SetEditingMode: (values: boolean) => {
 	},
@@ -46,6 +51,7 @@ const useGlobalContext = (): IGlobalContext => {
 	const [background, setBackground] = useLocalStorage("background", "forest.png")
 	const [isBackgroundBlur, setBackgroundBlur] = useLocalStorage("backgroundBlur", "false")
 	const [language, setLanguage] = useLocalStorage("language", "English")
+	const [isMessageSettings, setMessageSettings] = useState(false)
 	const [isEditingMode, setEditingMode] = useState(false)
 
 	const SetScreenMode = (value: "sideBar" | "chat" | "info") => {
@@ -63,6 +69,9 @@ const useGlobalContext = (): IGlobalContext => {
 	const SetLanguage = (value: string) => {
 		setLanguage(value)
 	}
+	const SetMessageSettings = (value: boolean) => {
+		setMessageSettings(value)
+	}
 	const SetEditingMode = (value: boolean) => {
 		setEditingMode(value)
 	}
@@ -78,7 +87,9 @@ const useGlobalContext = (): IGlobalContext => {
 		SetLanguage,
 		language,
 		isEditingMode,
-		SetEditingMode
+		SetEditingMode,
+		isMessageSettings,
+		SetMessageSettings
 	}
 }
 export default useGlobalContext

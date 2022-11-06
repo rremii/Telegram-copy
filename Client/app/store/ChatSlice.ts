@@ -1,8 +1,7 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit"
-import {Chat, message, messageData, userInfo} from "./types"
+import {Chat, EditingMessage, message, messageData, userInfo} from "./types"
 import {ChatAPI} from "../api/ChatApi"
 import {ChatResponse} from "../api/types"
-import {AppDispatch, RootState} from "./ReduxStore"
 
 
 export const findOrCreateChat = createAsyncThunk(
@@ -80,6 +79,7 @@ interface initialStateType {
 		messages: message[]
 	}
 	currentChatId: number | null
+	editingMessage: EditingMessage
 }
 
 const initialState = {
@@ -96,7 +96,11 @@ const initialState = {
 		},
 		messages: []
 	},
-	currentChatId: null
+	currentChatId: null,
+	editingMessage: {
+		content: "",
+		id: null
+	}
 } as initialStateType
 
 const ChatSlice = createSlice({
@@ -118,6 +122,12 @@ const ChatSlice = createSlice({
 
 
 		},
+		setEditingMessage(state, action: PayloadAction<EditingMessage>) {
+			state.editingMessage = action.payload
+		},
+		resetEditingMessage(state) {
+			state.editingMessage = {id: null, content: ""}
+		},
 		resetChatSlice() {
 			return initialState
 		}
@@ -134,5 +144,11 @@ const ChatSlice = createSlice({
 		})
 	},
 })
-export const {resetChatSlice, setCurrentChatId, setCurrentMemberOnline, setCurrentMemberInfo} = ChatSlice.actions
+export const {
+	resetChatSlice,
+	setEditingMessage,
+	setCurrentChatId,
+	setCurrentMemberOnline,
+	setCurrentMemberInfo, resetEditingMessage
+} = ChatSlice.actions
 export default ChatSlice.reducer

@@ -4,36 +4,37 @@ import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import Image from "next/image"
 import {Field, Form, Formik} from "formik"
 import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
-import {addMessage} from "../../../store/ChatSlice"
+import {addMessage, resetEditingMessage} from "../../../store/ChatSlice"
 import * as Yup from "yup"
 import useScrollArrow from "../../../hooks/useScrollArrow"
 import {ScrollChatToBottom} from "../../../utils/ScrollToChatBottom"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
-import {cutStringToLength} from "../../../utils/cutStringToLength"
+import {useEditMessageMutation} from "../../../api/ChatApiRtk"
 
 interface IChatInputBox {
-	editingContent: string
 }
 
 const validSchema = Yup.object().shape({
 	content: Yup.string().required()
 })
 
-const ChatInputBox: FC<IChatInputBox> = ({editingContent}) => {
+const ChatInputBox: FC<IChatInputBox> = () => {
 
 	const dispatch = useAppDispatch()
 
 	const {currentChatId} = useTypedSelector(state => state.Chats)
+	const {id: messageId} = useTypedSelector(state => state.Chats.editingMessage)
+	const {content: editingContent} = useTypedSelector(state => state.Chats.editingMessage)
 	const {user_id} = useTypedSelector(state => state.Me.me)
 
 
 	const {isEditingMode, SetEditingMode} = useContext(GlobalContext)
 	const {isScrollArrow} = useScrollArrow()
-
+	const [EditMessage, result] = useEditMessageMutation()
 
 	const CloseEditingMode = () => {
 		SetEditingMode(false)
-
+		dispatch(resetEditingMessage())
 	}
 
 	return <ChatInputBoxWrapper isEditingMode={isEditingMode}>
@@ -51,7 +52,16 @@ const ChatInputBox: FC<IChatInputBox> = ({editingContent}) => {
 			validationSchema={validSchema}
 			onSubmit={(({content}, {resetForm}) => {
 				if (!currentChatId) return
-				dispatch(addMessage({content, user_id, chat_id: currentChatId}))
+
+
+				debugger
+				if (isEditingMode && messageId) {
+					EditMessage({newContent: content, id: messageId})
+				} else {
+					dispatch(addMessage({content, user_id, chat_id: currentChatId}))
+				}
+
+
 				CloseEditingMode()
 				resetForm()
 			})}
