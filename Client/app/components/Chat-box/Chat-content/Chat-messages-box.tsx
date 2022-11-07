@@ -1,4 +1,4 @@
-import {Dispatch, FC, SetStateAction, useContext, useEffect, useState} from "react"
+import {FC, useContext, useEffect, useState} from "react"
 import styled from "styled-components"
 import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import Image from "next/image"
@@ -7,9 +7,8 @@ import {getMessageDate} from "../../../utils/getMessageDate"
 import {useGetAllMessagesQuery} from "../../../api/ChatApiRtk"
 import ChatMessageSettings from "./Chat-message-settings"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
-import useScrollArrow from "../../../hooks/useScrollArrow"
 import {ScrollChatToBottom} from "../../../utils/ScrollToChatBottom"
-import {resetEditingMessage, setEditingMessage} from "../../../store/ChatSlice"
+import {setEditingMessage} from "../../../store/ChatSlice"
 
 interface IChatMessagesBox {
 
@@ -21,7 +20,6 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 
 	const {currentChatId} = useTypedSelector(state => state.Chats)
 	const {user_id} = useTypedSelector(state => state.Me.me)
-	const {id: messageId} = useTypedSelector(state => state.Chats.editingMessage)
 
 
 	const {
@@ -30,8 +28,10 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 		pollingInterval: 2000,
 		skip: !currentChatId
 	})
+	//TODO make an animatiob on loading when editing or deleting message
+	//TODO make a specific distance between your and partner messages
+	//TODO make a corting by creation date and display if the message was changed
 
-	// const [chosenId, setId] = useState<number | null>(null)
 	const [X, setX] = useState<number>(0)
 	const [Y, setY] = useState<number>(0)
 
@@ -55,7 +55,7 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 		//calculating X and Y depending on where click was done,
 		//in order settingsBox doesn't cross window's borders
 		if (e.clientX + settingsBoxWidth >= window.innerWidth) {
-			setX(e.clientX - settingsBoxWidth - 20)
+			setX(e.clientX - 170)
 		} else {
 			setX(e.clientX)
 		}
@@ -65,9 +65,7 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 			setY(e.clientY)
 		}
 
-	}
-	const ResetEditingMessage = () => {
-		dispatch(resetEditingMessage())
+
 	}
 
 

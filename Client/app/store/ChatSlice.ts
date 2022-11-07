@@ -2,6 +2,7 @@ import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit"
 import {Chat, EditingMessage, message, messageData, userInfo} from "./types"
 import {ChatAPI} from "../api/ChatApi"
 import {ChatResponse} from "../api/types"
+import {AppDispatch, RootState} from "./ReduxStore"
 
 
 export const findOrCreateChat = createAsyncThunk(
@@ -18,32 +19,32 @@ export const findOrCreateChat = createAsyncThunk(
 	}
 )
 
-// export const fetchChatsByUserId = createAsyncThunk<Chat[],
-// 	number,
-// 	{
-// 		dispatch: AppDispatch
-// 		state: RootState
-// 	}>(
-// 	"ChatSlice/fetchChatsByUserId",
-// 	async (userId: number, {rejectWithValue, dispatch, getState}) => {
-// 		try {
-//
-// 			const response = await ChatAPI.getChatsByUserId(userId)
-//
-// 			const state = getState()
-// 			const {currentChatId} = state.Chats
-// 			//updating a chat member online status
-// 			if (currentChatId) {
-// 				const currentChat = response.data.find(({chat_id}) => chat_id === currentChatId)
-// 				if (currentChat?.memberInfo.lastOnline) dispatch(setCurrentMemberOnline(currentChat.memberInfo.lastOnline))
-// 			}
-//
-// 			return response.data
-// 		} catch (e: any) {
-// 			return rejectWithValue(e.response.data.message)
-// 		}
-// 	}
-// )
+export const fetchChatsByUserId = createAsyncThunk<Chat[],
+	number,
+	{
+		dispatch: AppDispatch
+		state: RootState
+	}>(
+	"ChatSlice/fetchChatsByUserId",
+	async (userId: number, {rejectWithValue, dispatch, getState}) => {
+		try {
+
+			const response = await ChatAPI.getChatsByUserId(userId)
+
+			const state = getState()
+			const {currentChatId} = state.Chats
+			//updating a chat member online status
+			if (currentChatId) {
+				const currentChat = response.data.find(({chat_id}) => chat_id === currentChatId)
+				if (currentChat?.memberInfo.lastOnline) dispatch(setCurrentMemberOnline(currentChat.memberInfo.lastOnline))
+			}
+
+			return response.data
+		} catch (e: any) {
+			return rejectWithValue(e.response.data.message)
+		}
+	}
+)
 export const addMessage = createAsyncThunk(
 	"ChatSlice/addMessage",
 	async (messageData: messageData, {rejectWithValue}) => {

@@ -82,7 +82,7 @@ class MessageService {
             throw ApiError("wrong id or content to update message")
         }
 
-        return ChatMessage.update(
+        return await ChatMessage.update(
             {
                 content: newContent,
             },

@@ -1,4 +1,4 @@
-import {FC, useContext} from "react"
+import {FC, useContext, useEffect} from "react"
 import styled from "styled-components"
 import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import Image from "next/image"
@@ -30,7 +30,8 @@ const ChatInputBox: FC<IChatInputBox> = () => {
 
 	const {isEditingMode, SetEditingMode} = useContext(GlobalContext)
 	const {isScrollArrow} = useScrollArrow()
-	const [EditMessage, result] = useEditMessageMutation()
+	const [editMessage] = useEditMessageMutation()
+
 
 	const CloseEditingMode = () => {
 		SetEditingMode(false)
@@ -54,9 +55,8 @@ const ChatInputBox: FC<IChatInputBox> = () => {
 				if (!currentChatId) return
 
 
-				debugger
 				if (isEditingMode && messageId) {
-					EditMessage({newContent: content, id: messageId})
+					editMessage({newContent: content, id: messageId})
 				} else {
 					dispatch(addMessage({content, user_id, chat_id: currentChatId}))
 				}

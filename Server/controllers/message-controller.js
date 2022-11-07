@@ -43,8 +43,11 @@ class MessageController {
     async editMessage(request, response, next) {
         try {
             const { newContent, id } = request.body
-            debugger
-            const updatedMessage = MessageService.editMessage(newContent, id)
+
+            const updatedMessage = await MessageService.editMessage(
+                newContent,
+                id
+            )
 
             response.json(updatedMessage)
         } catch (e) {

@@ -1,6 +1,6 @@
 import {BaseQueryFn, createApi} from "@reduxjs/toolkit/query/react"
 import {Chat, message} from "../store/types"
-import axios, {AxiosError, AxiosRequestConfig} from "axios"
+import {AxiosRequestConfig} from "axios"
 import {$api} from "./index"
 
 
@@ -75,11 +75,14 @@ export const ChatApiRtk = createApi({
 				invalidatesTags: ["Message"]
 			}),
 			editMessage: build.mutation<message, { newContent: string, id: number }>({
-				query: (body) => ({
-					url: "/messages/",
-					body,
-					method: "PUT"
-				}),
+				query: ({newContent, id}) => {
+					return {
+						url: "/messages/",
+						method: "PUT",
+						data: {newContent, id}
+						// body: {newContent, id},
+					}
+				},
 				invalidatesTags: ["Message"]
 			})
 			//

@@ -13,8 +13,6 @@ interface IChatMessageSettings {
 }
 
 const ChatMessageSettings: FC<IChatMessageSettings> = ({X, Y}) => {
-	const dispatch = useAppDispatch()
-
 
 	const {id: messageId} = useTypedSelector(state => state.Chats.editingMessage)
 	const {content: messageContent} = useTypedSelector(state => state.Chats.editingMessage)
@@ -24,10 +22,13 @@ const ChatMessageSettings: FC<IChatMessageSettings> = ({X, Y}) => {
 	const [deleteMessage] = useDeleteMessageMutation()
 
 
-	const HandleMouseLeave = () => {
-		// dispatch(resetEditingMessage())
+	const HandleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+		if (e.relatedTarget === window) return
+
 		SetMessageSettings(false)
+		console.log("out")
 	}
+
 
 	const DeleteMessage = () => {
 		if (messageId)
@@ -39,8 +40,11 @@ const ChatMessageSettings: FC<IChatMessageSettings> = ({X, Y}) => {
 		SetMessageSettings(false)
 
 	}
-	
-	return <MessageSettings isMessageSettings={isMessageSettings} X={X} Y={Y} onMouseLeave={HandleMouseLeave}>
+
+
+	return <MessageSettings id="qwe" onMouseLeave={HandleMouseLeave} isMessageSettings={isMessageSettings} X={X} Y={Y}
+
+	>
 		<div className="content-cont">
 
 			<div onClick={() => SetEditingMode(true)} className="option">
@@ -62,24 +66,23 @@ const MessageSettings = styled.div<{
 	isMessageSettings: boolean
 }>`
   position: fixed;
-  top: ${({Y}) => Y}px !important;
-  left: ${({X}) => X}px !important;
+  top: ${({Y}) => Y}px;
+  left: ${({X}) => X}px;
+  //top: 270px;
+  //left: 550px;
   transform: ${({isMessageSettings}) => isMessageSettings ? "translate(-15px, -15px) scale(1)" : "translate(0, 0) scale(0.7)"};
   pointer-events: ${({isMessageSettings}) => isMessageSettings ? "initial" : "none"};
   transition: 0.3s transform;
   //right: 0;
-  z-index: 10;
+  z-index: 999;
   //gap: 5px;
   width: 210px;
   height: 130px;
   display: flex;
   align-items: center;
   justify-content: center;
-  //.overlay{
-  //position: absolute;
-  //background-color: green;
-  //width: 300px;
-  //}
+
+
   .content-cont {
     opacity: ${({isMessageSettings}) => isMessageSettings ? 1 : 0};
     width: ${AdaptiveValue(180, 150)};
