@@ -1,7 +1,6 @@
 import {FC} from "react"
 import styled from "styled-components"
 import {Rem} from "../../../../styles/functions/mixins"
-import {getMessageDate} from "../../../utils/getMessageDate"
 import Image from "next/image"
 
 interface IFeaturesMessages {

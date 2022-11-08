@@ -1,6 +1,5 @@
 import {FC} from "react"
 import styled from "styled-components"
-import ChatMessagesBox from "./Features-messages-box"
 import FeaturesMessagesBox from "./Features-messages-box"
 
 interface IFeaturesContent {

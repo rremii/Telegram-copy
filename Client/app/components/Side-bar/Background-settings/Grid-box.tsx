@@ -3,8 +3,6 @@ import Image from "next/image"
 import React, {useContext} from "react"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
 import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
-import useRipple from "../../../hooks/useRipple"
-import Ripple from "../../../ui/Ripple"
 
 const backgrounds = ["forest.png",
 	"misty-forest.png",

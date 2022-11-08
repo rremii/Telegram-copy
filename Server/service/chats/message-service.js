@@ -64,6 +64,7 @@ class MessageService {
         )
         return await ChatMessage.findAll({
             where: { chat_id },
+            order: [["createdAt", "ASC"]],
         })
     }
 

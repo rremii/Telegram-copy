@@ -1,7 +1,6 @@
 import styled from "styled-components"
 import {Rem} from "../../../../styles/functions/mixins"
-import {useContext, useState} from "react"
-import {SideBarContext} from "../../../hooks/useSideBarContext"
+import {useContext} from "react"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
 
 

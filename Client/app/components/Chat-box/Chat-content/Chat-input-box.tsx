@@ -4,7 +4,7 @@ import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import Image from "next/image"
 import {Field, Form, Formik} from "formik"
 import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
-import {addMessage, resetEditingMessage} from "../../../store/ChatSlice"
+import {addMessage, removeLoadingMessageId, resetEditingMessage, setLoadingMessageId} from "../../../store/ChatSlice"
 import * as Yup from "yup"
 import useScrollArrow from "../../../hooks/useScrollArrow"
 import {ScrollChatToBottom} from "../../../utils/ScrollToChatBottom"
@@ -30,7 +30,7 @@ const ChatInputBox: FC<IChatInputBox> = () => {
 
 	const {isEditingMode, SetEditingMode} = useContext(GlobalContext)
 	const {isScrollArrow} = useScrollArrow()
-	const [editMessage] = useEditMessageMutation()
+	const [editMessage, {isLoading, isSuccess, originalArgs,}] = useEditMessageMutation()
 
 
 	const CloseEditingMode = () => {
@@ -56,6 +56,7 @@ const ChatInputBox: FC<IChatInputBox> = () => {
 
 
 				if (isEditingMode && messageId) {
+					dispatch(setLoadingMessageId(messageId))
 					editMessage({newContent: content, id: messageId})
 				} else {
 					dispatch(addMessage({content, user_id, chat_id: currentChatId}))

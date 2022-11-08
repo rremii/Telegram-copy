@@ -1,14 +1,13 @@
 import {FC, useContext, useEffect, useState} from "react"
 import styled from "styled-components"
 import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
-import Image from "next/image"
 import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
-import {getMessageDate} from "../../../utils/getMessageDate"
 import {useGetAllMessagesQuery} from "../../../api/ChatApiRtk"
 import ChatMessageSettings from "./Chat-message-settings"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
 import {ScrollChatToBottom} from "../../../utils/ScrollToChatBottom"
-import {setEditingMessage} from "../../../store/ChatSlice"
+import {removeLoadingMessageId, setEditingMessage} from "../../../store/ChatSlice"
+import {getMessageDate} from "../../../utils/getMessageDate"
 
 interface IChatMessagesBox {
 
@@ -20,18 +19,23 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 
 	const {currentChatId} = useTypedSelector(state => state.Chats)
 	const {user_id} = useTypedSelector(state => state.Me.me)
+	const {loadingMessagesIds} = useTypedSelector(state => state.Chats)
 
 
 	const {
-		data: messages,
+		data: messages, isSuccess, isFetching,
 	} = useGetAllMessagesQuery({chat_id: currentChatId, user_id}, {
 		pollingInterval: 2000,
 		skip: !currentChatId
 	})
-	//TODO make an animatiob on loading when editing or deleting message
-	//TODO make a specific distance between your and partner messages
-	//TODO make a corting by creation date and display if the message was changed
 
+	useEffect(() => {
+		if (!isFetching && isSuccess) {
+			dispatch(removeLoadingMessageId())
+		}
+	}, [isFetching])
+
+	
 	const [X, setX] = useState<number>(0)
 	const [Y, setY] = useState<number>(0)
 
@@ -78,13 +82,20 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 		{isMessageSettings && <div onClick={() => SetMessageSettings(false)} className="settings-overlay"/>}
 
 
-		{messages?.map(({content, sender_id, createdAt, chat_message_id}, i) => {
+		{messages?.map(({content, sender_id, createdAt, updatedAt, chat_message_id}, i) => {
+			let isPrevMessageFromSameSender: boolean | null = null
+			if (messages[i - 1])
+				isPrevMessageFromSameSender = messages[i - 1].sender_id === messages[i].sender_id
+
+			const isLoading = loadingMessagesIds.find(id => id === chat_message_id)
 			//calculation an animation delay
 			let delayNum = 1
 			delayNum = messages.length - i + 1 //as farther el as less the delay
 			return <MessageWrapper
+				isPrevMessageFromSameSender={isPrevMessageFromSameSender}
+
 				fontSize={messageFontSize ? messageFontSize : localStorage.getItem("message-font-size")}
-				key={createdAt}
+				key={chat_message_id}
 			>
 				<div
 					style={{
@@ -94,9 +105,13 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 					className={`message  ${user_id === sender_id ? "your-message" : "other-message"}`}>
 					{content}
 					<div className="extra-info">
-						<span className="created-at">{getMessageDate(createdAt)}</span>
-						<Image width={19}
-							   height={16} src="/check.svg"/>
+						{!isLoading ? <span
+								className="created-at">{updatedAt !== createdAt && "edited"} {isLoading && "fuck me lol"} {getMessageDate(createdAt)}</span>
+							: <div className="loading-clock">
+								<img src="/clock-icon.svg"/>
+							</div>
+						}
+
 					</div>
 					<img src={user_id === sender_id ? "/bubble-tail-left-purple.svg" : "/bubble-tail-left.svg"}
 						 alt="bubble-tail"/>
@@ -109,6 +124,7 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 export default ChatMessagesBox
 const ChatMessagesBoxWrapper = styled.div<{
 	length: number
+
 }>`
   width: 100%;
   flex: 1 1 auto;
@@ -141,12 +157,12 @@ const ChatMessagesBoxWrapper = styled.div<{
 
 const MessageWrapper = styled.div<{
 	fontSize: string | null
+	isPrevMessageFromSameSender: boolean | null
 }>`
   width: 100%;
   display: grid;
   font-family: Roboto, sans-serif;
-  padding: 4px 10px;
-
+  padding: ${({isPrevMessageFromSameSender}) => isPrevMessageFromSameSender ? "3px 10px 0" : "10px 10px 0	"};
   position: relative;
   word-wrap: anywhere;
   animation: fadeOut 0.5s forwards;
@@ -183,7 +199,9 @@ const MessageWrapper = styled.div<{
     .extra-info {
       display: flex;
       align-items: center;
+      justify-content: center;
       margin-left: 5px;
+      //padding-right: 5px;
       transform: translateY(6px);
       float: right;
       gap: 5px;
@@ -193,6 +211,20 @@ const MessageWrapper = styled.div<{
         font-size: ${Rem(12)};
         font-family: Roboto, sans-serif;
       }
+
+      .loading-clock {
+        position: relative;
+        width: 15px;
+        height: 15px;
+        margin-right: 10px;
+
+        img {
+          width: 100%;
+          height: 100%;
+
+        }
+      }
+
 
     }
 

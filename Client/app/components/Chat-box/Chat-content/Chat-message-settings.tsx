@@ -5,6 +5,7 @@ import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import {useDeleteMessageMutation} from "../../../api/ChatApiRtk"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
 import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
+import {removeLoadingMessageId, setLoadingMessageId} from "../../../store/ChatSlice"
 
 interface IChatMessageSettings {
 	X: number,
@@ -13,26 +14,33 @@ interface IChatMessageSettings {
 }
 
 const ChatMessageSettings: FC<IChatMessageSettings> = ({X, Y}) => {
+	const dispatch = useAppDispatch()
+
 
 	const {id: messageId} = useTypedSelector(state => state.Chats.editingMessage)
 	const {content: messageContent} = useTypedSelector(state => state.Chats.editingMessage)
 
 
 	const {SetEditingMode, SetMessageSettings, isMessageSettings} = useContext(GlobalContext)
-	const [deleteMessage] = useDeleteMessageMutation()
+	const [deleteMessage, {isLoading, isSuccess, originalArgs}] = useDeleteMessageMutation()
+
+
+	// useEffect(() => {
+	// 	if (!isLoading && isSuccess && originalArgs)
+	// 		dispatch(removeLoadingMessageId(originalArgs))
+	// }, [isLoading])
 
 
 	const HandleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
 		if (e.relatedTarget === window) return
 
 		SetMessageSettings(false)
-		console.log("out")
 	}
-
-
 	const DeleteMessage = () => {
-		if (messageId)
+		if (messageId) {
 			deleteMessage(messageId)
+			dispatch(setLoadingMessageId(messageId))
+		}
 		SetMessageSettings(false)
 	}
 	const CopyMessage = () => {

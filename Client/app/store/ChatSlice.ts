@@ -81,6 +81,7 @@ interface initialStateType {
 	}
 	currentChatId: number | null
 	editingMessage: EditingMessage
+	loadingMessagesIds: number[]
 }
 
 const initialState = {
@@ -101,7 +102,9 @@ const initialState = {
 	editingMessage: {
 		content: "",
 		id: null
-	}
+	},
+	loadingMessagesIds: [] //messages that are being deleted or edited currently
+
 } as initialStateType
 
 const ChatSlice = createSlice({
@@ -129,6 +132,15 @@ const ChatSlice = createSlice({
 		resetEditingMessage(state) {
 			state.editingMessage = {id: null, content: ""}
 		},
+
+		setLoadingMessageId(state, action: PayloadAction<number>) {
+			state.loadingMessagesIds.push(action.payload)
+
+		},
+		removeLoadingMessageId(state,) {
+			state.loadingMessagesIds = []
+		},
+
 		resetChatSlice() {
 			return initialState
 		}
@@ -150,6 +162,9 @@ export const {
 	setEditingMessage,
 	setCurrentChatId,
 	setCurrentMemberOnline,
-	setCurrentMemberInfo, resetEditingMessage
+	setCurrentMemberInfo,
+	resetEditingMessage,
+	setLoadingMessageId,
+	removeLoadingMessageId
 } = ChatSlice.actions
 export default ChatSlice.reducer

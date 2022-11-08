@@ -1,4 +1,4 @@
-import {FC, useState} from "react"
+import {FC} from "react"
 import styled from "styled-components"
 import ChatInputBox from "./Chat-input-box"
 import ChatMessagesBox from "./Chat-messages-box"

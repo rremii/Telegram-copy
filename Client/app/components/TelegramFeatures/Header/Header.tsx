@@ -1,13 +1,8 @@
 import React, {FC, useContext} from "react"
 import styled from "styled-components"
 import Image from "next/image"
-import Ripple from "../../../ui/Ripple"
-import useRipple from "../../../hooks/useRipple"
 import {AdaptiveValue} from "../../../../styles/functions/mixins"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
-import {useTypedSelector} from "../../../store/ReduxStore"
-import {API_URL_STATIC} from "../../../api"
-import {getStatusByLastOnline} from "../../../utils/getStatusByLastOnline"
 
 interface IHeader {
 
