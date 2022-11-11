@@ -11,9 +11,6 @@ interface IChatContent {
 const ChatContent: FC<IChatContent> = () => {
 
 
-	// const [editingMessageContent, SetEditingContent] = useState<string>("qwe")
-
-
 	return <ChatContentWrapper>
 		<div className="chat-cont">
 

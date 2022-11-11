@@ -10,13 +10,14 @@ type  searchingFilter = "people" | "groups"
 
 const SearchMenu = () => {
 
+	const {users} = useTypedSelector(state => state.Search)
+	const {groups} = useTypedSelector(state => state.Search)
+
+
 	const {isSearchOn} = useContext(SideBarContext)
 
 
 	const [searchFilter, setSearchFilter] = useState<searchingFilter>("people")
-
-	const {users} = useTypedSelector(state => state.Search)
-	const {groups} = useTypedSelector(state => state.Search)
 
 
 	return <SearchMenuWrapper searchingFilter={searchFilter} isSearchOn={isSearchOn} className="searchMenu__wrapper">

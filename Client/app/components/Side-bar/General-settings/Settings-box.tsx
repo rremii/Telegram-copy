@@ -15,14 +15,11 @@ const CalcPercentOfRange = (messageFontSize: number) => {
 const SettingsBox = () => {
 
 
-	// const [messageFontSize, setFontSize] = useState<string | null>(localStorage.getItem("message-font-size"))
-
 	const {messageFontSize, SetMessageFontSize} = useContext(GlobalContext)
-	const {isBackgroundSettings, SetBackgroundSettings} = useContext(SideBarContext)
+	const {SetBackgroundSettings} = useContext(SideBarContext)
 
 
 	const HandleOnRangeChange = (e: ChangeEvent<HTMLInputElement>) => {
-		// localStorage.setItem("message-font-size", e.currentTarget.value)
 		SetMessageFontSize(e.currentTarget.value)
 	}
 

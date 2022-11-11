@@ -2,31 +2,19 @@ import React, {useContext} from "react"
 import styled from "styled-components"
 import ChatCell from "./Chat-cell"
 import {SideBarContext} from "../../../hooks/useSideBarContext"
-import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
+import {useTypedSelector} from "../../../store/ReduxStore"
 import {useGetChatsByUserIdQuery} from "../../../api/ChatApiRtk"
 import Preroll from "../../../ui/Preroll"
 import useUpdateMemberOnline from "../../../hooks/useUpdateMemberOnline"
 
 
 const ChatMenu = () => {
-	const dispatch = useAppDispatch()
 
 	const id = useTypedSelector(state => state.Me.me.user_id)
-	const {currentChatId} = useTypedSelector(state => state.Chats)
-	// const {chats} = useTypedSelector(state => state.Chats)
+
 
 	const {isSearchOn} = useContext(SideBarContext)
 
-
-	// useEffect(() => {
-	// 	if (!chats.length && id) {
-	// 		dispatch(fetchChatsByUserId(id))
-	// 	}
-	// 	const interval = setInterval(() => {
-	// 		if (id) dispatch(fetchChatsByUserId(id))
-	// 	}, 1000 * 5)
-	// 	return () => clearInterval(interval)
-	// }, [id])
 
 	const {
 		data: chats,

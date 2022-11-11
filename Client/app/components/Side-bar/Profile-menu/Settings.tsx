@@ -6,7 +6,7 @@ import {SideBarContext} from "../../../hooks/useSideBarContext"
 
 const Settings = () => {
 
-	const {isSettings, SetIsSettings, SetLanguageSettings} = useContext(SideBarContext)
+	const {SetIsSettings, SetLanguageSettings} = useContext(SideBarContext)
 
 
 	return <SettingsWrapper>

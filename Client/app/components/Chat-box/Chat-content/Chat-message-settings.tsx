@@ -1,11 +1,11 @@
 import styled from "styled-components"
-import {FC, useContext, useEffect} from "react"
+import {FC, useContext} from "react"
 import Image from "next/image"
 import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import {useDeleteMessageMutation} from "../../../api/ChatApiRtk"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
 import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
-import {removeLoadingMessageId, setLoadingMessageId} from "../../../store/ChatSlice"
+import {setLoadingMessageId} from "../../../store/ChatSlice"
 
 interface IChatMessageSettings {
 	X: number,
@@ -20,15 +20,9 @@ const ChatMessageSettings: FC<IChatMessageSettings> = ({X, Y}) => {
 	const {id: messageId} = useTypedSelector(state => state.Chats.editingMessage)
 	const {content: messageContent} = useTypedSelector(state => state.Chats.editingMessage)
 
+	const [deleteMessage] = useDeleteMessageMutation()
 
 	const {SetEditingMode, SetMessageSettings, isMessageSettings} = useContext(GlobalContext)
-	const [deleteMessage, {isLoading, isSuccess, originalArgs}] = useDeleteMessageMutation()
-
-
-	// useEffect(() => {
-	// 	if (!isLoading && isSuccess && originalArgs)
-	// 		dispatch(removeLoadingMessageId(originalArgs))
-	// }, [isLoading])
 
 
 	const HandleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {

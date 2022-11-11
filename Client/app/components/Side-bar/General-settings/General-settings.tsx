@@ -6,7 +6,7 @@ import {SideBarContext} from "../../../hooks/useSideBarContext"
 
 const GeneralSettings = () => {
 
-	const {isSettings, SetIsSettings} = useContext(SideBarContext)
+	const {isSettings} = useContext(SideBarContext)
 
 	return <GeneralSettingsWrapper isSettings={isSettings}>
 		<div className="GeneralSettings-cont">

@@ -10,8 +10,11 @@ interface ChatBoxType {
 }
 
 const ChatBox: FC<ChatBoxType> = () => {
-	const {screenMode, background, isBackgroundBlur} = useContext(GlobalContext)
 	const {currentChatId} = useTypedSelector(state => state.Chats)
+
+
+	const {screenMode, background, isBackgroundBlur} = useContext(GlobalContext)
+
 
 	return <ChatBoxWrapper isBackgroundBlur={isBackgroundBlur === "true"} background={background}
 						   currentChatId={currentChatId} screenMode={screenMode}>

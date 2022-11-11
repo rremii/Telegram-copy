@@ -8,11 +8,20 @@ import {GlobalContext} from "../../../hooks/useGlobalContext"
 import {ScrollChatToBottom} from "../../../utils/ScrollToChatBottom"
 import {removeLoadingMessageId, setEditingMessage} from "../../../store/ChatSlice"
 import {getMessageDate} from "../../../utils/getMessageDate"
+import {message} from "../../../store/types"
 
 interface IChatMessagesBox {
 
 }
 
+const IsPrevMessageFromSameSender = (messages: message[], index: number) => {
+	let isPrevMessageFromSameSender: boolean | null = null
+	const prevMessage = messages[index - 1]
+	const curMessage = messages[index - 1]
+	if (prevMessage)
+		isPrevMessageFromSameSender = prevMessage.sender_id === curMessage.sender_id
+	return isPrevMessageFromSameSender
+}
 
 const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 	const dispatch = useAppDispatch()
@@ -29,18 +38,19 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 		skip: !currentChatId
 	})
 
+
+	const [settingsX, setSettingsX] = useState<number>(0)
+	const [settingsY, setSettingsY] = useState<number>(0)
+
+
+	const {messageFontSize, SetMessageSettings, isMessageSettings} = useContext(GlobalContext)
+
+
 	useEffect(() => {
 		if (!isFetching && isSuccess) {
 			dispatch(removeLoadingMessageId())
 		}
 	}, [isFetching])
-
-	
-	const [X, setX] = useState<number>(0)
-	const [Y, setY] = useState<number>(0)
-
-	const {messageFontSize, SetMessageSettings, isMessageSettings} = useContext(GlobalContext)
-
 
 	useEffect(() => {
 		ScrollChatToBottom()
@@ -50,6 +60,10 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 	const HandleClick = (e: React.MouseEvent<HTMLDivElement>, messageId: number, sender_id: number, content: string) => {
 		dispatch(setEditingMessage({content, id: messageId}))
 		SetMessageSettings(true)
+		SetSettingsCoordinates(e, sender_id)
+	}
+
+	const SetSettingsCoordinates = (e: React.MouseEvent<HTMLDivElement>, sender_id: number) => {
 
 		if (user_id !== sender_id) return
 
@@ -59,16 +73,15 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 		//calculating X and Y depending on where click was done,
 		//in order settingsBox doesn't cross window's borders
 		if (e.clientX + settingsBoxWidth >= window.innerWidth) {
-			setX(e.clientX - 170)
+			setSettingsX(e.clientX - 170)
 		} else {
-			setX(e.clientX)
+			setSettingsX(e.clientX)
 		}
 		if (e.clientY + inputBoxHeight >= window.innerHeight) {
-			setY(e.clientY - 90)
+			setSettingsY(e.clientY - 90)
 		} else {
-			setY(e.clientY)
+			setSettingsY(e.clientY)
 		}
-
 
 	}
 
@@ -76,24 +89,23 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 	return <ChatMessagesBoxWrapper id="scroll-cont"
 								   length={messages?.length ? messages?.length : 0}>
 
-		<ChatMessageSettings X={X}
-							 Y={Y}/>
+		<ChatMessageSettings X={settingsX}
+							 Y={settingsY}/>
 
 		{isMessageSettings && <div onClick={() => SetMessageSettings(false)} className="settings-overlay"/>}
 
 
 		{messages?.map(({content, sender_id, createdAt, updatedAt, chat_message_id}, i) => {
-			let isPrevMessageFromSameSender: boolean | null = null
-			if (messages[i - 1])
-				isPrevMessageFromSameSender = messages[i - 1].sender_id === messages[i].sender_id
 
+			const isPrevMessageFromSameSender = IsPrevMessageFromSameSender(messages, i)
+
+			//checking if curMessage is loading(being updated or deleted)
 			const isLoading = loadingMessagesIds.find(id => id === chat_message_id)
 			//calculation an animation delay
 			let delayNum = 1
 			delayNum = messages.length - i + 1 //as farther el as less the delay
 			return <MessageWrapper
 				isPrevMessageFromSameSender={isPrevMessageFromSameSender}
-
 				fontSize={messageFontSize ? messageFontSize : localStorage.getItem("message-font-size")}
 				key={chat_message_id}
 			>

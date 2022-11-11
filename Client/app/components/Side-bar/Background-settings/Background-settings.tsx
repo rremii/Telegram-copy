@@ -6,7 +6,7 @@ import {SideBarContext} from "../../../hooks/useSideBarContext"
 
 const BackgroundSettings = () => {
 
-	const {isBackgroundSettings, SetBackgroundSettings} = useContext(SideBarContext)
+	const {isBackgroundSettings} = useContext(SideBarContext)
 
 
 	return <BackgroundSettingsWrapper isBackground={isBackgroundSettings}>

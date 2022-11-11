@@ -41,6 +41,7 @@ const ChatCell: FC<IChatList> = ({
 		await router.push("/?chatId=" + chatId)
 		SetScreenMode("chat")
 	}
+
 	const title = firstName + " " + (lastName ? lastName : "")
 	return <ChatCellWrapper onClick={HandleCellClick} className="cell">
 		<div className="avatar">

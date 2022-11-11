@@ -66,7 +66,7 @@ const LogoutPopUpWrapper = styled.div<{
     //TODO check that all transition are applied to specific properties 
     transition: .3s;
     transform: ${({isLogoutPopUp}) => isLogoutPopUp ?
-	"translateY(0) scale(1)" : " scale(0.8)translateY(100px)"};
+            "translateY(0) scale(1)" : " scale(0.8)translateY(100px)"};
 
     h1 {
       font-family: Roboto, sans-serif;

@@ -29,9 +29,7 @@ const Header = () => {
 
 
 	useEffect(() => {
-
 		dispatch(fetchUsers(debouncedSearchString))
-
 	}, [debouncedSearchString])
 
 

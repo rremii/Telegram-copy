@@ -161,7 +161,7 @@ const Auth3Wrapper = styled.div<{ isActive: boolean }>`
           background-color: rgb(135, 116, 225);
           border-radius: 50%;
             // display: ${({isActive}) =>
-                  isActive ? "none" : "initial"};
+	isActive ? "none" : "initial"};
         }
 
         //img {

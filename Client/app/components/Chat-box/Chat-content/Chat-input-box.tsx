@@ -1,10 +1,10 @@
-import {FC, useContext, useEffect} from "react"
+import {FC, useContext} from "react"
 import styled from "styled-components"
 import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import Image from "next/image"
 import {Field, Form, Formik} from "formik"
 import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
-import {addMessage, removeLoadingMessageId, resetEditingMessage, setLoadingMessageId} from "../../../store/ChatSlice"
+import {addMessage, resetEditingMessage, setLoadingMessageId} from "../../../store/ChatSlice"
 import * as Yup from "yup"
 import useScrollArrow from "../../../hooks/useScrollArrow"
 import {ScrollChatToBottom} from "../../../utils/ScrollToChatBottom"
@@ -28,9 +28,11 @@ const ChatInputBox: FC<IChatInputBox> = () => {
 	const {user_id} = useTypedSelector(state => state.Me.me)
 
 
+	const [editMessage] = useEditMessageMutation()
+
 	const {isEditingMode, SetEditingMode} = useContext(GlobalContext)
+
 	const {isScrollArrow} = useScrollArrow()
-	const [editMessage, {isLoading, isSuccess, originalArgs,}] = useEditMessageMutation()
 
 
 	const CloseEditingMode = () => {
@@ -67,7 +69,7 @@ const ChatInputBox: FC<IChatInputBox> = () => {
 				resetForm()
 			})}
 		>
-			{({dirty, isValid, handleSubmit}) => (
+			{({dirty, isValid}) => (
 				<Form>
 					<div className="input-box">
 
@@ -281,7 +283,7 @@ const EditingBox = styled.div<{
       height: 100%;
       width: 20px;
       background-color: rgb(33, 33, 33);
-      box-shadow: rgb(33, 33, 33) 0px 0px 50px 50px;
+      box-shadow: rgb(33, 33, 33) 0 0 50px 50px;
     }
 
     h1 {

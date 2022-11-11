@@ -15,23 +15,6 @@ const Info: FC<IInfo> = () => {
 	const dispatch = useAppDispatch()
 
 
-	// const [currentAvatar, setCurrentAvatar] = useState(0)
-
-	// const NextAvatar = () => {
-	// 	if (currentAvatar !== ArrOfAvatars.length - 1) {
-	// 		setCurrentAvatar(currentAvatar + 1)
-	// 	} else {
-	// 		setCurrentAvatar(0)
-	// 	}
-	// }
-	// const PrevAvatar = () => {
-	// 	if (currentAvatar !== 0) {
-	// 		setCurrentAvatar(currentAvatar - 1)
-	// 	} else {
-	// 		setCurrentAvatar(ArrOfAvatars.length - 1)
-	// 	}
-	// }
-
 	const {profilePic} = useTypedSelector(state => state.Me.me)
 	const {lastName} = useTypedSelector(state => state.Me.me)
 	const {firstName} = useTypedSelector(state => state.Me.me)
@@ -40,13 +23,7 @@ const Info: FC<IInfo> = () => {
 
 
 	const ChangeAvatar = (e: ChangeEvent<HTMLInputElement>) => {
-
-		// const profilePic = e.currentTarget.value
-
 		if (e.target.files)
-			// dispatch(changeAvatar(URL.createObjectURL(e.target.files[0])))
-
-
 			dispatch(changeAvatar({
 				profilePic: e.target.files[0],
 				user_id

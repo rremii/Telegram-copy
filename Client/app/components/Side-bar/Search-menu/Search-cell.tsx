@@ -15,10 +15,12 @@ const SearchCell: FC<userInfo> = (userInfo) => {
 
 	const dispatch = useAppDispatch()
 
-	const {SetIsSearch} = useContext(SideBarContext)
-	const {SetScreenMode} = useContext(GlobalContext)
 
 	const {user_id} = useTypedSelector(state => state.Me.me)
+
+
+	const {SetIsSearch} = useContext(SideBarContext)
+	const {SetScreenMode} = useContext(GlobalContext)
 
 
 	const FindOrCreateChat = () => {

@@ -7,7 +7,7 @@ import {SideBarContext} from "../../../hooks/useSideBarContext"
 const Header = () => {
 
 
-	const {isSettings, SetIsSettings} = useContext(SideBarContext)
+	const {SetIsSettings} = useContext(SideBarContext)
 
 
 	const HandleArrowClick = () => {

@@ -26,17 +26,7 @@ const EditingForm = () => {
 
 	const [img, setImg] = useState<string>()
 	const fileRef = useRef<HTMLInputElement>(null)
-	// const HandleSubmit = async (values: FormValues) => {
-	// 	if (fileRef?.current?.files) {
-	// 		await dispatch(
-	// 			addUserBio({
-	// 				...values,
-	// 				profilePic: fileRef.current.files[0],
-	// 			})
-	// 		)
-	// 	}
-	// 	await router.push("email")
-	// }
+
 	const HandlePictureChange = (e: ChangeEvent<HTMLInputElement>) => {
 		if (e.target.files) setImg(URL.createObjectURL(e.target.files[0]))
 	}

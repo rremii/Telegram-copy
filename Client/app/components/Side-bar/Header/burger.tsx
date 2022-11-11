@@ -21,7 +21,7 @@ const Burger: FC<IBurgerMenu> = () => {
 		SetDarkMode,
 		isDarkMode
 	} = useContext(SideBarContext)
-	const {screenMode, SetScreenMode} = useContext(GlobalContext)
+	const {SetScreenMode} = useContext(GlobalContext)
 
 
 	const HandleFeatures = async () => {
