@@ -1,5 +1,5 @@
 import {BaseQueryFn, createApi} from "@reduxjs/toolkit/query/react"
-import {Chat, message} from "../store/types"
+import {Chat, Me, message} from "../store/types"
 import {AxiosRequestConfig} from "axios"
 import {$api} from "./index"
 
@@ -32,7 +32,6 @@ const axiosBaseQuery =
 
 
 export const ChatApiRtk = createApi({
-
 		reducerPath: "chatApiRtk",
 		baseQuery: axiosBaseQuery({
 			baseUrl: "http://localhost:5000/api/",
@@ -51,7 +50,7 @@ export const ChatApiRtk = createApi({
 		// }
 		// }
 		// ),
-		tagTypes: ["Message"],
+		tagTypes: ["Message", "Me"],
 		endpoints: (build) => ({
 			getAllMessages: build.query <message[], { chat_id: number | null, user_id: number }>({
 				query: ({chat_id, user_id}) => ({
@@ -66,6 +65,13 @@ export const ChatApiRtk = createApi({
 					method: "GET"
 				}),
 				providesTags: ["Message"],
+			}),
+			getMe: build.query <Me, void>({
+				query: () => ({
+					url: "me",
+					method: "GET"
+				}),
+				providesTags: ["Me"],
 			}),
 			deleteMessage: build.mutation<message, number>({
 				query: (id) => ({
@@ -84,7 +90,30 @@ export const ChatApiRtk = createApi({
 					}
 				},
 				invalidatesTags: ["Message"]
-			})
+			}),
+			editUserBio: build.mutation<message, {
+				profilePic: File | null,
+				user_id: number,
+				firstName: string,
+				lastName: string
+			}>({
+				query: ({user_id, firstName, lastName, profilePic}) => {
+					const formData = new FormData()
+					if (profilePic)
+						formData.append("profilePic", profilePic)
+					formData.append("user_id", user_id + "")
+					formData.append("firstName", firstName + "")
+					formData.append("lastName", lastName + "")
+					return {
+						url: "/edit",
+						method: "PUT",
+						data: formData
+						// body: {newContent, id},
+					}
+				},
+				invalidatesTags: ["Me"]
+			}),
+
 			//
 			//     transformResponse (values: BaseQueryResult<any>) {
 			//       debugger
@@ -113,6 +142,8 @@ export const {getAllMessages} = ChatApiRtk.endpoints
 export const {
 	useGetChatsByUserIdQuery,
 	useGetAllMessagesQuery,
+	useGetMeQuery,
 	useDeleteMessageMutation,
-	useEditMessageMutation
+	useEditMessageMutation,
+	useEditUserBioMutation
 } = ChatApiRtk

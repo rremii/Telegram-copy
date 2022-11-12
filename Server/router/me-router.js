@@ -11,5 +11,6 @@ router.post(
     // UploadMiddleware.single("profilePic"),
     meController.changeAvatar
 )
+router.put("/edit", meController.editUserBio)
 
 module.exports = router

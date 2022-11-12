@@ -4,11 +4,12 @@ import SideBar from "../components/Side-bar/Side-bar"
 import ChatBox from "../components/Chat-box/Chat-box"
 import InfoBox from "../components/Info-box/Info-box"
 import LogoutPopUp from "../components/Globals/Logout-pop-up"
-import {fetchMe} from "../store/MeSlice"
+import {fetchMe, setMe} from "../store/MeSlice"
 import {useAppDispatch} from "../store/ReduxStore"
 import {GlobalContext} from "../hooks/useGlobalContext"
 import {useRouter} from "next/router"
 import TelegramFeatures from "../components/TelegramFeatures/TelegramFeatures"
+import {useGetMeQuery} from "../api/ChatApiRtk"
 
 interface HomeType {
 }
@@ -20,9 +21,14 @@ const Home: FC<HomeType> = () => {
 
 	const {screenMode} = useContext(GlobalContext)
 
+
+	const {data: userData,} = useGetMeQuery()
+
+
 	useEffect(() => {
-		dispatch(fetchMe())
-	}, [])
+		if (userData)
+			dispatch(setMe(userData))
+	}, [userData])
 
 	const queryPath = router.asPath
 

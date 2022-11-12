@@ -3,9 +3,10 @@ import Image from "next/image"
 import React, {ChangeEvent, useRef, useState} from "react"
 import {Field, Form, Formik} from "formik"
 import {Rem} from "../../../../styles/functions/mixins"
-import {useTypedSelector} from "../../../store/ReduxStore"
+import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
 import {API_URL_STATIC} from "../../../api"
 import * as Yup from "yup"
+import {useEditMessageMutation, useEditUserBioMutation} from "../../../api/ChatApiRtk"
 
 interface formValues {
 	firstName: string,
@@ -18,10 +19,15 @@ const validSchema = Yup.object().shape({
 })
 
 const EditingForm = () => {
+	const dispatch = useAppDispatch()
 
 	const {profilePic} = useTypedSelector(state => state.Me.me)
+	const {user_id} = useTypedSelector(state => state.Me.me)
 	const {firstName} = useTypedSelector(state => state.Me.me)
 	const {lastName} = useTypedSelector(state => state.Me.me)
+
+
+	const [editUser] = useEditUserBioMutation()
 
 
 	const [img, setImg] = useState<string>()
@@ -35,6 +41,12 @@ const EditingForm = () => {
 		<Formik
 			onSubmit={(values: formValues) => {
 
+
+				editUser({
+					...values,
+					profilePic: fileRef?.current?.files ? fileRef?.current?.files[0] : null,
+					user_id
+				})
 
 			}}
 			validationSchema={validSchema}

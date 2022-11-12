@@ -9,7 +9,7 @@ import {useRouter} from "next/router"
 import {setCurrentChatId, setCurrentMemberInfo, setCurrentMemberOnline} from "../../../store/ChatSlice"
 import {Chat} from "../../../store/types"
 import {API_URL_STATIC} from "../../../api"
-import {getMessageDate} from "../../../utils/getMessageDate"
+import {getMessageTime} from "../../../utils/getMessageTime"
 import {getStatusByLastOnline} from "../../../utils/getStatusByLastOnline"
 
 interface IChatList extends Chat {
@@ -56,7 +56,7 @@ const ChatCell: FC<IChatList> = ({
 				<h1>{cutStringToLength(title, 15)}</h1>
 				<div className="message-info-cont">
 					<span className="date">
-						 {getMessageDate(lastMessage.updatedAt)}
+						 {getMessageTime(lastMessage.updatedAt)}
 					</span>
 				</div>
 			</div>

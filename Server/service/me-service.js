@@ -30,6 +30,7 @@ class MeService {
             lastOnline: user.userBio.lastOnline,
         }
     }
+
     async changeAvatar(profilePic, user_id) {
         if (!profilePic || !user_id) throw ApiError("invalid id or profile pic")
 
@@ -51,6 +52,7 @@ class MeService {
 
         return profilePicName
     }
+
     async updateOnline(user_id) {
         if (!user_id) throw ApiError("invalid id")
 
@@ -61,5 +63,24 @@ class MeService {
             lastOnline: Date.now(),
         })
     }
+
+    async editUserBio({ user_id, firstName, lastName }) {
+        if (!user_id || !firstName || !lastName) {
+            throw ApiError("invalid id, or wrong data")
+        }
+
+        return await UserBio.update(
+            {
+                firstName,
+                lastName,
+            },
+            {
+                where: {
+                    user_id,
+                },
+            }
+        )
+    }
 }
+
 module.exports = new MeService()

@@ -45,6 +45,10 @@ const MeSlice = createSlice({
 	name: "MeSlice",
 	initialState,
 	reducers: {
+		setMe(state, action: PayloadAction<Me>) {
+			state.me = action.payload
+		},
+
 		resetMeSlice() {
 			return initialState
 		}
@@ -56,5 +60,5 @@ const MeSlice = createSlice({
 
 	},
 })
-export const {resetMeSlice} = MeSlice.actions
+export const {resetMeSlice, setMe} = MeSlice.actions
 export default MeSlice.reducer

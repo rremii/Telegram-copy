@@ -26,6 +26,27 @@ class MeController {
             next(e)
         }
     }
+    async editUserBio(request, response, next) {
+        try {
+            const profilePic = request?.files?.profilePic
+            const { user_id, firstName, lastName } = request.body
+            if (profilePic) {
+                const newProfilePic = await MeService.changeAvatar(
+                    profilePic,
+                    +user_id
+                )
+            }
+
+            const updatedBio = MeService.editUserBio({
+                user_id,
+                firstName,
+                lastName,
+            })
+            response.json({ message: "user was updated" })
+        } catch (e) {
+            next(e)
+        }
+    }
 }
 
 module.exports = new MeController()

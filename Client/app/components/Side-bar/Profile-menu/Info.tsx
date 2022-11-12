@@ -5,6 +5,7 @@ import {Rem} from "../../../../styles/functions/mixins"
 import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
 import {API_URL_STATIC} from "../../../api"
 import {changeAvatar} from "../../../store/MeSlice"
+import {useGetMeQuery} from "../../../api/ChatApiRtk"
 
 interface IInfo {
 }
@@ -15,12 +16,18 @@ const Info: FC<IInfo> = () => {
 	const dispatch = useAppDispatch()
 
 
-	const {profilePic} = useTypedSelector(state => state.Me.me)
-	const {lastName} = useTypedSelector(state => state.Me.me)
-	const {firstName} = useTypedSelector(state => state.Me.me)
+	// const {profilePic} = useTypedSelector(state => state.Me.me)
+	// const {lastName} = useTypedSelector(state => state.Me.me)
+	// const {firstName} = useTypedSelector(state => state.Me.me)
 	const {email} = useTypedSelector(state => state.Me.me)
 	const {user_id} = useTypedSelector(state => state.Me.me)
 
+//TODO fix rtk query and make everything on it
+	const {data: user} = useGetMeQuery()
+
+	const profilePic = user?.profilePic
+	const firstName = user?.firstName
+	const lastName = user?.lastName
 
 	const ChangeAvatar = (e: ChangeEvent<HTMLInputElement>) => {
 		if (e.target.files)

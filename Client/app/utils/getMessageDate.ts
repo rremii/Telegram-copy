@@ -1,23 +1,32 @@
-const twentyFourHours = 60 * 60 * 24
+import {message} from "../store/types"
 
-export const getMessageDate = (stringDate: string | null) => {
+const twentyFourHours = 1000 * 60 * 60 * 24
+
+
+const getDateDifference = (stringDate: string) => {
 	if (!stringDate) return ""
-	const updatedDate = new Date(stringDate).getTime()
+	const createdDate = new Date(stringDate).getTime()
 
-	const difference = (Date.now() - updatedDate) / 1000
+	const difference = (Date.now() - createdDate)
+	if (difference <= twentyFourHours) return "Today"
 
-	if (difference <= twentyFourHours) {
-		return new Date(stringDate).getHours().toString().padStart(2, "0")
-			+ ":"
-			+ new Date(stringDate).getMinutes().toString().padStart(2, "0")
-	}
-	if (difference > twentyFourHours) {
+	const arrOfDate = new Date(stringDate).toLocaleString("en-us", {month: "long", day: "numeric"}).split(" ")
 
-		const arrOfDate = new Date(stringDate).toDateString().split(" ")
+	return arrOfDate[0] + " " + arrOfDate[1] // month + day
 
-		return arrOfDate[1] + " " + arrOfDate[2] // month + day
+}
 
-	}
+export const getMessageDate = (messages: message[], index: number) => {
+	const prevMessage = messages[index - 1]
+	const curMessage = messages[index]
 
-	return ""
+
+	const curCreationDate = getDateDifference(curMessage.createdAt)
+
+	if (!prevMessage) return curCreationDate
+	const prevCreationDate = getDateDifference(prevMessage.createdAt)
+
+	if (prevCreationDate !== curCreationDate) return curCreationDate
+
+	return null
 }

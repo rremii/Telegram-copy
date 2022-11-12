@@ -7,8 +7,9 @@ import ChatMessageSettings from "./Chat-message-settings"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
 import {ScrollChatToBottom} from "../../../utils/ScrollToChatBottom"
 import {removeLoadingMessageId, setEditingMessage} from "../../../store/ChatSlice"
-import {getMessageDate} from "../../../utils/getMessageDate"
+import {getMessageTime} from "../../../utils/getMessageTime"
 import {message} from "../../../store/types"
+import {getMessageDate} from "../../../utils/getMessageDate"
 
 interface IChatMessagesBox {
 
@@ -17,7 +18,7 @@ interface IChatMessagesBox {
 const IsPrevMessageFromSameSender = (messages: message[], index: number) => {
 	let isPrevMessageFromSameSender: boolean | null = null
 	const prevMessage = messages[index - 1]
-	const curMessage = messages[index - 1]
+	const curMessage = messages[index]
 	if (prevMessage)
 		isPrevMessageFromSameSender = prevMessage.sender_id === curMessage.sender_id
 	return isPrevMessageFromSameSender
@@ -97,18 +98,24 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 
 		{messages?.map(({content, sender_id, createdAt, updatedAt, chat_message_id}, i) => {
 
+
 			const isPrevMessageFromSameSender = IsPrevMessageFromSameSender(messages, i)
+
+			const messageDate = getMessageDate(messages, i)
 
 			//checking if curMessage is loading(being updated or deleted)
 			const isLoading = loadingMessagesIds.find(id => id === chat_message_id)
 			//calculation an animation delay
-			let delayNum = 1
-			delayNum = messages.length - i + 1 //as farther el as less the delay
+			const delayNum = messages.length - i + 1 //as farther el as less the delay
 			return <MessageWrapper
-				isPrevMessageFromSameSender={isPrevMessageFromSameSender}
+				isPrevMessageFromSameSender={messageDate ? true : isPrevMessageFromSameSender}
 				fontSize={messageFontSize ? messageFontSize : localStorage.getItem("message-font-size")}
 				key={chat_message_id}
 			>
+				{messageDate &&
+					<div className="date-cont">
+						<span>{messageDate}</span>
+					</div>}
 				<div
 					style={{
 						animationDelay: delayNum * 0.04 + 1 + "s",
@@ -118,7 +125,7 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 					{content}
 					<div className="extra-info">
 						{!isLoading ? <span
-								className="created-at">{updatedAt !== createdAt && "edited"} {isLoading && "fuck me lol"} {getMessageDate(createdAt)}</span>
+								className="created-at">{updatedAt !== createdAt && "edited"} {isLoading && "fuck me lol"} {getMessageTime(createdAt)}</span>
 							: <div className="loading-clock">
 								<img src="/clock-icon.svg"/>
 							</div>
@@ -174,7 +181,7 @@ const MessageWrapper = styled.div<{
   width: 100%;
   display: grid;
   font-family: Roboto, sans-serif;
-  padding: ${({isPrevMessageFromSameSender}) => isPrevMessageFromSameSender ? "3px 10px 0" : "10px 10px 0	"};
+  padding: ${({isPrevMessageFromSameSender}) => isPrevMessageFromSameSender ? "3px 10px 0" : "10px 10px 0"} !important;
   position: relative;
   word-wrap: anywhere;
   animation: fadeOut 0.5s forwards;
@@ -190,6 +197,23 @@ const MessageWrapper = styled.div<{
     100% {
       opacity: 1;
       transform: scaleY(1);
+    }
+  }
+
+  .date-cont {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 0;
+
+    span {
+      padding: 5px 7px;
+      border-radius: 10px;
+      background-color: hsla(196, 32.0886%, 10.0686%, 0.4);
+      font-family: Roboto, sans-serif;
+      font-size: ${Rem(15)};
+      color: white;
     }
   }
 
