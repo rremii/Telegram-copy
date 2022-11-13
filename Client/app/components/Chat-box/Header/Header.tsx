@@ -6,7 +6,7 @@ import useRipple from "../../../hooks/useRipple"
 import {AdaptiveValue} from "../../../../styles/functions/mixins"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
 import {useTypedSelector} from "../../../store/ReduxStore"
-import {API_URL_STATIC} from "../../../api"
+import {API_URL_STATIC} from "../../../api/config"
 import {getStatusByLastOnline} from "../../../utils/getStatusByLastOnline"
 
 interface IHeader {

@@ -3,9 +3,9 @@ import styled from "styled-components"
 import ChatCell from "./Chat-cell"
 import {SideBarContext} from "../../../hooks/useSideBarContext"
 import {useTypedSelector} from "../../../store/ReduxStore"
-import {useGetChatsByUserIdQuery} from "../../../api/ChatApiRtk"
 import Preroll from "../../../ui/Preroll"
 import useUpdateMemberOnline from "../../../hooks/useUpdateMemberOnline"
+import {useGetChatsByUserIdQuery} from "../../../api/rtk/ChatApi"
 
 
 const ChatMenu = () => {

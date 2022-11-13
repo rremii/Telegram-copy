@@ -3,9 +3,9 @@ import styled from "styled-components"
 import Image from "next/image"
 import {Rem} from "../../../../styles/functions/mixins"
 import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
-import {API_URL_STATIC} from "../../../api"
+import {API_URL_STATIC} from "../../../api/config"
 import {changeAvatar} from "../../../store/MeSlice"
-import {useGetMeQuery} from "../../../api/ChatApiRtk"
+import {useGetMeQuery} from "../../../api/rtk/MeApi"
 
 interface IInfo {
 }

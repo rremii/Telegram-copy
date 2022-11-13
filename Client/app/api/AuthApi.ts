@@ -1,4 +1,4 @@
-import {$api, API_URL} from "./index"
+import {$api, API_URL} from "./config"
 import axios from "axios"
 import {DefaultResponse, TokenResponse} from "./types"
 import {AuthUserBio, AuthUserEmail} from "../store/types"

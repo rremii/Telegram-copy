@@ -8,7 +8,7 @@ import {useAppDispatch} from "../../../store/ReduxStore"
 import {useRouter} from "next/router"
 import {setCurrentChatId, setCurrentMemberInfo, setCurrentMemberOnline} from "../../../store/ChatSlice"
 import {Chat} from "../../../store/types"
-import {API_URL_STATIC} from "../../../api"
+import {API_URL_STATIC} from "../../../api/config"
 import {getMessageTime} from "../../../utils/getMessageTime"
 import {getStatusByLastOnline} from "../../../utils/getStatusByLastOnline"
 

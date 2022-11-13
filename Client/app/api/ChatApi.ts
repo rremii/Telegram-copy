@@ -1,4 +1,4 @@
-import {$api} from "./index"
+import {$api} from "./config"
 import {Chat, message, messageData} from "../store/types"
 import {ChatResponse} from "./types"
 

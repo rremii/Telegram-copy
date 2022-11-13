@@ -1,4 +1,4 @@
-import {$api} from "./index"
+import {$api} from "./config"
 import {userInfo} from "../store/types"
 import {ParseSearchString} from "../utils/parseSearchString"
 

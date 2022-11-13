@@ -9,7 +9,7 @@ import * as Yup from "yup"
 import useScrollArrow from "../../../hooks/useScrollArrow"
 import {ScrollChatToBottom} from "../../../utils/ScrollToChatBottom"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
-import {useEditMessageMutation} from "../../../api/ChatApiRtk"
+import {useEditMessageMutation} from "../../../api/rtk/ChatApi"
 
 interface IChatInputBox {
 }

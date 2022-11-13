@@ -5,7 +5,7 @@ import {PreloadedState} from "redux"
 import SearchSlice from "./SearchSlice"
 import MeSlice from "./MeSlice"
 import ChatSlice from "./ChatSlice"
-import {ChatApiRtk} from "../api/ChatApiRtk"
+import {Api} from "../api/config/Api"
 
 // export const store = configureStore({
 //     reducer: {
@@ -21,7 +21,7 @@ const rootReducer = combineReducers({
 	Search: SearchSlice,
 	Me: MeSlice,
 	Chats: ChatSlice,
-	[ChatApiRtk.reducerPath]: ChatApiRtk.reducer,
+	[Api.reducerPath]: Api.reducer,
 
 })
 export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
@@ -29,7 +29,7 @@ export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
 		reducer: rootReducer,
 		preloadedState,
 		middleware: (getDefaultMiddleware =>
-			getDefaultMiddleware().concat(ChatApiRtk.middleware))
+			getDefaultMiddleware().concat(Api.middleware))
 	})
 
 }

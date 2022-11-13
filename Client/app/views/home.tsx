@@ -9,7 +9,7 @@ import {useAppDispatch} from "../store/ReduxStore"
 import {GlobalContext} from "../hooks/useGlobalContext"
 import {useRouter} from "next/router"
 import TelegramFeatures from "../components/TelegramFeatures/TelegramFeatures"
-import {useGetMeQuery} from "../api/ChatApiRtk"
+import {useGetMeQuery} from "../api/rtk/MeApi"
 
 interface HomeType {
 }

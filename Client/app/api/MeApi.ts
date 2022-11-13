@@ -1,4 +1,4 @@
-import {$api} from "./index"
+import {$api} from "./config"
 
 import {Me} from "../store/types"
 

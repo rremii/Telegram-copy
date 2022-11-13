@@ -4,9 +4,9 @@ import React, {ChangeEvent, useRef, useState} from "react"
 import {Field, Form, Formik} from "formik"
 import {Rem} from "../../../../styles/functions/mixins"
 import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
-import {API_URL_STATIC} from "../../../api"
+import {API_URL_STATIC} from "../../../api/config"
 import * as Yup from "yup"
-import {useEditMessageMutation, useEditUserBioMutation} from "../../../api/ChatApiRtk"
+import {useEditUserBioMutation} from "../../../api/rtk/MeApi"
 
 interface formValues {
 	firstName: string,

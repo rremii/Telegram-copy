@@ -2,7 +2,6 @@ import {FC, useContext, useEffect, useState} from "react"
 import styled from "styled-components"
 import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
-import {useGetAllMessagesQuery} from "../../../api/ChatApiRtk"
 import ChatMessageSettings from "./Chat-message-settings"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
 import {ScrollChatToBottom} from "../../../utils/ScrollToChatBottom"
@@ -10,6 +9,7 @@ import {removeLoadingMessageId, setEditingMessage} from "../../../store/ChatSlic
 import {getMessageTime} from "../../../utils/getMessageTime"
 import {message} from "../../../store/types"
 import {getMessageDate} from "../../../utils/getMessageDate"
+import {useGetAllMessagesQuery} from "../../../api/rtk/ChatApi"
 
 interface IChatMessagesBox {
 
@@ -22,6 +22,14 @@ const IsPrevMessageFromSameSender = (messages: message[], index: number) => {
 	if (prevMessage)
 		isPrevMessageFromSameSender = prevMessage.sender_id === curMessage.sender_id
 	return isPrevMessageFromSameSender
+}
+const IsNextMessageFromSameSender = (messages: message[], index: number) => {
+	let isNextMessageFromSameSender: boolean | null = null
+	const nextMessage = messages[index + 1]
+	const curMessage = messages[index]
+	if (nextMessage)
+		isNextMessageFromSameSender = nextMessage.sender_id === curMessage.sender_id
+	return isNextMessageFromSameSender
 }
 
 const ChatMessagesBox: FC<IChatMessagesBox> = () => {
@@ -100,6 +108,7 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 
 
 			const isPrevMessageFromSameSender = IsPrevMessageFromSameSender(messages, i)
+			const isNextMessageFromSameSender = IsNextMessageFromSameSender(messages, i)
 
 			const messageDate = getMessageDate(messages, i)
 
@@ -107,7 +116,10 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 			const isLoading = loadingMessagesIds.find(id => id === chat_message_id)
 			//calculation an animation delay
 			const delayNum = messages.length - i + 1 //as farther el as less the delay
+
+
 			return <MessageWrapper
+				isNextMessageFromSameSender={isNextMessageFromSameSender}
 				isPrevMessageFromSameSender={messageDate ? true : isPrevMessageFromSameSender}
 				fontSize={messageFontSize ? messageFontSize : localStorage.getItem("message-font-size")}
 				key={chat_message_id}
@@ -132,8 +144,9 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 						}
 
 					</div>
-					<img src={user_id === sender_id ? "/bubble-tail-left-purple.svg" : "/bubble-tail-left.svg"}
-						 alt="bubble-tail"/>
+					{!isNextMessageFromSameSender &&
+						<img src={user_id === sender_id ? "/bubble-tail-left-purple.svg" : "/bubble-tail-left.svg"}
+							 alt="bubble-tail"/>}
 				</div>
 			</MessageWrapper>
 		})}
@@ -177,11 +190,12 @@ const ChatMessagesBoxWrapper = styled.div<{
 const MessageWrapper = styled.div<{
 	fontSize: string | null
 	isPrevMessageFromSameSender: boolean | null
+	isNextMessageFromSameSender: boolean | null
 }>`
   width: 100%;
   display: grid;
   font-family: Roboto, sans-serif;
-  padding: ${({isPrevMessageFromSameSender}) => isPrevMessageFromSameSender ? "3px 10px 0" : "10px 10px 0"} !important;
+  padding: ${({isPrevMessageFromSameSender}) => isPrevMessageFromSameSender ? "2px 10px 0" : "10px 10px 0"} !important;
   position: relative;
   word-wrap: anywhere;
   animation: fadeOut 0.5s forwards;
@@ -274,11 +288,11 @@ const MessageWrapper = styled.div<{
   }
 
   .your-message {
-    border-radius: 12px 12px 0 12px;
     justify-self: end;
     background-color: rgb(135, 116, 225);
     position: relative;
     cursor: pointer;
+    border-radius: ${({isNextMessageFromSameSender}) => isNextMessageFromSameSender ? "12px 12px 7px 12px" : "12px 7px 0 12px"} !important;
 
     img {
       bottom: 0;
@@ -289,8 +303,8 @@ const MessageWrapper = styled.div<{
 
   .other-message {
     justify-self: start;
-    border-radius: 12px 12px 12px 0;
     background-color: rgb(33, 33, 33);
+    border-radius: ${({isNextMessageFromSameSender}) => isNextMessageFromSameSender ? "12px 12px 12px 7px" : "7px 12px 12px 0"} !important;
 
     img {
       bottom: 0;

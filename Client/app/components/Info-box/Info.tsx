@@ -3,7 +3,7 @@ import Image from "next/image"
 import {Rem} from "../../../styles/functions/mixins"
 import {useTypedSelector} from "../../store/ReduxStore"
 import React from "react"
-import {API_URL_STATIC} from "../../api"
+import {API_URL_STATIC} from "../../api/config"
 import {getStatusByLastOnline} from "../../utils/getStatusByLastOnline"
 
 const Info = () => {

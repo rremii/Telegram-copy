@@ -2,10 +2,10 @@ import styled from "styled-components"
 import {FC, useContext} from "react"
 import Image from "next/image"
 import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
-import {useDeleteMessageMutation} from "../../../api/ChatApiRtk"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
 import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
 import {setLoadingMessageId} from "../../../store/ChatSlice"
+import {useDeleteMessageMutation} from "../../../api/rtk/ChatApi"
 
 interface IChatMessageSettings {
 	X: number,
