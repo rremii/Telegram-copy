@@ -36,6 +36,9 @@ const Info: FC<IInfo> = () => {
 				user_id
 			}))
 	}
+	const HandleEmailClick = (email: string) => {
+		navigator.clipboard.writeText(email)
+	}
 
 
 	return <InfoWrapper>
@@ -62,7 +65,7 @@ const Info: FC<IInfo> = () => {
 				<img src={"add-photo-icon.svg"} alt="add photo"/>
 				<input onChange={ChangeAvatar} type="file" accept="*.png,*.jpg,*.jpeg"/>
 			</div>
-			<div className="email-cont">
+			<div onClick={() => HandleEmailClick(email)} className="email-cont">
 				<div className="icon">
 					<Image src="/email.svg" width={35} height={35}/>
 				</div>

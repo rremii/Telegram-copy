@@ -30,7 +30,8 @@ function MyApp({Component, pageProps}: AppPropsWithLayout) {
 			{getLayout(
 				<Provider store={store}>
 					<Head>
-						<title>telegram</title>
+						<link rel="icon" href="/telegram-icon.svg"/>
+						<title>Telegram Copy</title>
 					</Head>
 					<Component {...pageProps} />
 				</Provider>

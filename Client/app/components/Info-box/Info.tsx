@@ -16,6 +16,10 @@ const Info = () => {
 	const {lastOnline} = useTypedSelector(state => state.Chats.currentChat.memberInfo)
 
 
+	const HandleEmailClick = (email: string) => {
+		navigator.clipboard.writeText(email)
+	}
+
 	return <InfoWrapper>
 		<div className="avatar">
 
@@ -26,7 +30,7 @@ const Info = () => {
 			</div>
 		</div>
 		<div className="padding-cont">
-			<div className="info-box">
+			<div onClick={() => HandleEmailClick(email)} className="info-box">
 				<Image width={35} height={35} src="/email.svg"/>
 				<div className="text-cont">
 					<h1>{email}</h1>
