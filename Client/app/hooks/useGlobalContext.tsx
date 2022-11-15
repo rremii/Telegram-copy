@@ -16,6 +16,8 @@ export interface IGlobalContext {
 	SetMessageSettings: (values: boolean) => void
 	isEditingMode: boolean
 	SetEditingMode: (values: boolean) => void
+	isChatSettings: boolean
+	SetChatSettings: (values: boolean) => void
 }
 
 
@@ -41,6 +43,9 @@ export const GlobalContext = createContext<IGlobalContext>({
 	isEditingMode: false,
 	SetEditingMode: (values: boolean) => {
 	},
+	isChatSettings: false,
+	SetChatSettings: (values: boolean) => {
+	}
 })
 
 
@@ -53,6 +58,7 @@ const useGlobalContext = (): IGlobalContext => {
 	const [language, setLanguage] = useLocalStorage("language", "English")
 	const [isMessageSettings, setMessageSettings] = useState(false)
 	const [isEditingMode, setEditingMode] = useState(false)
+	const [isChatSettings, setChatSettings] = useState(false)
 
 	const SetScreenMode = (value: "sideBar" | "chat" | "info") => {
 		setScreenMode(value)
@@ -75,6 +81,9 @@ const useGlobalContext = (): IGlobalContext => {
 	const SetEditingMode = (value: boolean) => {
 		setEditingMode(value)
 	}
+	const SetChatSettings = (value: boolean) => {
+		setChatSettings(value)
+	}
 	return {
 		screenMode,
 		SetScreenMode,
@@ -89,7 +98,9 @@ const useGlobalContext = (): IGlobalContext => {
 		isEditingMode,
 		SetEditingMode,
 		isMessageSettings,
-		SetMessageSettings
+		SetMessageSettings,
+		isChatSettings,
+		SetChatSettings
 	}
 }
 export default useGlobalContext

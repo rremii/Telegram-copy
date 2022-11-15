@@ -68,14 +68,13 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 
 	const HandleClick = (e: React.MouseEvent<HTMLDivElement>, messageId: number, sender_id: number, content: string) => {
 		dispatch(setEditingMessage({content, id: messageId}))
+		if (user_id !== sender_id) return
+		
 		SetMessageSettings(true)
-		SetSettingsCoordinates(e, sender_id)
+		SetSettingsCoordinates(e)
 	}
 
-	const SetSettingsCoordinates = (e: React.MouseEvent<HTMLDivElement>, sender_id: number) => {
-
-		if (user_id !== sender_id) return
-
+	const SetSettingsCoordinates = (e: React.MouseEvent<HTMLDivElement>) => {
 		const settingsBoxWidth = 150
 		const inputBoxHeight = 150
 

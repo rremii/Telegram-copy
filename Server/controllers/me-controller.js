@@ -37,7 +37,7 @@ class MeController {
                 )
             }
 
-            const updatedBio = MeService.editUserBio({
+            const updatedBio = await MeService.editUserBio({
                 user_id,
                 firstName,
                 lastName,

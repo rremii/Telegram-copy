@@ -44,7 +44,7 @@ const ChatMessageSettings: FC<IChatMessageSettings> = ({X, Y}) => {
 	}
 
 
-	return <MessageSettings id="qwe" onMouseLeave={HandleMouseLeave} isMessageSettings={isMessageSettings} X={X} Y={Y}
+	return <MessageSettings onMouseLeave={HandleMouseLeave} isMessageSettings={isMessageSettings} X={X} Y={Y}
 
 	>
 		<div className="content-cont">

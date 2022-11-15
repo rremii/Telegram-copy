@@ -8,6 +8,7 @@ import {GlobalContext} from "../../../hooks/useGlobalContext"
 import {useTypedSelector} from "../../../store/ReduxStore"
 import {API_URL_STATIC} from "../../../api/config"
 import {getStatusByLastOnline} from "../../../utils/getStatusByLastOnline"
+import ChatSettings from "./Chat-settings"
 
 interface IHeader {
 
@@ -18,11 +19,12 @@ const Header: FC<IHeader> = () => {
 
 	const {memberInfo} = useTypedSelector(state => state.Chats.currentChat)
 
-	const {screenMode, SetScreenMode} = useContext(GlobalContext)
+	const {screenMode, SetScreenMode, SetChatSettings} = useContext(GlobalContext)
 	const {X: XMore, Y: YMore, isRipple: isRippleMore, SetIsRipple: SetIsRippleMore} = useRipple()
 
 
 	const HandleMoreClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+		SetChatSettings(true)
 		SetIsRippleMore(e)
 	}
 	const HandleArrowClick = () => {
@@ -34,6 +36,7 @@ const Header: FC<IHeader> = () => {
 
 
 	return <HeaderWrapper screenMode={screenMode}>
+		<ChatSettings/>
 		<section className="chat-info">
 			<button onClick={HandleArrowClick} className="arrow">
 				<Image width={24} height={24} src="/arrow-left-icon.svg"/>
@@ -70,6 +73,7 @@ const HeaderWrapper = styled.div<{
   align-items: center;
   padding-left: 16px;
   padding-right: 16px;
+  position: relative;
   @media screen and (min-width: 1000px) {
     max-width: calc(100vw - 420px);
   }
