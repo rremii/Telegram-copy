@@ -1,5 +1,5 @@
 import {Api} from "../config/Api"
-import {Chat, Me, message} from "../../store/types"
+import {Chat, message} from "../../store/types"
 
 const ChatApi = Api.injectEndpoints({
 	endpoints: (build) => ({
@@ -7,15 +7,15 @@ const ChatApi = Api.injectEndpoints({
 			query: ({chat_id, user_id}) => ({
 				url: "messages/" + chat_id + "/" + user_id,
 				method: "GET"
-			})
-			// providesTags: ['Post'],
+			}),
+			providesTags: ["Message"],
 		}),
 		getChatsByUserId: build.query <Chat[], { user_id: number }>({
 			query: ({user_id}) => ({
 				url: `chatsByUserId/${user_id}`,
 				method: "GET"
 			}),
-			providesTags: ["Message"],
+			providesTags: ["Chat"],
 		}),
 
 		deleteMessage: build.mutation<message, number>({
@@ -36,6 +36,16 @@ const ChatApi = Api.injectEndpoints({
 			},
 			invalidatesTags: ["Message"]
 		}),
+		deleteChat: build.mutation<{ message: string }, number[]>({
+			query: (userIds) => {
+				return {
+					url: "/chat",
+					method: "DELETE",
+					data: userIds
+				}
+			},
+			invalidatesTags: ["Chat"]
+		}),
 
 	}),
 	overrideExisting: false,
@@ -46,4 +56,5 @@ export const {
 	useGetAllMessagesQuery,
 	useDeleteMessageMutation,
 	useEditMessageMutation,
+	useDeleteChatMutation
 } = ChatApi

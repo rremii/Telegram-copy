@@ -3,9 +3,10 @@ import {FC, useContext} from "react"
 import Image from "next/image"
 import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
-import {useAppDispatch} from "../../../store/ReduxStore"
-import {useDeleteMessageMutation} from "../../../api/rtk/ChatApi"
-import {useOutside} from "../../../hooks/useOutside"
+import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
+import {useDeleteChatMutation} from "../../../api/rtk/ChatApi"
+import {useGetMeQuery} from "../../../api/rtk/MeApi"
+import {useRouter} from "next/router"
 
 interface IChatSettings {
 
@@ -13,20 +14,18 @@ interface IChatSettings {
 
 const ChatSettings: FC<IChatSettings> = () => {
 	const dispatch = useAppDispatch()
-
+	const router = useRouter()
 
 	// const {id: messageId} = useTypedSelector(state => state.Chats.editingMessage)
 	// const {content: messageContent} = useTypedSelector(state => state.Chats.editingMessage)
+	const {user_id} = useTypedSelector(state => state.Chats.currentChat.memberInfo)
 
-	const [deleteMessage] = useDeleteMessageMutation()
 
+	const {data: userData} = useGetMeQuery()
+	const [deleteChat] = useDeleteChatMutation()
 
-	const {ref, isShow, setIsShow, refBtn} = useOutside(false)
 
 	const {
-		SetEditingMode,
-		SetMessageSettings,
-		isMessageSettings,
 		SetChatSettings,
 		isChatSettings
 	} = useContext(GlobalContext)
@@ -42,11 +41,9 @@ const ChatSettings: FC<IChatSettings> = () => {
 
 	const DeleteMessage = () => {
 		SetChatSettings(false)
-		// if (messageId) {
-		// 	deleteMessage(messageId)
-		// 	dispatch(setLoadingMessageId(messageId))
-		// }
-		// SetMessageSettings(false)
+		if (!userData) return
+		deleteChat([user_id, userData.user_id])
+		router.push("/")
 	}
 	const HandleOverlayClick = () => {
 		SetChatSettings(false)

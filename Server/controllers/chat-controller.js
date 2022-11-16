@@ -1,5 +1,6 @@
 const ChatService = require("../service/chats/chat-service")
 const MeService = require("../service/me-service")
+const { debug } = require("nodemon/lib/utils")
 
 class ChatController {
     async findOrCreate(request, response, next) {
@@ -23,6 +24,18 @@ class ChatController {
             const chats = await ChatService.getChatsByUserId(userId)
 
             response.json(chats)
+        } catch (e) {
+            next(e)
+        }
+    }
+
+    async deleteChat(request, response, next) {
+        try {
+            const userIds = request.body
+
+            await ChatService.deleteChat(userIds)
+
+            response.json({ message: "chat was successfully deleted" })
         } catch (e) {
             next(e)
         }

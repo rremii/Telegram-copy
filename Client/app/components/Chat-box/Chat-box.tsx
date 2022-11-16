@@ -20,8 +20,11 @@ const ChatBox: FC<ChatBoxType> = () => {
 						   currentChatId={currentChatId} screenMode={screenMode}>
 		<div className="chat-box-content">
 
+
 			<Header/>
 			<ChatContent/>
+
+
 		</div>
 	</ChatBoxWrapper>
 }
@@ -74,6 +77,5 @@ const ChatBoxWrapper = styled.div<{
     height: 100%;
     display: ${({currentChatId}) => currentChatId ? "flex" : "none"};
     flex-direction: column;
-
   }
 `

@@ -24,6 +24,7 @@ Chat.hasOne(LastMessage, {
 })
 LastMessage.belongsTo(Chat, {
     foreignKey: "chat_id",
+    onDelete: "cascade",
 })
 
 module.exports = { LastMessage }

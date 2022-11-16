@@ -49,6 +49,7 @@ User.hasMany(ChatMessage, {
 })
 ChatMessage.belongsTo(Chat, {
     foreignKey: "sender_id",
+    onDelete: "cascade",
 })
 
 module.exports = { ChatMessage }

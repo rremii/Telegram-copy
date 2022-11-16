@@ -37,6 +37,7 @@ Chat.hasMany(UnSeenMessage, {
 })
 UnSeenMessage.belongsTo(Chat, {
     foreignKey: "chat_id",
+    onDelete: "cascade",
 })
 
 module.exports = { UnSeenMessage }

@@ -77,7 +77,7 @@ const AuthCode: FC<Auth2Type> = () => {
 				</h2>
 				<Formik
 					initialValues={{
-						code: "" as string,
+						code: "11111" as string,
 					}}
 					onSubmit={HandleSubmit}
 				>

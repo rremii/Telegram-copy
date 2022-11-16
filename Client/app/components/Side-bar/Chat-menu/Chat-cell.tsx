@@ -32,6 +32,7 @@ const ChatCell: FC<IChatList> = ({
 	const {SetScreenMode} = useContext(GlobalContext)
 
 
+//TODO add hook and render chat on url change
 	const HandleCellClick = async () => {
 		dispatch(setCurrentChatId({chatId}))
 		dispatch(setCurrentMemberInfo(memberInfo))

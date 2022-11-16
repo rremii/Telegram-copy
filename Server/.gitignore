@@ -1,5 +1,6 @@
 .idea
 .env
+db.js
 node_modules
 
 

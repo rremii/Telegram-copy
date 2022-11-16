@@ -6,5 +6,6 @@ const router = Router()
 
 router.post("/chat", chatController.findOrCreate)
 router.get("/chatsByUserId/:userId", chatController.getChatsByUserId)
+router.delete("/chat", chatController.deleteChat)
 
 module.exports = router

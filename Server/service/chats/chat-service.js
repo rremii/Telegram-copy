@@ -90,7 +90,6 @@ class ChatService {
                 unSeenMessages: chat.unSeenMessages ? chat.unSeenMessages : 0,
             }
         })
-
         return await Promise.all(
             chats.map(async (chat) => {
                 const chat_id = chat.chat_id
@@ -114,7 +113,6 @@ class ChatService {
                         },
                     },
                 })
-
                 const member = currentChat.users[0]
 
                 return {
@@ -137,6 +135,16 @@ class ChatService {
         lastMessage.content = content
 
         return await lastMessage.save()
+    }
+    async deleteChat(userIds) {
+        if (!userIds) return ApiError("wrong user ids")
+        const chat = await ChatService.#findChatByIds(userIds)
+
+        return await Chat.destroy({
+            where: {
+                chat_id: chat.chat_id,
+            },
+        })
     }
 }
 

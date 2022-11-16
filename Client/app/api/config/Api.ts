@@ -29,7 +29,7 @@ export const Api = createApi({
 			baseUrl: "http://localhost:5000/api/",
 		}),
 
-		tagTypes: ["Message", "Me"],
+		tagTypes: ["Message", "Me", "Chat"],
 		endpoints: (build) => ({}),
 	}
 )

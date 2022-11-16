@@ -75,7 +75,7 @@ const AuthEmail: FC<Auth1Type> = () => {
 					validationSchema={validSchema}
 					initialValues={
 						{
-							email: "",
+							email: "noruto2021@gmail.com",
 							isRememberMe: false,
 						} as formValues
 					}
