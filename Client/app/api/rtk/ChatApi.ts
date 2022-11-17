@@ -31,7 +31,6 @@ const ChatApi = Api.injectEndpoints({
 					url: "/messages/",
 					method: "PUT",
 					data: {newContent, id}
-					// body: {newContent, id},
 				}
 			},
 			invalidatesTags: ["Message"]

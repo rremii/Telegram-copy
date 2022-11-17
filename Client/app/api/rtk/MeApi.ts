@@ -29,7 +29,6 @@ const MeApi = Api.injectEndpoints({
 					url: "/edit",
 					method: "PUT",
 					data: formData
-					// body: {newContent, id},
 				}
 			},
 			invalidatesTags: ["Me"]

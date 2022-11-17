@@ -11,21 +11,11 @@ interface IHeader {
 const Header: FC<IHeader> = () => {
 
 
-	// const {memberInfo} = useTypedSelector(state => state.Chats.currentChat)
-	//
 	const {screenMode, SetScreenMode} = useContext(GlobalContext)
-	// const {X: XMore, Y: YMore, isRipple: isRippleMore, SetIsRipple: SetIsRippleMore} = useRipple()
-	//
-	//
-	// const HandleMoreClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-	// 	SetIsRippleMore(e)
-	// }
+
 	const HandleArrowClick = () => {
 		SetScreenMode(screenMode === "sideBar" ? "chat" : "sideBar")
 	}
-	// const HandleAvatarClick = () => {
-	// 	SetScreenMode("info")
-	// }
 
 
 	return <HeaderWrapper screenMode={screenMode}>
