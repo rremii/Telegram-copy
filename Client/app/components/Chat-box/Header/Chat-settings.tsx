@@ -7,6 +7,7 @@ import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
 import {useDeleteChatMutation} from "../../../api/rtk/ChatApi"
 import {useGetMeQuery} from "../../../api/rtk/MeApi"
 import {useRouter} from "next/router"
+import {resetCurrentChat} from "../../../store/ChatSlice"
 
 interface IChatSettings {
 
@@ -43,6 +44,7 @@ const ChatSettings: FC<IChatSettings> = () => {
 		SetChatSettings(false)
 		if (!userData) return
 		deleteChat([user_id, userData.user_id])
+		dispatch(resetCurrentChat())
 		router.push("/")
 	}
 	const HandleOverlayClick = () => {

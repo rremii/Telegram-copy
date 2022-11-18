@@ -129,13 +129,28 @@ const ChatSlice = createSlice({
 		setEditingMessage(state, action: PayloadAction<EditingMessage>) {
 			state.editingMessage = action.payload
 		},
-		resetEditingMessage(state) {
-			state.editingMessage = {id: null, content: ""}
-		},
 
 		setLoadingMessageId(state, action: PayloadAction<number>) {
 			state.loadingMessagesIds.push(action.payload)
 
+		},
+		resetEditingMessage(state) {
+			state.editingMessage = {id: null, content: ""}
+		},
+		resetCurrentChat(state) {
+			state.currentChatId = null
+			state.currentChat = {
+				memberInfo: {
+					firstName: "",
+					lastName: null,
+					profilePic: null,
+					userBio_id: 0,
+					user_id: 0,
+					email: "",
+					lastOnline: null
+				},
+				messages: []
+			}
 		},
 		removeLoadingMessageId(state,) {
 			state.loadingMessagesIds = []
@@ -165,6 +180,7 @@ export const {
 	setCurrentMemberInfo,
 	resetEditingMessage,
 	setLoadingMessageId,
-	removeLoadingMessageId
+	removeLoadingMessageId,
+	resetCurrentChat
 } = ChatSlice.actions
 export default ChatSlice.reducer

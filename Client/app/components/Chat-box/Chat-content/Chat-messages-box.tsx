@@ -69,7 +69,7 @@ const ChatMessagesBox: FC<IChatMessagesBox> = () => {
 	const HandleClick = (e: React.MouseEvent<HTMLDivElement>, messageId: number, sender_id: number, content: string) => {
 		dispatch(setEditingMessage({content, id: messageId}))
 		if (user_id !== sender_id) return
-		
+
 		SetMessageSettings(true)
 		SetSettingsCoordinates(e)
 	}
@@ -201,7 +201,7 @@ const MessageWrapper = styled.div<{
   opacity: 0;
   animation-delay: 0.5s;
   //align-items: center;
-  flex: 1 1 auto;
+  //flex: 1 1 auto;
   @keyframes fadeOut {
     0% {
       opacity: 0;
@@ -242,7 +242,7 @@ const MessageWrapper = styled.div<{
     animation: fadeOut 0.5s forwards;
     opacity: 0;
     animation-delay: 0.5s;
-    height: 100%;
+    height: min-content;
 
 
     .extra-info {
