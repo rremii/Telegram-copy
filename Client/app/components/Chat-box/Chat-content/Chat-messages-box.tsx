@@ -15,6 +15,7 @@ interface IChatMessagesBox {
 
 }
 
+
 const IsPrevMessageFromSameSender = (messages: message[], index: number) => {
 	let isPrevMessageFromSameSender: boolean | null = null
 	const prevMessage = messages[index - 1]

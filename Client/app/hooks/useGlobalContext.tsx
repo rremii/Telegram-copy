@@ -18,6 +18,8 @@ export interface IGlobalContext {
 	SetEditingMode: (values: boolean) => void
 	isChatSettings: boolean
 	SetChatSettings: (values: boolean) => void
+	isChatDeletePopUp: boolean
+	SetChatDeletePopUp: (values: boolean) => void
 }
 
 
@@ -45,6 +47,9 @@ export const GlobalContext = createContext<IGlobalContext>({
 	},
 	isChatSettings: false,
 	SetChatSettings: (values: boolean) => {
+	},
+	isChatDeletePopUp: false,
+	SetChatDeletePopUp: (values) => {
 	}
 })
 
@@ -59,6 +64,8 @@ const useGlobalContext = (): IGlobalContext => {
 	const [isMessageSettings, setMessageSettings] = useState(false)
 	const [isEditingMode, setEditingMode] = useState(false)
 	const [isChatSettings, setChatSettings] = useState(false)
+	const [isChatDeletePopUp, setChatDeletePopUp] = useState(false)
+
 
 	const SetScreenMode = (value: "sideBar" | "chat" | "info") => {
 		setScreenMode(value)
@@ -84,6 +91,10 @@ const useGlobalContext = (): IGlobalContext => {
 	const SetChatSettings = (value: boolean) => {
 		setChatSettings(value)
 	}
+	const SetChatDeletePopUp = (value: boolean) => {
+		setChatDeletePopUp(value)
+	}
+
 	return {
 		screenMode,
 		SetScreenMode,
@@ -100,7 +111,9 @@ const useGlobalContext = (): IGlobalContext => {
 		isMessageSettings,
 		SetMessageSettings,
 		isChatSettings,
-		SetChatSettings
+		SetChatSettings,
+		isChatDeletePopUp,
+		SetChatDeletePopUp
 	}
 }
 export default useGlobalContext

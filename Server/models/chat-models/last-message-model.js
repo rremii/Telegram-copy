@@ -1,6 +1,7 @@
 const sequelize = require("../../db")
 const { INTEGER, STRING } = require("sequelize")
 const { Chat } = require("./chat-model")
+
 //TODO reference it to the message due to its bugging when you delete the last one,and change add message method dut to it
 const LastMessage = sequelize.define(
     "lastMessage",

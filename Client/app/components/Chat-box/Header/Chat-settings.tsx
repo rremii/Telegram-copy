@@ -28,7 +28,8 @@ const ChatSettings: FC<IChatSettings> = () => {
 
 	const {
 		SetChatSettings,
-		isChatSettings
+		isChatSettings,
+		SetChatDeletePopUp
 	} = useContext(GlobalContext)
 
 
@@ -40,12 +41,8 @@ const ChatSettings: FC<IChatSettings> = () => {
 	}
 
 
-	const DeleteMessage = () => {
-		SetChatSettings(false)
-		if (!userData) return
-		deleteChat([user_id, userData.user_id])
-		dispatch(resetCurrentChat())
-		router.push("/")
+	const DeleteChat = () => {
+		SetChatDeletePopUp(true)
 	}
 	const HandleOverlayClick = () => {
 		SetChatSettings(false)
@@ -57,7 +54,7 @@ const ChatSettings: FC<IChatSettings> = () => {
 		<ChatSettingsWrapper onMouseLeave={HandleMouseLeave}
 							 isChatSettings={isChatSettings}>
 			<div className="content-cont">
-				<div onClick={DeleteMessage} className="option">
+				<div onClick={DeleteChat} className="option">
 					<Image width={20} height={20} src="/trash-bin.svg"/> <span>Delete</span>
 				</div>
 			</div>

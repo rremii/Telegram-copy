@@ -10,6 +10,7 @@ import {GlobalContext} from "../hooks/useGlobalContext"
 import {useRouter} from "next/router"
 import TelegramFeatures from "../components/TelegramFeatures/TelegramFeatures"
 import {useGetMeQuery} from "../api/rtk/MeApi"
+import DeleteChatPopUp from "../components/Globals/Delete-chat-pop-up"
 
 interface HomeType {
 }
@@ -45,6 +46,7 @@ const Home: FC<HomeType> = () => {
 					</>
 				}
 				<LogoutPopUp/>
+				<DeleteChatPopUp/>
 			</div>
 
 		</HomeWrapper>

@@ -23,6 +23,7 @@ export interface ISideBarContext {
 	SetEditProfile: (values: boolean) => void
 	isLanguageSettings: boolean
 	SetLanguageSettings: (values: boolean) => void
+
 }
 
 
@@ -60,6 +61,7 @@ export const SideBarContext = createContext<ISideBarContext>({
 	},
 	SetLanguageSettings: (values) => {
 	},
+
 })
 
 
@@ -111,7 +113,7 @@ const useSideBarContext = (): ISideBarContext => {
 		isEditProfile,
 		SetEditProfile,
 		isLanguageSettings,
-		SetLanguageSettings
+		SetLanguageSettings,
 	}
 
 }
