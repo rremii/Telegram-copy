@@ -22,7 +22,7 @@ const Home: FC<HomeType> = () => {
 
 	const {screenMode} = useContext(GlobalContext)
 
-
+//TODO check if it does work on logout,cuz it doesnt refetch after logging out
 	const {data: userData,} = useGetMeQuery()
 
 

@@ -23,7 +23,7 @@ const LogoutPopUp: FC<ILogoutPopUp> = () => {
 		SetLogoutPopUp(false)
 	}
 
-	return <LogoutPopUpWrapper isLogoutPopUp={isLogoutPopUp}>
+	return <LogoutPopUpWrapper isActive={isLogoutPopUp}>
 		<div className="pop-up-cont">
 			<h1>Log out</h1>
 			<span>Are you sure you want to log out?</span>
@@ -36,8 +36,8 @@ const LogoutPopUp: FC<ILogoutPopUp> = () => {
 	</LogoutPopUpWrapper>
 }
 export default LogoutPopUp
-const LogoutPopUpWrapper = styled.div<{
-	isLogoutPopUp: boolean
+export const LogoutPopUpWrapper = styled.div<{
+	isActive: boolean
 }>`
   color: white;
   position: fixed;
@@ -49,8 +49,8 @@ const LogoutPopUpWrapper = styled.div<{
   align-items: center;
   justify-content: center;
   transition: .3s;
-  opacity: ${({isLogoutPopUp}) => isLogoutPopUp ? 1 : 0};
-  pointer-events: ${({isLogoutPopUp}) => isLogoutPopUp ? "initial" : "none"};
+  opacity: ${({isActive}) => isActive ? 1 : 0};
+  pointer-events: ${({isActive}) => isActive ? "initial" : "none"};
 
   .pop-up-cont {
     border-radius: 10px;
@@ -65,7 +65,7 @@ const LogoutPopUpWrapper = styled.div<{
     justify-content: space-between;
     //TODO check that all transition are applied to specific properties 
     transition: .3s;
-    transform: ${({isLogoutPopUp}) => isLogoutPopUp ?
+    transform: ${({isActive}) => isActive ?
             "translateY(0) scale(1)" : " scale(0.8)translateY(100px)"};
 
     h1 {

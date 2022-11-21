@@ -40,7 +40,6 @@ const Info: FC<IInfo> = () => {
 		navigator.clipboard.writeText(email)
 	}
 
-
 	return <InfoWrapper>
 		<div className="avatar-cont">
 			<div className="bio">

@@ -9,12 +9,13 @@ import {resetCurrentChat} from "../../store/ChatSlice"
 import {useRouter} from "next/router"
 import {useGetMeQuery} from "../../api/rtk/MeApi"
 import {useDeleteChatMutation} from "../../api/rtk/ChatApi"
+import {LogoutPopUpWrapper} from "./Logout-pop-up"
 
 interface ILogoutPopUp {
 
 }
 
-const LogoutPopUp: FC<ILogoutPopUp> = () => {
+const DeleteChatPopUp: FC<ILogoutPopUp> = () => {
 	const dispatch = useAppDispatch()
 	const router = useRouter()
 
@@ -29,7 +30,8 @@ const LogoutPopUp: FC<ILogoutPopUp> = () => {
 
 	const {
 		isChatDeletePopUp,
-		SetChatDeletePopUp
+		SetChatDeletePopUp,
+		SetScreenMode
 	} = useContext(GlobalContext)
 
 
@@ -39,22 +41,24 @@ const LogoutPopUp: FC<ILogoutPopUp> = () => {
 		dispatch(resetCurrentChat())
 		router.push("/")
 		SetChatDeletePopUp(false)
+		SetScreenMode("sideBar")
 	}
 
-	return <LogoutPopUpWrapper isLogoutPopUp={isChatDeletePopUp}>
+	return <DeleteChatPopUpWrapper isActive={isChatDeletePopUp}>
 		<div className="pop-up-cont">
 			<h1>Delete chat</h1>
 			<span>Permanently delete the chat with {firstName} </span>
 			<div className="btn-cont">
 				<button onClick={() => SetChatDeletePopUp(false)} className="cancel">CANCEL</button>
-				<button onClick={DeleteChat} className="logout">LOGOUT</button>
+				<button onClick={DeleteChat} className="logout">DELETE</button>
 			</div>
 		</div>
-	</LogoutPopUpWrapper>
+	</DeleteChatPopUpWrapper>
 }
-export default LogoutPopUp
-const LogoutPopUpWrapper = styled.div<{
-	isLogoutPopUp: boolean
+export default DeleteChatPopUp
+// const DeleteChatPopUpWrapper = styled.div(LogoutPopUpWrapper)
+const DeleteChatPopUpWrapper = styled.div<{
+	isActive: boolean
 }>`
   color: white;
   position: fixed;
@@ -66,8 +70,8 @@ const LogoutPopUpWrapper = styled.div<{
   align-items: center;
   justify-content: center;
   transition: .3s;
-  opacity: ${({isLogoutPopUp}) => isLogoutPopUp ? 1 : 0};
-  pointer-events: ${({isLogoutPopUp}) => isLogoutPopUp ? "initial" : "none"};
+  opacity: ${({isActive}) => isActive ? 1 : 0};
+  pointer-events: ${({isActive}) => isActive ? "initial" : "none"};
 
   .pop-up-cont {
     border-radius: 10px;
@@ -80,9 +84,9 @@ const LogoutPopUpWrapper = styled.div<{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    //TODO check that all transition are applied to specific properties 
+    //TODO check that all transition are applied to specific properties
     transition: .3s;
-    transform: ${({isLogoutPopUp}) => isLogoutPopUp ?
+    transform: ${({isActive}) => isActive ?
             "translateY(0) scale(1)" : " scale(0.8)translateY(100px)"};
 
     h1 {
