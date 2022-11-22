@@ -5,7 +5,7 @@ import {Rem} from "../../../../styles/functions/mixins"
 import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
 import {API_URL_STATIC} from "../../../api/config"
 import {changeAvatar} from "../../../store/MeSlice"
-import {useGetMeQuery} from "../../../api/rtk/MeApi"
+import {useChangeAvatarMutation, useGetMeQuery} from "../../../api/rtk/MeApi"
 
 interface IInfo {
 }
@@ -24,6 +24,7 @@ const Info: FC<IInfo> = () => {
 
 //TODO fix rtk query and make everything on it
 	const {data: user} = useGetMeQuery()
+	const [changeAvatar] = useChangeAvatarMutation()
 
 	const profilePic = user?.profilePic
 	const firstName = user?.firstName
@@ -31,10 +32,10 @@ const Info: FC<IInfo> = () => {
 
 	const ChangeAvatar = (e: ChangeEvent<HTMLInputElement>) => {
 		if (e.target.files)
-			dispatch(changeAvatar({
+			changeAvatar({
 				profilePic: e.target.files[0],
 				user_id
-			}))
+			})
 	}
 	const HandleEmailClick = (email: string) => {
 		navigator.clipboard.writeText(email)

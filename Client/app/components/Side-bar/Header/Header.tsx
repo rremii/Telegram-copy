@@ -5,13 +5,16 @@ import useRipple from "../../../hooks/useRipple"
 import Ripple from "../../../ui/Ripple"
 import Burger from "./burger"
 import {SideBarContext} from "../../../hooks/useSideBarContext"
-import {fetchUsers} from "../../../store/SearchSlice"
-import {useAppDispatch} from "../../../store/ReduxStore"
+import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
 import useDebounce from "../../../hooks/useDebounce"
+import {useGetUsersQuery} from "../../../api/rtk/SearchApi"
+import {setSearchedUsers} from "../../../store/SearchSlice"
 
 
 const Header = () => {
 	const dispatch = useAppDispatch()
+
+	const {user_id} = useTypedSelector(state => state.Me.me)
 
 	const {
 		isBurger,
@@ -27,10 +30,14 @@ const Header = () => {
 	const [searchString, setSearchString] = useState<string>("")
 	const debouncedSearchString = useDebounce<string>(searchString, 300)
 
+	const {data: searchedUsers} = useGetUsersQuery(debouncedSearchString, {
+		refetchOnMountOrArgChange: true
+	})
 
 	useEffect(() => {
-		dispatch(fetchUsers(debouncedSearchString))
-	}, [debouncedSearchString])
+		if (searchedUsers)
+			dispatch(setSearchedUsers({users: searchedUsers, user_id}))
+	}, [searchedUsers])
 
 
 	const HandleSearchFocus = () => {

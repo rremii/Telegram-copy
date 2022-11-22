@@ -3,34 +3,34 @@ import {Me,} from "./types"
 import {MeAPI} from "../api/MeApi"
 
 
-export const fetchMe = createAsyncThunk(
-	"MeSlice/fetchMe",
-	async (_, {rejectWithValue}) => {
-		try {
-
-			const response = await MeAPI.getMe()
-
-			return response.data
-		} catch (e: any) {
-			return rejectWithValue(e.response.data.message)
-		}
-	}
-)
-export const changeAvatar = createAsyncThunk(
-	"MeSlice/changeAvatar",
-	async ({profilePic, user_id}: { profilePic: File, user_id: number }, {rejectWithValue, dispatch}) => {
-		try {
-
-			const response = await MeAPI.changeAvatar(profilePic, user_id)
-
-			dispatch(fetchMe())
-
-			return response.data
-		} catch (e: any) {
-			return rejectWithValue(e.response.data.message)
-		}
-	}
-)
+// export const fetchMe = createAsyncThunk(
+// 	"MeSlice/fetchMe",
+// 	async (_, {rejectWithValue}) => {
+// 		try {
+//
+// 			const response = await MeAPI.getMe()
+//
+// 			return response.data
+// 		} catch (e: any) {
+// 			return rejectWithValue(e.response.data.message)
+// 		}
+// 	}
+// )
+// export const changeAvatar = createAsyncThunk(
+// 	"MeSlice/changeAvatar",
+// 	async ({profilePic, user_id}: { profilePic: File, user_id: number }, {rejectWithValue, dispatch}) => {
+// 		try {
+//
+// 			const response = await MeAPI.changeAvatar(profilePic, user_id)
+//
+// 			dispatch(fetchMe())
+//
+// 			return response.data
+// 		} catch (e: any) {
+// 			return rejectWithValue(e.response.data.message)
+// 		}
+// 	}
+// )
 
 
 interface initialStateType {
@@ -54,9 +54,9 @@ const MeSlice = createSlice({
 		}
 	},
 	extraReducers: (builder) => {
-		builder.addCase(fetchMe.fulfilled, (state, action: PayloadAction<Me>) => {
-			state.me = action.payload
-		})
+		// builder.addCase(fetchMe.fulfilled, (state, action: PayloadAction<Me>) => {
+		// 	state.me = action.payload
+		// })
 
 	},
 })

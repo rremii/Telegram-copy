@@ -1,35 +1,54 @@
 import Image from "next/image"
-import React, {FC, useContext} from "react"
+import React, {FC, useContext, useEffect} from "react"
 import styled from "styled-components"
 import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import {API_URL_STATIC} from "../../../api/config"
 import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
-import {fetchChatsByUserId, findOrCreateChat, setCurrentMemberInfo} from "../../../store/ChatSlice"
+import {setCurrentChatId, setCurrentMemberInfo, setCurrentMemberOnline} from "../../../store/ChatSlice"
 import {userInfo} from "../../../store/types"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
 import {SideBarContext} from "../../../hooks/useSideBarContext"
+import {useFindOrCreateChatMutation} from "../../../api/rtk/ChatApi"
+import {useRouter} from "next/router"
 
 
 const SearchCell: FC<userInfo> = (userInfo) => {
 	const {user_id: id, firstName, profilePic: avatar, lastName, email} = userInfo
 
 	const dispatch = useAppDispatch()
+	const router = useRouter()
 
 
 	const {user_id} = useTypedSelector(state => state.Me.me)
 
 
+	const [findOrCreateChat, {data: chat}] = useFindOrCreateChatMutation()
+	// const {data: memberInfo} = useGetChatsByUserIdQuery(user_id)
 	const {SetIsSearch} = useContext(SideBarContext)
 	const {SetScreenMode} = useContext(GlobalContext)
 
 
 	const FindOrCreateChat = () => {
-		dispatch(findOrCreateChat([user_id, id]))
-		dispatch(fetchChatsByUserId(user_id))
+
+		// dispatch(setCurrentChatId({chatId}))
+
+		SetScreenMode("chat")
+		findOrCreateChat([user_id, id])
 		dispatch(setCurrentMemberInfo(userInfo))
+		if (userInfo.lastOnline)
+			dispatch(setCurrentMemberOnline(userInfo.lastOnline))
 		SetIsSearch(false)
 		SetScreenMode("chat")
 	}
+
+	useEffect(() => {
+		if (!chat) return
+		const chatId = chat.chatId
+
+		dispatch(setCurrentChatId({chatId}))
+
+		router.push("/?chatId=" + chatId)
+	}, [chat])
 
 
 	//TODO check that all state clears after logout(searchSlice)

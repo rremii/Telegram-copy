@@ -9,7 +9,7 @@ import * as Yup from "yup"
 import useScrollArrow from "../../../hooks/useScrollArrow"
 import {ScrollChatToBottom} from "../../../utils/ScrollToChatBottom"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
-import {useEditMessageMutation} from "../../../api/rtk/ChatApi"
+import {useAddMessageMutation, useEditMessageMutation} from "../../../api/rtk/ChatApi"
 
 interface IChatInputBox {
 }
@@ -29,6 +29,7 @@ const ChatInputBox: FC<IChatInputBox> = () => {
 
 
 	const [editMessage] = useEditMessageMutation()
+	const [addMessage] = useAddMessageMutation()
 
 	const {isEditingMode, SetEditingMode} = useContext(GlobalContext)
 
@@ -61,7 +62,7 @@ const ChatInputBox: FC<IChatInputBox> = () => {
 					dispatch(setLoadingMessageId(messageId))
 					editMessage({newContent: content, id: messageId})
 				} else {
-					dispatch(addMessage({content, user_id, chat_id: currentChatId}))
+					addMessage({content, user_id, chat_id: currentChatId})
 				}
 
 
