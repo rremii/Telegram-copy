@@ -1,15 +1,12 @@
 import React, {FC, useContext} from "react"
 import styled from "styled-components"
 import {Rem} from "../../../styles/functions/mixins"
-import {SideBarContext} from "../../hooks/useSideBarContext"
-import {fetchLogout} from "../../store/AuthSlice"
 import {useAppDispatch, useTypedSelector} from "../../store/ReduxStore"
 import {GlobalContext} from "../../hooks/useGlobalContext"
 import {resetCurrentChat} from "../../store/ChatSlice"
 import {useRouter} from "next/router"
 import {useGetMeQuery} from "../../api/rtk/MeApi"
 import {useDeleteChatMutation} from "../../api/rtk/ChatApi"
-import {LogoutPopUpWrapper} from "./Logout-pop-up"
 
 interface ILogoutPopUp {
 
@@ -87,7 +84,7 @@ const DeleteChatPopUpWrapper = styled.div<{
     //TODO check that all transition are applied to specific properties
     transition: .3s;
     transform: ${({isActive}) => isActive ?
-            "translateY(0) scale(1)" : " scale(0.8)translateY(100px)"};
+	"translateY(0) scale(1)" : " scale(0.8)translateY(100px)"};
 
     h1 {
       font-family: Roboto, sans-serif;

@@ -7,7 +7,6 @@ import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
 import {useDeleteChatMutation} from "../../../api/rtk/ChatApi"
 import {useGetMeQuery} from "../../../api/rtk/MeApi"
 import {useRouter} from "next/router"
-import {resetCurrentChat} from "../../../store/ChatSlice"
 
 interface IChatSettings {
 
