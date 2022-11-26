@@ -5,7 +5,7 @@ const router = Router()
 
 router.post("/", messageController.addMessage)
 router.put("/", messageController.editMessage)
-router.delete("/:id", messageController.deleteMessage)
+router.delete("/:id/:chat_id", messageController.deleteMessage)
 router.get("/:chat_id/:user_id", messageController.getMessages)
 
 module.exports = router

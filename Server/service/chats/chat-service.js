@@ -7,6 +7,7 @@ const {
     UnSeenMessage,
 } = require("../../models/chat-models/unSeen-message-model")
 const { LastMessage } = require("../../models/chat-models/last-message-model")
+const { ChatMessage } = require("../../models/chat-models/chat-message-model")
 
 class ChatService {
     static async #createChat(userIds) {
@@ -135,6 +136,15 @@ class ChatService {
         lastMessage.content = content
 
         return await lastMessage.save()
+    }
+    async deleteLastMessage(chat_id) {
+        const [lastMessage] = await ChatMessage.findAll({
+            limit: 1,
+            where: { chat_id: +chat_id },
+            order: [["createdAt", "DESC"]],
+        })
+
+        return await this.addLastMessage(chat_id, lastMessage.content)
     }
     async deleteChat(userIds) {
         if (!userIds) return ApiError("wrong user ids")

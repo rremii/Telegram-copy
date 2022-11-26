@@ -55,7 +55,6 @@ export const GlobalContext = createContext<IGlobalContext>({
 
 
 const useGlobalContext = (): IGlobalContext => {
-	//TODO check that all useContexts work correctly
 	const [screenMode, setScreenMode] = useState<"sideBar" | "chat" | "info">("sideBar")
 	const [messageFontSize, setMessageFontSize] = useLocalStorage("message-font-size", "16")
 	const [background, setBackground] = useLocalStorage("background", "forest.png")

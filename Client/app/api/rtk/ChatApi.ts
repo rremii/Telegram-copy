@@ -37,9 +37,9 @@ const ChatApi = Api.injectEndpoints({
 			}),
 			invalidatesTags: ["Message"]
 		}),
-		deleteMessage: build.mutation<message, number>({
-			query: (id) => ({
-				url: "/messages/" + id,
+		deleteMessage: build.mutation<message, { id: number, chat_id: number }>({
+			query: ({id, chat_id}) => ({
+				url: "/messages/" + id + "/" + chat_id,
 				method: "DELETE"
 			}),
 			invalidatesTags: ["Message"]

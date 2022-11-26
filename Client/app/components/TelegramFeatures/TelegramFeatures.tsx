@@ -9,11 +9,9 @@ interface TelegramFeaturesType {
 }
 
 const TelegramFeatures: FC<TelegramFeaturesType> = () => {
-	const {screenMode} = useContext(GlobalContext)
+	const {screenMode, background} = useContext(GlobalContext)
 
-//TODO fix the background when switching to the page
-	return <TelegramFeaturesWrapper screenMode={screenMode}>
-
+	return <TelegramFeaturesWrapper background={background} screenMode={screenMode}>
 		<div className="telegram-features-content">
 			<Header/>
 			<FeaturesContent/>
@@ -23,11 +21,13 @@ const TelegramFeatures: FC<TelegramFeaturesType> = () => {
 export default TelegramFeatures
 const TelegramFeaturesWrapper = styled.div<{
 	screenMode: "sideBar" | "chat" | "info"
+	background: string
 }>`
   height: 100%;
   padding: 0;
   background-color: rgb(33, 33, 33);
-  background-image: url("/chat-background.jpg");
+  background-image: ${({background}) => ("url(/backgrounds/" + background + ")")};
+  //background-image: url("/chat-background.jpg");
   background-size: cover;
   flex: 1 1 auto;
   z-index: 15;

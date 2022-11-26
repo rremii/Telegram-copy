@@ -76,8 +76,6 @@ const FeaturesMessages: FC<IFeaturesMessages> = () => {
 		<div className="message-cont">
 			<div style={{animationDelay: 0.02 + "s"}} className={`message other-message `}>Hey, now you can deal we the
 				messages you send, hopefully you like that
-				{//TODO add an image
-				}
 				<div className="extra-info">
 					<span className="created-at">Oct 23</span>
 					<Image width={19}

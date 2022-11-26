@@ -68,14 +68,15 @@ class MessageService {
         })
     }
 
-    async deleteMessage(id) {
-        if (!id) throw ApiError("incorrect message id")
+    async deleteMessage(id, chat_id) {
+        if (!id || !chat_id) throw ApiError("incorrect message or chat id")
 
-        return ChatMessage.destroy({
+        await ChatMessage.destroy({
             where: {
                 chat_message_id: +id,
             },
         })
+        return await ChatService.deleteLastMessage(chat_id)
     }
 
     async editMessage(newContent, id) {

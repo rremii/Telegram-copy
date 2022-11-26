@@ -29,7 +29,6 @@ export const AuthAPI = {
 		return await $api.post<TokenResponse>("auth/registration", formData)
 	},
 	refresh: async () => {
-		//TODO bug in production url is wrong
 		return await axios.get<TokenResponse>(API_URL + "auth/refresh", {
 			withCredentials: true,
 		})

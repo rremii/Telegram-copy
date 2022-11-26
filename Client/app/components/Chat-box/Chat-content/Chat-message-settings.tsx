@@ -19,6 +19,7 @@ const ChatMessageSettings: FC<IChatMessageSettings> = ({X, Y}) => {
 
 	const {id: messageId} = useTypedSelector(state => state.Chats.editingMessage)
 	const {content: messageContent} = useTypedSelector(state => state.Chats.editingMessage)
+	const {currentChatId} = useTypedSelector(state => state.Chats)
 
 	const [deleteMessage] = useDeleteMessageMutation()
 
@@ -31,8 +32,8 @@ const ChatMessageSettings: FC<IChatMessageSettings> = ({X, Y}) => {
 		SetMessageSettings(false)
 	}
 	const DeleteMessage = () => {
-		if (messageId) {
-			deleteMessage(messageId)
+		if (messageId && currentChatId) {
+			deleteMessage({id: messageId, chat_id: currentChatId})
 			dispatch(setLoadingMessageId(messageId))
 		}
 		SetMessageSettings(false)

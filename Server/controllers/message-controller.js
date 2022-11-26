@@ -30,9 +30,12 @@ class MessageController {
     }
     async deleteMessage(request, response, next) {
         try {
-            const { id } = request.params
+            const { id, chat_id } = request.params
 
-            const deletedMessage = await MessageService.deleteMessage(id)
+            const deletedMessage = await MessageService.deleteMessage(
+                id,
+                chat_id
+            )
 
             response.json(deletedMessage)
         } catch (e) {

@@ -21,7 +21,6 @@ const Info: FC<IInfo> = () => {
 	const {email} = useTypedSelector(state => state.Me.me)
 	const {user_id} = useTypedSelector(state => state.Me.me)
 
-//TODO fix rtk query and make everything on it
 	const {data: user} = useGetMeQuery()
 	const [changeAvatar] = useChangeAvatarMutation()
 
