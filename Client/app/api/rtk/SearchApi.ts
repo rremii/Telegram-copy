@@ -2,7 +2,7 @@ import {Api} from "../config/Api"
 import {userInfo} from "../../store/types"
 import {ParseSearchString} from "../../utils/parseSearchString"
 
-const MeApi = Api.injectEndpoints({
+const SearchApi = Api.injectEndpoints({
 
 		endpoints: (build) => ({
 
@@ -13,7 +13,7 @@ const MeApi = Api.injectEndpoints({
 
 					return {
 						url: `users/search?email=${email ? email : ""}${firstName ? "&firstName=" + firstName : ""}${lastName ? "&lastName=" + lastName : ""}`,
-						method: "GET"
+						method: "GET",
 					}
 				},
 				// transformResponse: (response)=>respons
@@ -30,4 +30,4 @@ const MeApi = Api.injectEndpoints({
 
 export const {
 	useGetUsersQuery
-} = MeApi
+} = SearchApi

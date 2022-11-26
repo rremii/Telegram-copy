@@ -1,6 +1,6 @@
 import {BaseQueryFn, createApi} from "@reduxjs/toolkit/query/react"
 import {Chat, Me} from "../../store/types"
-import {AxiosRequestConfig} from "axios"
+import {AxiosRequestConfig, AxiosResponse} from "axios"
 import {$api} from "./index"
 
 
@@ -11,13 +11,19 @@ const axiosBaseQuery =
 		url: string
 		method: AxiosRequestConfig["method"]
 		data?: AxiosRequestConfig["data"]
-		params?: AxiosRequestConfig["params"]
+		params?: AxiosRequestConfig["params"],
+		isDefault?: boolean  //use default axios, instead of custom with interceptors
 	},
 		unknown,
 		unknown> =>
-		async ({url, method, data, params}) => {
+		async ({url, method, data, params, isDefault = false}) => {
+			let result!: AxiosResponse<any, any>
 
-			const result = await $api({url: baseUrl + url, method, data, params})
+			if (!isDefault)
+				result = await $api({url: baseUrl + url, method, data, params})
+			if (isDefault)
+				result = await $api({url: baseUrl + url, method, data, params})
+
 			return {data: result.data}
 
 		}

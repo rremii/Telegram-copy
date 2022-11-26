@@ -9,6 +9,7 @@ import useIsLoginPage from "../hooks/useIsLoginPage"
 import {useAppDispatch, useTypedSelector} from "../store/ReduxStore"
 import {addUser, fetchCreateCandidate} from "../store/AuthSlice"
 import {useClearErrors} from "../hooks/useClearErrors"
+import {useCreateCandidateMutation} from "../api/rtk/AuthApi"
 
 const validSchema = Yup.object().shape({
 	email: Yup.string().email("Invalid email").required("Required"),
@@ -29,6 +30,8 @@ const AuthEmail: FC<Auth1Type> = () => {
 
 	const {emailError} = useTypedSelector((state) => state.Auth)
 
+	// const [createCandidate, result] = useCreateCandidateMutation()
+
 	const [isPending, setIsPending] = useState<boolean>(false)
 
 	useClearErrors()
@@ -40,12 +43,22 @@ const AuthEmail: FC<Auth1Type> = () => {
 			" = " +
 			encodeURIComponent(isRememberMe)
 		setIsPending(true)
+
+
+		//
+		// const response: any = await createCandidate({
+		// 	email,
+		// 	type: isLoginPage ? "login" : "register",
+		// })
+		//
 		const response: any = await dispatch(
 			fetchCreateCandidate({
 				email,
 				type: isLoginPage ? "login" : "register",
 			})
 		)
+
+		//
 		dispatch(addUser(email))
 
 		if (!response.error) await router.push("code")
