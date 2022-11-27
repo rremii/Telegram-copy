@@ -113,7 +113,6 @@ const ChatMessagesBox = () => {
 			//calculation an animation delay
 			const delayNum = messages.length - i + 1 //as farther el as less the delay
 
-
 			return <MessageWrapper
 				isNextMessageFromSameSender={isNextMessageFromSameSender}
 				isPrevMessageFromSameSender={messageDate ? true : isPrevMessageFromSameSender}

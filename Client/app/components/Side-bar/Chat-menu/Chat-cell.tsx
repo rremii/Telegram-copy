@@ -1,4 +1,4 @@
-import React, {FC, useContext} from "react"
+import React, {FC, useContext, useEffect} from "react"
 import styled from "styled-components"
 import Image from "next/image"
 import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
@@ -11,6 +11,8 @@ import {Chat} from "../../../store/types"
 import {API_URL_STATIC} from "../../../api/config"
 import {getMessageTime} from "../../../utils/getMessageTime"
 import {getStatusByLastOnline} from "../../../utils/getStatusByLastOnline"
+import useMessageSound from "../../../hooks/useMessageSound"
+
 
 interface IChatList extends Chat {
 	chat_id: number
@@ -23,6 +25,7 @@ const ChatCell: FC<IChatList> = ({
 	memberInfo
 }) => {
 
+
 	const {lastName, firstName, profilePic: avatar} = memberInfo
 
 	const dispatch = useAppDispatch()
@@ -31,6 +34,7 @@ const ChatCell: FC<IChatList> = ({
 
 	const {SetScreenMode} = useContext(GlobalContext)
 
+	useMessageSound(unSeenMessages)
 
 	const HandleCellClick = async () => {
 		dispatch(setCurrentChatId({chatId}))
