@@ -10,9 +10,6 @@ import {useChangeAvatarMutation, useGetMeQuery} from "../../../api/rtk/MeApi"
 const Info = () => {
 
 
-	// const {profilePic} = useTypedSelector(state => state.Me.me)
-	// const {lastName} = useTypedSelector(state => state.Me.me)
-	// const {firstName} = useTypedSelector(state => state.Me.me)
 	const {email} = useTypedSelector(state => state.Me.me)
 	const {user_id} = useTypedSelector(state => state.Me.me)
 

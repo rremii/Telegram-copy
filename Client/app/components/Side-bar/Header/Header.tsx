@@ -9,6 +9,7 @@ import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
 import useDebounce from "../../../hooks/useDebounce"
 import {useGetUsersQuery} from "../../../api/rtk/SearchApi"
 import {setSearchedUsers} from "../../../store/SearchSlice"
+import {GlobalContext} from "../../../hooks/useGlobalContext"
 
 
 const Header = () => {

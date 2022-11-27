@@ -4,6 +4,7 @@ import {Rem} from "../../../styles/functions/mixins"
 import {SideBarContext} from "../../hooks/useSideBarContext"
 import {fetchLogout} from "../../store/AuthSlice"
 import {useAppDispatch} from "../../store/ReduxStore"
+import {GlobalContext} from "../../hooks/useGlobalContext"
 
 
 const LogoutPopUp = () => {
@@ -13,6 +14,7 @@ const LogoutPopUp = () => {
 		isLogoutPopUp,
 		SetLogoutPopUp
 	} = useContext(SideBarContext)
+	const {language} = useContext(GlobalContext)
 
 
 	const Logout = () => {
@@ -22,9 +24,13 @@ const LogoutPopUp = () => {
 
 	return <LogoutPopUpWrapper isActive={isLogoutPopUp}>
 		<div className="pop-up-cont">
-			<h1>Log out</h1>
-			<span>Are you sure you want to log out?</span>
-			<span>Note that you can seamlessly use Telegram on all your devices at once.</span>
+			<h1>{language === "English" ? "Log out" : "Выйти"}</h1>
+			<span>{language === "English" ?
+				"Are you sure you want to log out?" :
+				"Уверены, что хотите выйти?"}</span>
+			<span>{language === "English" ?
+				"Note that you can seamlessly use Telegram on all your devices at once." :
+				"Обратите внимание, что вы можете беспрепятственно использовать Telegram сразу на всех своих устройствах."}</span>
 			<div className="btn-cont">
 				<button onClick={() => SetLogoutPopUp(false)} className="cancel">CANCEL</button>
 				<button onClick={Logout} className="logout">LOGOUT</button>
@@ -63,7 +69,7 @@ export const LogoutPopUpWrapper = styled.div<{
     //TODO check that all transition are applied to specific properties 
     transition: .3s;
     transform: ${({isActive}) => isActive ?
-	"translateY(0) scale(1)" : " scale(0.8)translateY(100px)"};
+            "translateY(0) scale(1)" : " scale(0.8)translateY(100px)"};
 
     h1 {
       font-family: Roboto, sans-serif;

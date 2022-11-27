@@ -1,12 +1,13 @@
 import styled from "styled-components"
 import Image from "next/image"
-import React, {ChangeEvent, useRef, useState} from "react"
+import React, {ChangeEvent, useContext, useRef, useState} from "react"
 import {Field, Form, Formik} from "formik"
 import {Rem} from "../../../../styles/functions/mixins"
 import {useTypedSelector} from "../../../store/ReduxStore"
 import {API_URL_STATIC} from "../../../api/config"
 import * as Yup from "yup"
 import {useEditUserBioMutation} from "../../../api/rtk/MeApi"
+import {GlobalContext} from "../../../hooks/useGlobalContext"
 
 interface formValues {
 	firstName: string,
@@ -27,6 +28,8 @@ const EditingForm = () => {
 
 
 	const [editUser] = useEditUserBioMutation()
+
+	const {language} = useContext(GlobalContext)
 
 
 	const [img, setImg] = useState<string>()
@@ -79,7 +82,8 @@ const EditingForm = () => {
 							name="firstName"
 						/>
 						<label htmlFor="Code">
-							First Name
+							{language === "English" ? "First Name" : "Имя"}
+
 						</label>
 					</div>
 					<div className="form-field-cont">
@@ -93,7 +97,8 @@ const EditingForm = () => {
 							name="lastName"
 						/>
 						<label htmlFor="Code">
-							Last Name
+							{language === "English" ? "Last Name" : "Фамилия"}
+
 						</label>
 					</div>
 					{dirty && isValid && <button className="submit">
@@ -103,7 +108,10 @@ const EditingForm = () => {
 			)}
 		</Formik>
 		<h3 className="helper-text">
-			You can use a-z, 0-9 and underscores. Minimum length is 3 characters.
+			{language === "English" ?
+				"You can use a-z, 0-9 and underscores. Minimum length is 3 characters." :
+				"Используйте а-я, 0-9 и нижнее подчеркивание. Минимальная длинна 3 символа"}
+
 		</h3>
 	</EditingFormWrapper>
 }

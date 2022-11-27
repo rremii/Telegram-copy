@@ -4,7 +4,7 @@ import {useContext} from "react"
 import {GlobalContext} from "../../hooks/useGlobalContext"
 
 const Header = () => {
-	const {SetScreenMode} = useContext(GlobalContext)
+	const {SetScreenMode, language} = useContext(GlobalContext)
 
 
 	return <HeaderWrapper>
@@ -13,7 +13,7 @@ const Header = () => {
 			<span/>
 			<span/>
 		</div>
-		<h2>Profile</h2>
+		<h2>{language === "English" ? "Profile" : "Профиль"}</h2>
 	</HeaderWrapper>
 }
 export default Header

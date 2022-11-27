@@ -3,10 +3,12 @@ import Image from "next/image"
 import {Rem} from "../../../../styles/functions/mixins"
 import {useContext} from "react"
 import {SideBarContext} from "../../../hooks/useSideBarContext"
+import {GlobalContext} from "../../../hooks/useGlobalContext"
 
 const Settings = () => {
 
 	const {SetIsSettings, SetLanguageSettings} = useContext(SideBarContext)
+	const {language} = useContext(GlobalContext)
 
 
 	return <SettingsWrapper>
@@ -15,7 +17,7 @@ const Settings = () => {
 				<Image width={35} height={35} src="/setting-gray.svg"/>
 			</div>
 			<h1 className="title">
-				General Settings
+				{language === "English" ? "General Settings" : "Главные настройки"}
 			</h1>
 		</div>
 		<div onClick={() => SetLanguageSettings(true)} className="cell">
@@ -23,7 +25,7 @@ const Settings = () => {
 				<Image width={35} height={35} src="/language-icon.svg"/>
 			</div>
 			<h1 className="title">
-				Language
+				{language === "English" ? "Language" : "Язык"}
 			</h1>
 		</div>
 	</SettingsWrapper>

@@ -29,7 +29,7 @@ const ChatInputBox = () => {
 	const [editMessage] = useEditMessageMutation()
 	const [addMessage] = useAddMessageMutation()
 
-	const {isEditingMode, SetEditingMode} = useContext(GlobalContext)
+	const {isEditingMode, SetEditingMode, language} = useContext(GlobalContext)
 
 	const {isScrollArrow} = useScrollArrow()
 
@@ -77,7 +77,7 @@ const ChatInputBox = () => {
 								<Image width={22} height={22} src="/pencil-icon-purple.svg"/>
 							</div>
 							<div className="text-box">
-								<h2>Editing</h2>
+								<h2>{language === "English" ? "Editing" : "Редактирование"}</h2>
 								<h1>{editingContent}</h1>
 							</div>
 							<div onClick={CloseEditingMode} className="cross">
@@ -87,7 +87,8 @@ const ChatInputBox = () => {
 						</EditingBox>
 
 						<div className="input-cont">
-							<Field name="content" placeholder="Message" type="text"/>
+							<Field name="content" placeholder={language === "English" ? "Message" : "Сообщение"}
+								   type="text"/>
 						</div>
 						<div className="tail-cont">
 							<Image layout="fill" className="tail" src={"/bubble-tail-left.svg"} alt=""/>

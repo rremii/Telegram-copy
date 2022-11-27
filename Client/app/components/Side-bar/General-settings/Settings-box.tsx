@@ -15,7 +15,7 @@ const CalcPercentOfRange = (messageFontSize: number) => {
 const SettingsBox = () => {
 
 
-	const {messageFontSize, SetMessageFontSize} = useContext(GlobalContext)
+	const {messageFontSize, SetMessageFontSize, language} = useContext(GlobalContext)
 	const {SetBackgroundSettings} = useContext(SideBarContext)
 
 
@@ -26,10 +26,10 @@ const SettingsBox = () => {
 
 	return <SettingsBoxWrapper fontSize={CalcPercentOfRange(+messageFontSize)}>
 
-		<h1 className="title">Settings</h1>
+		<h1 className="title">{language === "English" ? "Settings" : "Настройки"}</h1>
 		<div className="text-size-box">
 			<h2 className="sub-title">
-				Message Text Size
+				{language === "English" ? "Message Text Size" : "Размер Шрифта"}
 				<span>{+messageFontSize}</span>
 			</h2>
 			<input value={+messageFontSize} min={minFontSize} step={1} max={maxFontSize}
@@ -37,7 +37,7 @@ const SettingsBox = () => {
 		</div>
 		<div onClick={() => SetBackgroundSettings(true)} className="bg-box">
 			<Image width={29} height={29} src="/gallery-icon.svg"/>
-			<span>Chat Background</span>
+			<span>{language === "English" ? "Chat Background" : "Фон"}</span>
 		</div>
 	</SettingsBoxWrapper>
 }

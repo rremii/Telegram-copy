@@ -22,7 +22,7 @@ const backgrounds = ["forest.png",
 const GridBox = () => {
 
 
-	const {background, SetBackground, isBackgroundBlur, SetBackgroundBlur} = useContext(GlobalContext)
+	const {background, SetBackground, isBackgroundBlur, SetBackgroundBlur, language} = useContext(GlobalContext)
 
 
 	const ChangeBackground = (src: string) => {
@@ -40,7 +40,7 @@ const GridBox = () => {
 					<input readOnly={true} checked={isBackgroundBlur === "true"} type="checkbox"/>
 					<span/>
 				</div>
-				<h2>Blur Wallpaper Image</h2>
+				<h2>{language === "English" ? "Blur Wallpaper Image" : "Заблюрить фон"}</h2>
 			</div>
 		</div>
 		<div className="grid">

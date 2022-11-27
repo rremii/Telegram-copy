@@ -25,7 +25,8 @@ const DeleteChatPopUp = () => {
 	const {
 		isChatDeletePopUp,
 		SetChatDeletePopUp,
-		SetScreenMode
+		SetScreenMode,
+		language
 	} = useContext(GlobalContext)
 
 
@@ -40,8 +41,10 @@ const DeleteChatPopUp = () => {
 
 	return <DeleteChatPopUpWrapper isActive={isChatDeletePopUp}>
 		<div className="pop-up-cont">
-			<h1>Delete chat</h1>
-			<span>Permanently delete the chat with {firstName} </span>
+			<h1>{language === "English" ? "Delete chat" : "Удалить чат"}</h1>
+			<span>{language === "English" ?
+				`Permanently delete the chat with ${firstName}` :
+				`Навсегда удалить чат с ${firstName}`}</span>
 			<div className="btn-cont">
 				<button onClick={() => SetChatDeletePopUp(false)} className="cancel">CANCEL</button>
 				<button onClick={DeleteChat} className="logout">DELETE</button>
@@ -81,7 +84,7 @@ const DeleteChatPopUpWrapper = styled.div<{
     //TODO check that all transition are applied to specific properties
     transition: .3s;
     transform: ${({isActive}) => isActive ?
-	"translateY(0) scale(1)" : " scale(0.8)translateY(100px)"};
+            "translateY(0) scale(1)" : " scale(0.8)translateY(100px)"};
 
     h1 {
       font-family: Roboto, sans-serif;

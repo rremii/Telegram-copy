@@ -3,11 +3,13 @@ import Image from "next/image"
 import React, {useContext} from "react"
 import {Rem} from "../../../../styles/functions/mixins"
 import {SideBarContext} from "../../../hooks/useSideBarContext"
+import {GlobalContext} from "../../../hooks/useGlobalContext"
 
 const Header = () => {
 
 
 	const {SetLanguageSettings} = useContext(SideBarContext)
+	const {language} = useContext(GlobalContext)
 
 
 	const HandleArrowClick = () => {
@@ -18,7 +20,7 @@ const Header = () => {
 		<button onClick={HandleArrowClick} className="arrow">
 			<Image width={24} height={24} src="/arrow-left-icon.svg"/>
 		</button>
-		<h1>Language</h1>
+		<h1>{language === "English" ? "Language" : "Язык"}</h1>
 	</HeaderWrapper>
 }
 export default Header

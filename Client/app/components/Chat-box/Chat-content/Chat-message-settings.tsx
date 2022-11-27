@@ -23,7 +23,7 @@ const ChatMessageSettings: FC<IChatMessageSettings> = ({X, Y}) => {
 
 	const [deleteMessage] = useDeleteMessageMutation()
 
-	const {SetEditingMode, SetMessageSettings, isMessageSettings} = useContext(GlobalContext)
+	const {SetEditingMode, SetMessageSettings, isMessageSettings, language} = useContext(GlobalContext)
 
 
 	const HandleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -51,13 +51,16 @@ const ChatMessageSettings: FC<IChatMessageSettings> = ({X, Y}) => {
 		<div className="content-cont">
 
 			<div onClick={() => SetEditingMode(true)} className="option">
-				<Image width={20} height={20} src="/pencil-icon.svg"/> <span>Edit</span>
+				<Image width={20} height={20} src="/pencil-icon.svg"/>
+				<span>{language === "English" ? "Edit" : "Изменить"}</span>
 			</div>
 			<div onClick={CopyMessage} className="option">
-				<Image width={20} height={20} src="/copy-icon.svg"/> <span>Copy</span>
+				<Image width={20} height={20} src="/copy-icon.svg"/>
+				<span>{language === "English" ? "Copy" : "Копировать"}</span>
 			</div>
 			<div onClick={DeleteMessage} className="option">
-				<Image width={20} height={20} src="/trash-bin.svg"/> <span>Delete</span>
+				<Image width={20} height={20} src="/trash-bin.svg"/>
+				<span>{language === "English" ? "Delete" : "Удалить"}</span>
 			</div>
 		</div>
 	</MessageSettings>

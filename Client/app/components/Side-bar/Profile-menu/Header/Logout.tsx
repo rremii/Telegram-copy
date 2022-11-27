@@ -3,6 +3,7 @@ import styled from "styled-components"
 import Image from "next/image"
 import {Rem} from "../../../../../styles/functions/mixins"
 import {SideBarContext} from "../../../../hooks/useSideBarContext"
+import {GlobalContext} from "../../../../hooks/useGlobalContext"
 
 
 const Logout = () => {
@@ -12,6 +13,7 @@ const Logout = () => {
 		SetLogout,
 		SetLogoutPopUp,
 	} = useContext(SideBarContext)
+	const {language} = useContext(GlobalContext)
 
 
 	return <LogoutWrapper isLogout={isLogout}>
@@ -19,7 +21,7 @@ const Logout = () => {
 			<div className="icon">
 				<Image width={25} height={25} src="/logout.svg"/>
 			</div>
-			<span>Log Out</span>
+			<span>{language === "English" ? "Log Out" : "Выйти"}</span>
 		</button>
 		<button onClick={() => SetLogout(false)} className="logout-overlay"/>
 	</LogoutWrapper>

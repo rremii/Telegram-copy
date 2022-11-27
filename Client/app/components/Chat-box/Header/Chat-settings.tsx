@@ -11,7 +11,8 @@ const ChatSettings = () => {
 	const {
 		SetChatSettings,
 		isChatSettings,
-		SetChatDeletePopUp
+		SetChatDeletePopUp,
+		language
 	} = useContext(GlobalContext)
 
 
@@ -37,7 +38,8 @@ const ChatSettings = () => {
 							 isChatSettings={isChatSettings}>
 			<div className="content-cont">
 				<div onClick={DeleteChat} className="option">
-					<Image width={20} height={20} src="/trash-bin.svg"/> <span>Delete</span>
+					<Image width={20} height={20} src="/trash-bin.svg"/>
+					<span>{language === "English" ? "Delete" : "Удалить"}</span>
 				</div>
 			</div>
 		</ChatSettingsWrapper>

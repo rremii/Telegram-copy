@@ -18,7 +18,7 @@ const Burger = () => {
 		SetDarkMode,
 		isDarkMode
 	} = useContext(SideBarContext)
-	const {SetScreenMode} = useContext(GlobalContext)
+	const {SetScreenMode, language} = useContext(GlobalContext)
 
 
 	const HandleFeatures = async () => {
@@ -37,20 +37,20 @@ const Burger = () => {
 	return <BurgerWrapper onMouseLeave={() => SetIsBurger(false)} isBurger={isBurger}>
 		<div className="burger-overlay" onClick={() => SetIsBurger(false)}/>
 
-		<div className="row">
-			<div className="icon">
-				<Image width={21} height={21} src="/bookmark-icon.svg"/>
-			</div>
-			<div className="setting-text">
-				<span>Saved Messages</span>
-			</div>
-		</div>
+		{/*<div className="row">*/}
+		{/*	<div className="icon">*/}
+		{/*		<Image width={21} height={21} src="/bookmark-icon.svg"/>*/}
+		{/*	</div>*/}
+		{/*	<div className="setting-text">*/}
+		{/*		<span>Saved Messages</span>*/}
+		{/*	</div>*/}
+		{/*</div>*/}
 		<div onClick={HandleFeatures} className="row">
 			<div className="icon">
 				<Image width={21} height={21} src="/contact.svg"/>
 			</div>
 			<div className="setting-text">
-				<span>Telegram Features</span>
+				<span>{language === "English" ? "Telegram Features" : "Возможности Telegram"}</span>
 			</div>
 		</div>
 		<div onClick={HandleSettings} className="row">
@@ -58,7 +58,7 @@ const Burger = () => {
 				<Image width={21} height={21} src="/setting.svg"/>
 			</div>
 			<div className="setting-text">
-				<span>Settings</span>
+				<span>{language === "English" ? "Settings" : "Настройки"}</span>
 			</div>
 		</div>
 		<button onClick={HandleDarkMode} className="row">
@@ -66,7 +66,7 @@ const Burger = () => {
 				<Image width={21} height={21} src="/night-mode.svg"/>
 			</div>
 			<div className="setting-text with-toggle">
-				<span>Dark mode</span>
+				<span>{language === "English" ? "Dark mode" : "Темная тема"}</span>
 				<Toggle isDarkMode={isDarkMode}/>
 			</div>
 		</button>
