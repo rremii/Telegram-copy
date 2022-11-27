@@ -1,7 +1,6 @@
-const { INTEGER, BOOLEAN, STRING, ARRAY, TEXT } = require("sequelize")
+const { INTEGER } = require("sequelize")
 const sequelize = require("../../db")
 const { User } = require("../user-model")
-// const { UserChat } = require("./user-chat-model")
 
 const Chat = sequelize.define(
     "chat",
@@ -11,10 +10,6 @@ const Chat = sequelize.define(
             primaryKey: true,
             autoIncrement: true,
         },
-        // unSeenMessages: {
-        //     type: INTEGER,
-        //     defaultValue: 0,
-        // },
     },
     {
         timestamps: false,

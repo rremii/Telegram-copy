@@ -1,14 +1,12 @@
-import React, {FC, useContext} from "react"
+import React, {useContext} from "react"
 import styled from "styled-components"
 import {SideBarContext} from "../../../hooks/useSideBarContext"
 import Header from "./Header/Header"
 import Info from "./Info"
 import Settings from "./Settings"
 
-interface IProfileMenu {
-}
 
-const ProfileMenu: FC<IProfileMenu> = () => {
+const ProfileMenu = () => {
 
 	const {isProfile, SetLogout} = useContext(SideBarContext)
 

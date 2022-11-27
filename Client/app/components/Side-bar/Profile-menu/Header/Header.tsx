@@ -6,11 +6,12 @@ import React, {useContext} from "react"
 import useRipple from "../../../../hooks/useRipple"
 import {SideBarContext} from "../../../../hooks/useSideBarContext"
 import Logout from "./Logout"
+import {GlobalContext} from "../../../../hooks/useGlobalContext"
 
 const Header = () => {
 
 	const {isProfile, SetIsProfile, SetLogout, isLogout, SetEditProfile} = useContext(SideBarContext)
-
+	const {language} = useContext(GlobalContext)
 
 	const {X: XEdit, Y: YEdit, isRipple: isRippleEdit, SetIsRipple: SetIsRippleEdit} = useRipple()
 	const {X: XMore, Y: YMore, isRipple: isRippleMore, SetIsRipple: SetIsRippleMore} = useRipple()
@@ -33,7 +34,7 @@ const Header = () => {
 			<button onClick={HandleArrowClick} className="arrow">
 				<Image width={24} height={24} src="/arrow-left-icon.svg"/>
 			</button>
-			<h1>Settings</h1>
+			<h1>{language === "English" ? "Settings" : "Настройки"}</h1>
 		</section>
 		<section>
 			<button onClick={HandleEditClick} className="edit">

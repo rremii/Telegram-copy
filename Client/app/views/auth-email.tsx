@@ -1,4 +1,4 @@
-import React, {FC, useState} from "react"
+import React, {useState} from "react"
 import styled from "styled-components"
 import Image from "next/image"
 import {Field, Form, Formik} from "formik"
@@ -9,7 +9,6 @@ import useIsLoginPage from "../hooks/useIsLoginPage"
 import {useAppDispatch, useTypedSelector} from "../store/ReduxStore"
 import {addUser, fetchCreateCandidate} from "../store/AuthSlice"
 import {useClearErrors} from "../hooks/useClearErrors"
-import {useCreateCandidateMutation} from "../api/rtk/AuthApi"
 
 const validSchema = Yup.object().shape({
 	email: Yup.string().email("Invalid email").required("Required"),
@@ -21,10 +20,8 @@ interface formValues {
 	isRememberMe: boolean
 }
 
-interface Auth1Type {
-}
 
-const AuthEmail: FC<Auth1Type> = () => {
+const AuthEmail = () => {
 	const router = useRouter()
 	const dispatch = useAppDispatch()
 

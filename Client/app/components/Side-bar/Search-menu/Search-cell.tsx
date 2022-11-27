@@ -50,7 +50,7 @@ const SearchCell: FC<userInfo> = (userInfo) => {
 		router.push("/?chatId=" + chatId)
 	}, [chat])
 
-	
+
 	return <CellWrapper onClick={FindOrCreateChat}>
 		<div className="avatar">
 			<Image layout="fill" src={avatar ? API_URL_STATIC + avatar : "/no-avatar.svg"}/>

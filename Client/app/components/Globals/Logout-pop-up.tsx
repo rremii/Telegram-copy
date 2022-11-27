@@ -1,15 +1,12 @@
-import React, {FC, useContext} from "react"
+import React, {useContext} from "react"
 import styled from "styled-components"
 import {Rem} from "../../../styles/functions/mixins"
 import {SideBarContext} from "../../hooks/useSideBarContext"
 import {fetchLogout} from "../../store/AuthSlice"
 import {useAppDispatch} from "../../store/ReduxStore"
 
-interface ILogoutPopUp {
 
-}
-
-const LogoutPopUp: FC<ILogoutPopUp> = () => {
+const LogoutPopUp = () => {
 	const dispatch = useAppDispatch()
 
 	const {
@@ -66,7 +63,7 @@ export const LogoutPopUpWrapper = styled.div<{
     //TODO check that all transition are applied to specific properties 
     transition: .3s;
     transform: ${({isActive}) => isActive ?
-            "translateY(0) scale(1)" : " scale(0.8)translateY(100px)"};
+	"translateY(0) scale(1)" : " scale(0.8)translateY(100px)"};
 
     h1 {
       font-family: Roboto, sans-serif;

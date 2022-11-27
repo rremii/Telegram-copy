@@ -21,9 +21,6 @@ function MyApp({Component, pageProps}: AppPropsWithLayout) {
 	// eslint-disable-next-line react/display-name
 	else getLayout = (page: ReactNode) => <Layout>{page}</Layout>
 
-	// const getLayout =
-	//     Component.getLayout !== null ||
-	//     ((page: ReactNode) => <Layout>{page}</Layout>)
 
 	return (
 		<div className="MainWrapper">

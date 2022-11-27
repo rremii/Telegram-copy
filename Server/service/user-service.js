@@ -1,12 +1,12 @@
+const { Op } = require("sequelize")
 const { User } = require("../models/user-model")
 const { UserBio } = require("../models/userBio-model")
-const { Op } = require("sequelize")
 
 class UserService {
     async findAll({ firstName = null, lastName = null, email = null }) {
-        //looking for users by email or first and last name
+        // looking for users by email or first and last name
         if (email) {
-            //looking for the email that contains email from search
+            // looking for the email that contains email from search
             const users = await User.findAll({
                 where: { email: { [Op.like]: `%${email}%` } },
                 include: {
@@ -14,8 +14,7 @@ class UserService {
                     as: "userBio",
                 },
             })
-            return users.map((user) => {
-                return {
+            return users.map((user) => ({
                     user_id: user.user_id,
                     email: user.email,
                     userBio_id: user.userBio.userBio_id,
@@ -23,11 +22,10 @@ class UserService {
                     lastName: user.userBio.lastName,
                     profilePic: user.userBio.profilePic,
                     lastOnline: user.userBio.lastOnline,
-                }
-            })
+                }))
         }
         if (firstName || lastName) {
-            //looking for the user whose first or last name contain first/last name from search
+            // looking for the user whose first or last name contain first/last name from search
             const userInfo = await UserBio.findAll({
                 where: {
                     [Op.or]: [
@@ -38,7 +36,7 @@ class UserService {
                 include: User,
             })
             return userInfo.map((userBio) => {
-                const user = userBio.user
+                const {user} = userBio
                 return {
                     user_id: user.user_id,
                     email: user.email,
@@ -49,7 +47,7 @@ class UserService {
                     lastOnline: userBio.lastOnline,
                 }
             })
-        } else return []
+        } return []
     }
 }
 module.exports = new UserService()

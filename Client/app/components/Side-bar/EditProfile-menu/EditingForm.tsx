@@ -3,7 +3,7 @@ import Image from "next/image"
 import React, {ChangeEvent, useRef, useState} from "react"
 import {Field, Form, Formik} from "formik"
 import {Rem} from "../../../../styles/functions/mixins"
-import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
+import {useTypedSelector} from "../../../store/ReduxStore"
 import {API_URL_STATIC} from "../../../api/config"
 import * as Yup from "yup"
 import {useEditUserBioMutation} from "../../../api/rtk/MeApi"
@@ -19,7 +19,6 @@ const validSchema = Yup.object().shape({
 })
 
 const EditingForm = () => {
-	const dispatch = useAppDispatch()
 
 	const {profilePic} = useTypedSelector(state => state.Me.me)
 	const {user_id} = useTypedSelector(state => state.Me.me)

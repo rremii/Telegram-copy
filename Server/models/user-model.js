@@ -1,4 +1,4 @@
-const { INTEGER, BOOLEAN, STRING } = require("sequelize")
+const { INTEGER, STRING } = require("sequelize")
 const sequelize = require("../db")
 
 const User = sequelize.define(

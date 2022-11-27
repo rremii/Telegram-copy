@@ -1,4 +1,4 @@
-import React, {FC, useContext, useEffect} from "react"
+import React, {useContext, useEffect} from "react"
 import styled from "styled-components"
 import SideBar from "../components/Side-bar/Side-bar"
 import ChatBox from "../components/Chat-box/Chat-box"
@@ -12,11 +12,8 @@ import TelegramFeatures from "../components/TelegramFeatures/TelegramFeatures"
 import {useGetMeQuery} from "../api/rtk/MeApi"
 import DeleteChatPopUp from "../components/Globals/Delete-chat-pop-up"
 
-interface HomeType {
-}
 
-
-const Home: FC<HomeType> = () => {
+const Home = () => {
 	const dispatch = useAppDispatch()
 	const router = useRouter()
 

@@ -1,10 +1,10 @@
+const { Op } = require("sequelize")
 const { ChatMessage } = require("../../models/chat-models/chat-message-model")
 const ApiError = require("../../exceptions/api-error")
 const ChatService = require("./chat-service")
 const {
     UnSeenMessage,
 } = require("../../models/chat-models/unSeen-message-model")
-const { Op } = require("sequelize")
 
 class MessageService {
     async addMessage({ content, chat_id, user_id }) {
@@ -13,7 +13,7 @@ class MessageService {
         }
 
         const message = await ChatMessage.create({
-            content: content + "",
+            content: `${content}`,
             chat_id,
             sender_id: user_id,
         })
@@ -76,15 +76,15 @@ class MessageService {
                 chat_message_id: +id,
             },
         })
-        return await ChatService.deleteLastMessage(chat_id)
+        return await ChatService.updateLastMessage(chat_id)
     }
 
-    async editMessage(newContent, id) {
-        if (!newContent || !id) {
+    async editMessage(newContent, id, chat_id) {
+        if (!newContent || !id || !chat_id) {
             throw ApiError("wrong id or content to update message")
         }
 
-        return await ChatMessage.update(
+        await ChatMessage.update(
             {
                 content: newContent,
             },
@@ -94,6 +94,7 @@ class MessageService {
                 },
             }
         )
+        return await ChatService.updateLastMessage(chat_id)
     }
 }
 

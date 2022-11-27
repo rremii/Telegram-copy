@@ -1,6 +1,5 @@
 const ChatService = require("../service/chats/chat-service")
 const MeService = require("../service/me-service")
-const { debug } = require("nodemon/lib/utils")
 
 class ChatController {
     async findOrCreate(request, response, next) {

@@ -1,4 +1,4 @@
-import {FC, useContext} from "react"
+import {useContext} from "react"
 import styled from "styled-components"
 import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import Image from "next/image"
@@ -11,14 +11,12 @@ import {ScrollChatToBottom} from "../../../utils/ScrollToChatBottom"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
 import {useAddMessageMutation, useEditMessageMutation} from "../../../api/rtk/ChatApi"
 
-interface IChatInputBox {
-}
 
 const validSchema = Yup.object().shape({
 	content: Yup.string().required()
 })
 
-const ChatInputBox: FC<IChatInputBox> = () => {
+const ChatInputBox = () => {
 
 	const dispatch = useAppDispatch()
 
@@ -58,9 +56,9 @@ const ChatInputBox: FC<IChatInputBox> = () => {
 				if (!currentChatId) return
 
 
-				if (isEditingMode && messageId) {
+				if (isEditingMode && messageId && currentChatId) {
 					dispatch(setLoadingMessageId(messageId))
-					editMessage({newContent: content, id: messageId})
+					editMessage({newContent: content, id: messageId, chat_id: currentChatId})
 				} else {
 					addMessage({content, user_id, chat_id: currentChatId})
 				}

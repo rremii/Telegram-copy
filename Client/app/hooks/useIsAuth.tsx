@@ -31,10 +31,3 @@ const useIsAuth = () => {
 }
 export default useIsAuth
 
-// HomePage.getInitialProps = wrapper.getInitialPageProps(({dispatch}) =>
-//
-//
-//     async () => {
-//         await dispatch(await fetchCheckIsAuth());
-//     }
-// );

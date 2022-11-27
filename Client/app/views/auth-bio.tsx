@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC, useRef, useState} from "react"
+import React, {ChangeEvent, useRef, useState} from "react"
 import styled from "styled-components"
 import Image from "next/image"
 import {Field, Form, Formik} from "formik"
@@ -18,10 +18,8 @@ interface FormValues {
 	lastName: string
 }
 
-interface Auth3Type {
-}
 
-const AuthBio: FC<Auth3Type> = () => {
+const AuthBio = () => {
 	const router = useRouter()
 	const dispatch = useAppDispatch()
 

@@ -1,28 +1,11 @@
 import styled from "styled-components"
-import {FC, useContext} from "react"
+import {useContext} from "react"
 import Image from "next/image"
 import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
-import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
-import {useDeleteChatMutation} from "../../../api/rtk/ChatApi"
-import {useGetMeQuery} from "../../../api/rtk/MeApi"
-import {useRouter} from "next/router"
-
-interface IChatSettings {
-
-}
-
-const ChatSettings: FC<IChatSettings> = () => {
-	const dispatch = useAppDispatch()
-	const router = useRouter()
-
-	// const {id: messageId} = useTypedSelector(state => state.Chats.editingMessage)
-	// const {content: messageContent} = useTypedSelector(state => state.Chats.editingMessage)
-	const {user_id} = useTypedSelector(state => state.Chats.currentChat.memberInfo)
 
 
-	const {data: userData} = useGetMeQuery()
-	const [deleteChat] = useDeleteChatMutation()
+const ChatSettings = () => {
 
 
 	const {

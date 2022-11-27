@@ -1,4 +1,4 @@
-import React, {FC, useContext} from "react"
+import React, {useContext} from "react"
 import styled from "styled-components"
 import {Rem} from "../../../styles/functions/mixins"
 import {useAppDispatch, useTypedSelector} from "../../store/ReduxStore"
@@ -8,11 +8,8 @@ import {useRouter} from "next/router"
 import {useGetMeQuery} from "../../api/rtk/MeApi"
 import {useDeleteChatMutation} from "../../api/rtk/ChatApi"
 
-interface ILogoutPopUp {
 
-}
-
-const DeleteChatPopUp: FC<ILogoutPopUp> = () => {
+const DeleteChatPopUp = () => {
 	const dispatch = useAppDispatch()
 	const router = useRouter()
 

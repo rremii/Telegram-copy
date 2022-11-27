@@ -1,18 +1,13 @@
-import React, {ChangeEvent, FC} from "react"
+import React, {ChangeEvent} from "react"
 import styled from "styled-components"
 import Image from "next/image"
 import {Rem} from "../../../../styles/functions/mixins"
-import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
+import {useTypedSelector} from "../../../store/ReduxStore"
 import {API_URL_STATIC} from "../../../api/config"
 import {useChangeAvatarMutation, useGetMeQuery} from "../../../api/rtk/MeApi"
 
-interface IInfo {
-}
 
-
-const Info: FC<IInfo> = () => {
-
-	const dispatch = useAppDispatch()
+const Info = () => {
 
 
 	// const {profilePic} = useTypedSelector(state => state.Me.me)
@@ -45,18 +40,8 @@ const Info: FC<IInfo> = () => {
 				<h1>{firstName} {lastName}</h1>
 				<span>online</span>
 			</div>
-			{/*<div className="avatar-indicator">*/}
-			{/*	{ArrOfAvatars.map((_, i) => {*/}
-			{/*		return <span key={i} className={currentAvatar === i ? "current" : ""}/>*/}
-			{/*	})}*/}
-			{/*</div>*/}
+
 			<Image src={profilePic ? API_URL_STATIC + profilePic : "/no-avatar.svg"} layout="fill"/>
-			{/*<button onClick={PrevAvatar} className="arrow-left">*/}
-			{/*	<Image width={25} height={50} src="/prev.svg"/>*/}
-			{/*</button>*/}
-			{/*<button onClick={NextAvatar} className="arrow-right">*/}
-			{/*	<Image width={25} height={50} src="/next.svg"/>*/}
-			{/*</button>*/}
 		</div>
 		<div className="padding-cont">
 			<div className="change-avatar">

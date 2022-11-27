@@ -22,12 +22,12 @@ const MeSlice = createSlice({
 			return initialState
 		}
 	},
-	extraReducers: (builder) => {
-		// builder.addCase(fetchMe.fulfilled, (state, action: PayloadAction<Me>) => {
-		// 	state.me = action.payload
-		// })
+	// extraReducers: (builder) => {
+	// builder.addCase(fetchMe.fulfilled, (state, action: PayloadAction<Me>) => {
+	// 	state.me = action.payload
+	// })
 
-	},
+	// },
 })
 export const {resetMeSlice, setMe} = MeSlice.actions
 export default MeSlice.reducer

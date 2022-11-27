@@ -1,14 +1,11 @@
-import React, {FC, useContext} from "react"
+import React, {useContext} from "react"
 import styled from "styled-components"
 import Image from "next/image"
 import {AdaptiveValue} from "../../../../styles/functions/mixins"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
 
-interface IHeader {
 
-}
-
-const Header: FC<IHeader> = () => {
+const Header = () => {
 
 
 	const {screenMode, SetScreenMode} = useContext(GlobalContext)
@@ -30,17 +27,10 @@ const Header: FC<IHeader> = () => {
 				</div>
 				<div className="text-content">
 					<h1>Telegram tips</h1>
-					{/*<h2></h2>*/}
 				</div>
 			</div>
 		</section>
-		{/*<section className="chat-utils">*/}
-		{/*	<button className="more">*/}
-		{/*		<span/>*/}
-		{/*		<span/>*/}
-		{/*		<span/>*/}
-		{/*	</button>*/}
-		{/*</section>*/}
+
 	</HeaderWrapper>
 }
 export default Header

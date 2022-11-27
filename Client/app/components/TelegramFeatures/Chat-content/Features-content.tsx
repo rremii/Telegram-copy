@@ -1,12 +1,8 @@
-import {FC} from "react"
 import styled from "styled-components"
 import FeaturesMessagesBox from "./Features-messages-box"
 
-interface IFeaturesContent {
 
-}
-
-const FeaturesContent: FC<IFeaturesContent> = () => {
+const FeaturesContent = () => {
 	return <FeaturesContentWrapper>
 		<div className="features-cont">
 			<FeaturesMessagesBox/>

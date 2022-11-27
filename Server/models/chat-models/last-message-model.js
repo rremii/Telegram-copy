@@ -1,5 +1,5 @@
-const sequelize = require("../../db")
 const { INTEGER, STRING } = require("sequelize")
+const sequelize = require("../../db")
 const { Chat } = require("./chat-model")
 
 const LastMessage = sequelize.define(

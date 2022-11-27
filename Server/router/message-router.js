@@ -1,5 +1,5 @@
 const { Router } = require("express")
-const messageController = require("./../controllers/message-controller")
+const messageController = require("../controllers/message-controller")
 
 const router = Router()
 

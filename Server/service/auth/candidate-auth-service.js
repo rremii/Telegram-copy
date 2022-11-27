@@ -1,13 +1,12 @@
-const uuid = require("uuid")
 const { Op } = require("sequelize")
 const ApiError = require("../../exceptions/api-error")
 const { User } = require("../../models/user-model")
 const MailService = require("../mail-service")
 const { Candidate, fiveMin } = require("../../models/candidate-model")
+const uuid = require("uuid")
 
 class CandidateAuthService {
     async createCandidate(email, type = "register") {
-        //TODO check that all services have a validation
         if (!email) throw ApiError.BadRequest("invalid email")
 
         const registeredUser = await User.findOne({

@@ -1,5 +1,13 @@
 const nodemailer = require("nodemailer")
 
+const style = `
+  display: flex;
+  background-color: #0f0f0f;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+`
+
 class MailService {
     constructor() {
         this.transporter = nodemailer.createTransport({
@@ -21,7 +29,7 @@ class MailService {
             text: "",
             html: `
                 <div>
-                    <h1>code: ${code}</h1>
+                    <h1>your activation code: ${code}</h1>
                 </div>
             `,
         })

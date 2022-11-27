@@ -1,35 +1,10 @@
-import {FC} from "react"
 import styled from "styled-components"
 import {Rem} from "../../../../styles/functions/mixins"
 import Image from "next/image"
 
-interface IFeaturesMessages {
 
-}
+const FeaturesMessages = () => {
 
-
-const FeaturesMessages: FC<IFeaturesMessages> = () => {
-
-
-	// const {currentChatId} = useTypedSelector(state => state.Chats)
-	// const {user_id} = useTypedSelector(state => state.Me.me)
-	//
-	//
-	// const {
-	// 	data: messages,
-	// } = useGetAllMessagesQuery({chat_id: currentChatId, user_id}, {
-	// 	pollingInterval: 2000,
-	// 	skip: !currentChatId
-	// })
-	//
-	//
-	// useEffect(() => {
-	// 	const scrollBox = document.getElementById("scroll-cont")
-	// 	if (scrollBox) {
-	// 		scrollBox.scrollTo(0, scrollBox.scrollHeight)
-	// 	}
-	//
-	// }, [messages])
 
 	return <FeaturesMessagesWrapper id="scroll-cont">
 
@@ -73,18 +48,7 @@ const FeaturesMessages: FC<IFeaturesMessages> = () => {
 					 alt="bubble-tail"/>
 			</div>
 		</div>
-		<div className="message-cont">
-			<div style={{animationDelay: 0.02 + "s"}} className={`message other-message `}>Hey, now you can deal we the
-				messages you send, hopefully you like that
-				<div className="extra-info">
-					<span className="created-at">Oct 23</span>
-					<Image width={19}
-						   height={16} src="/check.svg"/>
-				</div>
-				<img src="/bubble-tail-left.svg"
-					 alt="bubble-tail"/>
-			</div>
-		</div>
+
 
 	</FeaturesMessagesWrapper>
 }

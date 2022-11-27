@@ -1,4 +1,3 @@
-const { validationResult } = require("express-validator")
 const UserAuthService = require("../service/auth/user-auth-service")
 const CandidateAuthService = require("../service/auth/candidate-auth-service")
 

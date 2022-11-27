@@ -1,14 +1,11 @@
-import React, {FC, useContext} from "react"
+import React, {useContext} from "react"
 import styled from "styled-components"
 import {GlobalContext} from "../../hooks/useGlobalContext"
 import FeaturesContent from "./Chat-content/Features-content"
 import Header from "./Header/Header"
 
-interface TelegramFeaturesType {
 
-}
-
-const TelegramFeatures: FC<TelegramFeaturesType> = () => {
+const TelegramFeatures = () => {
 	const {screenMode, background} = useContext(GlobalContext)
 
 	return <TelegramFeaturesWrapper background={background} screenMode={screenMode}>

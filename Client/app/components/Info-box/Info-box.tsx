@@ -1,14 +1,12 @@
-import React, {FC, useContext} from "react"
+import React, {useContext} from "react"
 import styled from "styled-components"
 import {AdaptiveValue} from "../../../styles/functions/mixins"
 import {GlobalContext} from "../../hooks/useGlobalContext"
 import Info from "./Info"
 import Header from "./Header"
 
-interface InfoBoxType {
-}
 
-const InfoBox: FC<InfoBoxType> = () => {
+const InfoBox = () => {
 
 	const {screenMode} = useContext(GlobalContext)
 

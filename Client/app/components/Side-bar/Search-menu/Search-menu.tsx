@@ -4,6 +4,7 @@ import {Rem} from "../../../../styles/functions/mixins"
 import SearchCell from "./Search-cell"
 import {SideBarContext} from "../../../hooks/useSideBarContext"
 import {useTypedSelector} from "../../../store/ReduxStore"
+import {GlobalContext} from "../../../hooks/useGlobalContext"
 
 
 type  searchingFilter = "people" | "groups"
@@ -15,6 +16,7 @@ const SearchMenu = () => {
 
 
 	const {isSearchOn} = useContext(SideBarContext)
+	const {language} = useContext(GlobalContext)
 
 
 	const [searchFilter, setSearchFilter] = useState<searchingFilter>("people")
@@ -23,10 +25,10 @@ const SearchMenu = () => {
 	return <SearchMenuWrapper searchingFilter={searchFilter} isSearchOn={isSearchOn} className="searchMenu__wrapper">
 		<nav>
 			<button onClick={() => setSearchFilter("people")} className={searchFilter === "people" ? "btn-active" : ""}>
-				<span>People</span>
+				<span>{language === "English" ? "People" : "Люди"}</span>
 			</button>
 			<button onClick={() => setSearchFilter("groups")} className={searchFilter === "groups" ? "btn-active" : ""}>
-				<span>Groups</span>
+				<span>{language === "English" ? "Groups" : "Группы"}</span>
 			</button>
 		</nav>
 		<div className="cell-box">

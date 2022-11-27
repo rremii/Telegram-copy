@@ -1,11 +1,10 @@
-const { Chat, UserChat } = require("../models/chat-models/chat-model")
+const fs = require("fs")
+const path = require("path")
 const { User } = require("../models/user-model")
 const ApiError = require("../exceptions/api-error")
 const TokenService = require("./token-service")
 const { UserBio } = require("../models/userBio-model")
-const StaticService = require("../service/static-service")
-const fs = require("fs")
-const path = require("path")
+const StaticService = require("./static-service")
 
 class MeService {
     async getMe(refreshToken) {

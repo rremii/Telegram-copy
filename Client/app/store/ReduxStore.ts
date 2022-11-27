@@ -7,14 +7,6 @@ import MeSlice from "./MeSlice"
 import ChatSlice from "./ChatSlice"
 import {Api} from "../api/config/Api"
 
-// export const store = configureStore({
-//     reducer: {
-//         // [AuthApiRtk.reducerPath]: AuthApiRtk.reducer,
-//         Auth: AuthSlice,
-//     },
-//     // middleware: (getDefaultMiddleware =>
-//     //     getDefaultMiddleware().concat(AuthApiRtk.middleware))
-// })
 
 const rootReducer = combineReducers({
 	Auth: AuthSlice,

@@ -28,6 +28,7 @@ class MessageController {
             next(e)
         }
     }
+
     async deleteMessage(request, response, next) {
         try {
             const { id, chat_id } = request.params
@@ -45,11 +46,12 @@ class MessageController {
 
     async editMessage(request, response, next) {
         try {
-            const { newContent, id } = request.body
+            const { newContent, id, chat_id } = request.body
 
             const updatedMessage = await MessageService.editMessage(
                 newContent,
-                id
+                id,
+                chat_id
             )
 
             response.json(updatedMessage)

@@ -1,5 +1,4 @@
 import {BaseQueryFn, createApi} from "@reduxjs/toolkit/query/react"
-import {Chat, Me} from "../../store/types"
 import {AxiosRequestConfig, AxiosResponse} from "axios"
 import {$api} from "./index"
 

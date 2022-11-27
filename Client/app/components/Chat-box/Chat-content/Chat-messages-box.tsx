@@ -1,4 +1,4 @@
-import {FC, useContext, useEffect, useState} from "react"
+import {useContext, useEffect, useState} from "react"
 import styled from "styled-components"
 import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
@@ -10,10 +10,6 @@ import {getMessageTime} from "../../../utils/getMessageTime"
 import {message} from "../../../store/types"
 import {getMessageDate} from "../../../utils/getMessageDate"
 import {useGetAllMessagesQuery} from "../../../api/rtk/ChatApi"
-
-interface IChatMessagesBox {
-
-}
 
 
 const IsPrevMessageFromSameSender = (messages: message[], index: number) => {
@@ -33,7 +29,7 @@ const IsNextMessageFromSameSender = (messages: message[], index: number) => {
 	return isNextMessageFromSameSender
 }
 
-const ChatMessagesBox: FC<IChatMessagesBox> = () => {
+const ChatMessagesBox = () => {
 	const dispatch = useAppDispatch()
 
 	const {currentChatId} = useTypedSelector(state => state.Chats)

@@ -4,11 +4,8 @@ import ChatInputBox from "./Chat-input-box"
 import ChatMessagesBox from "./Chat-messages-box"
 import {AdaptiveValue} from "./../../../../styles/functions/mixins"
 
-interface IChatContent {
 
-}
-
-const ChatContent: FC<IChatContent> = () => {
+const ChatContent = () => {
 
 
 	return <ChatContentWrapper>

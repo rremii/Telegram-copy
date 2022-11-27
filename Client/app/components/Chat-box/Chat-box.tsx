@@ -1,15 +1,12 @@
-import React, {FC, useContext} from "react"
+import React, {useContext} from "react"
 import styled from "styled-components"
 import Header from "./Header/Header"
 import ChatContent from "./Chat-content/Chat-content"
 import {GlobalContext} from "../../hooks/useGlobalContext"
 import {useTypedSelector} from "../../store/ReduxStore"
 
-interface ChatBoxType {
 
-}
-
-const ChatBox: FC<ChatBoxType> = () => {
+const ChatBox = () => {
 	const {currentChatId} = useTypedSelector(state => state.Chats)
 
 

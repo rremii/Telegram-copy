@@ -1,4 +1,4 @@
-import React, {FC, useContext} from "react"
+import React, {useContext} from "react"
 import styled from "styled-components"
 import ChatMenu from "./Chat-menu/Chat-menu"
 import ProfileMenu from "./Profile-menu/Profile-menu"
@@ -10,12 +10,8 @@ import GeneralSettings from "./General-settings/General-settings"
 import EditProfileMenu from "./EditProfile-menu/EditProfile-menu"
 import LanguageSettings from "./Language-settings/Language-settings"
 
-interface ISideBar {
 
-}
-
-
-const SideBar: FC<ISideBar> = () => {
+const SideBar = () => {
 
 	const {screenMode} = useContext(GlobalContext)
 

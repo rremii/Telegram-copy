@@ -1,8 +1,7 @@
-const { INTEGER, BOOLEAN, STRING, ARRAY, TEXT } = require("sequelize")
+const { INTEGER } = require("sequelize")
 const sequelize = require("../../db")
 const { User } = require("../user-model")
 const { Chat } = require("./chat-model")
-// const { UserChat } = require("./user-chat-model")
 
 const UnSeenMessage = sequelize.define(
     "UnSeenMessage",

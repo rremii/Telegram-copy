@@ -69,8 +69,8 @@ const AuthApi = Api.injectEndpoints({
 	}
 )
 
-export const {
-	useCreateCandidateMutation,
-	useLoginMutation,
-	useRegistrationMutation
-} = AuthApi
+// export const {
+// 	useCreateCandidateMutation,
+// 	useLoginMutation,
+// 	useRegistrationMutation
+// } = AuthApi

@@ -1,4 +1,4 @@
-import React, {FC, useContext} from "react"
+import React, {useContext} from "react"
 import styled from "styled-components"
 import Image from "next/image"
 import Ripple from "../../../ui/Ripple"
@@ -10,11 +10,7 @@ import {API_URL_STATIC} from "../../../api/config"
 import {getStatusByLastOnline} from "../../../utils/getStatusByLastOnline"
 import ChatSettings from "./Chat-settings"
 
-interface IHeader {
-
-}
-
-const Header: FC<IHeader> = () => {
+const Header = () => {
 
 
 	const {memberInfo} = useTypedSelector(state => state.Chats.currentChat)

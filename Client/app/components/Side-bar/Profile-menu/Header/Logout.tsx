@@ -1,14 +1,11 @@
-import React, {FC, useContext} from "react"
+import React, {useContext} from "react"
 import styled from "styled-components"
 import Image from "next/image"
 import {Rem} from "../../../../../styles/functions/mixins"
 import {SideBarContext} from "../../../../hooks/useSideBarContext"
 
-interface ILogout {
 
-}
-
-const Logout: FC<ILogout> = () => {
+const Logout = () => {
 
 	const {
 		isLogout,

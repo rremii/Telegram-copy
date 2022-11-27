@@ -25,13 +25,13 @@ const SearchSlice = createSlice({
 		},
 
 	},
-	extraReducers: (builder) => {
-		// builder.addCase(fetchUsers.fulfilled, (state, action: PayloadAction<userInfo[]>) => {
-		//
-		// 	state.users = action.payload
-		// })
+	// extraReducers: (builder) => {
+	// builder.addCase(fetchUsers.fulfilled, (state, action: PayloadAction<userInfo[]>) => {
+	//
+	// 	state.users = action.payload
+	// })
 
-	},
+	// },
 })
 export const {resetSearchSlice, setSearchedUsers} = SearchSlice.actions
 export default SearchSlice.reducer

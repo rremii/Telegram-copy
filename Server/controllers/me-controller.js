@@ -11,6 +11,7 @@ class MeController {
             next(e)
         }
     }
+
     async changeAvatar(request, response, next) {
         try {
             const profilePic = request?.files?.profilePic
@@ -26,18 +27,16 @@ class MeController {
             next(e)
         }
     }
+
     async editUserBio(request, response, next) {
         try {
             const profilePic = request?.files?.profilePic
             const { user_id, firstName, lastName } = request.body
             if (profilePic) {
-                const newProfilePic = await MeService.changeAvatar(
-                    profilePic,
-                    +user_id
-                )
+                await MeService.changeAvatar(profilePic, +user_id)
             }
 
-            const updatedBio = await MeService.editUserBio({
+            await MeService.editUserBio({
                 user_id,
                 firstName,
                 lastName,

@@ -1,8 +1,8 @@
+const { Op } = require("sequelize")
 const { Chat, UserChat } = require("../../models/chat-models/chat-model")
 const { User } = require("../../models/user-model")
 const ApiError = require("../../exceptions/api-error")
 const { UserBio } = require("../../models/userBio-model")
-const { Op } = require("sequelize")
 const {
     UnSeenMessage,
 } = require("../../models/chat-models/unSeen-message-model")
@@ -47,10 +47,10 @@ class ChatService {
         })
         if (!chats1.length || !chats2.length) return null
 
-        //looking for same chats that both users have
-        return chats1.find((chat1) => {
-            return chats2.some((chat2) => chat2.chat_id === chat1.chat_id)
-        })
+        // looking for same chats that both users have
+        return chats1.find((chat1) =>
+            chats2.some((chat2) => chat2.chat_id === chat1.chat_id)
+        )
     }
 
     async findOrCreate(userIds) {
@@ -69,7 +69,8 @@ class ChatService {
     }
 
     async getChatsByUserId(user_id) {
-        //looking for all the chat that user has
+        if (!user_id) throw ApiError("wrong user id")
+        // looking for all the chat that user has
         const userChats = await User.findOne({
             where: { user_id },
             include: {
@@ -78,31 +79,27 @@ class ChatService {
             },
         })
 
-        //converting chats for a better looking
-        const chats = userChats.chats.map((chat) => {
-            return {
-                chat_id: chat.chat_id,
-                lastMessage: {
-                    content: chat.lastMessage ? chat.lastMessage.content : null,
-                    updatedAt: chat.lastMessage
-                        ? chat.lastMessage.updatedAt
-                        : null,
-                },
-                unSeenMessages: chat.unSeenMessages ? chat.unSeenMessages : 0,
-            }
-        })
+        // converting chats for a better looking
+        const chats = userChats.chats.map((chat) => ({
+            chat_id: chat.chat_id,
+            lastMessage: {
+                content: chat.lastMessage ? chat.lastMessage.content : null,
+                updatedAt: chat.lastMessage ? chat.lastMessage.updatedAt : null,
+            },
+            unSeenMessages: chat.unSeenMessages ? chat.unSeenMessages : 0,
+        }))
         return await Promise.all(
             chats.map(async (chat) => {
-                const chat_id = chat.chat_id
+                const { chat_id } = chat
 
-                //find the chat user's unseen messages
+                // find the chat user's unseen messages
                 const unSeenMessage = await UnSeenMessage.findOne({
                     where: {
                         chat_id,
                         sender_id: { [Op.ne]: user_id },
                     },
                 })
-                //find the chat user's partner
+                // find the chat user's partner
                 const currentChat = await Chat.findOne({
                     where: { chat_id },
                     include: {
@@ -137,7 +134,9 @@ class ChatService {
 
         return await lastMessage.save()
     }
-    async deleteLastMessage(chat_id) {
+
+    async updateLastMessage(chat_id) {
+        //grab last message from the chat and make it last message
         const [lastMessage] = await ChatMessage.findAll({
             limit: 1,
             where: { chat_id: +chat_id },
@@ -146,6 +145,7 @@ class ChatService {
 
         return await this.addLastMessage(chat_id, lastMessage.content)
     }
+
     async deleteChat(userIds) {
         if (!userIds) return ApiError("wrong user ids")
         const chat = await ChatService.#findChatByIds(userIds)

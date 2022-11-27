@@ -1,4 +1,4 @@
-const { INTEGER, BOOLEAN, STRING, ARRAY, TEXT } = require("sequelize")
+const { INTEGER, STRING } = require("sequelize")
 const sequelize = require("../../db")
 const { User } = require("../user-model")
 const { Chat } = require("./chat-model")
@@ -16,13 +16,6 @@ const ChatMessage = sequelize.define(
             type: STRING,
             allowNull: false,
         },
-        // isSeen: {
-        //     type: BOOLEAN,
-        //     defaultValue: false,
-        // },
-        // lastMessage: {
-        //     type: STRING,
-        // },
         chat_id: {
             type: INTEGER,
             allowNull: false,

@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC} from "react"
+import React, {ChangeEvent} from "react"
 import styled from "styled-components"
 import Image from "next/image"
 import {Field, Form, Formik, FormikProps} from "formik"
@@ -8,17 +8,14 @@ import useIsLoginPage from "../hooks/useIsLoginPage"
 import {useAppDispatch, useTypedSelector} from "../store/ReduxStore"
 import {useClearErrors} from "../hooks/useClearErrors"
 import {FormikHelpers} from "formik/dist/types"
-import {useLoginMutation, useRegistrationMutation} from "../api/rtk/AuthApi"
 import {fetchLogin, fetchRegistration} from "../store/AuthSlice"
 
 interface FormValues {
 	code: string
 }
 
-interface Auth2Type {
-}
 
-const AuthCode: FC<Auth2Type> = () => {
+const AuthCode = () => {
 	const router = useRouter()
 	const dispatch = useAppDispatch()
 

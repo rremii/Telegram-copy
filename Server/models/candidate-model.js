@@ -1,6 +1,5 @@
-const { INTEGER, BOOLEAN, STRING, BIGINT, TIME, DATE } = require("sequelize")
+const { INTEGER, STRING, DATE } = require("sequelize")
 const sequelize = require("../db")
-const { User } = require("./user-model")
 
 const fiveMin = 1000 * 60 * 5
 

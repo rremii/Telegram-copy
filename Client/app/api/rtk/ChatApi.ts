@@ -44,12 +44,12 @@ const ChatApi = Api.injectEndpoints({
 			}),
 			invalidatesTags: ["Message"]
 		}),
-		editMessage: build.mutation<message, { newContent: string, id: number }>({
-			query: ({newContent, id}) => {
+		editMessage: build.mutation<message, { newContent: string, id: number, chat_id: number }>({
+			query: ({newContent, id, chat_id}) => {
 				return {
 					url: "/messages/",
 					method: "PUT",
-					data: {newContent, id}
+					data: {newContent, id, chat_id}
 				}
 			},
 			invalidatesTags: ["Message"]

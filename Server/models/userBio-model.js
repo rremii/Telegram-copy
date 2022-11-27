@@ -1,12 +1,4 @@
-const {
-    INTEGER,
-    BOOLEAN,
-    STRING,
-    BLOB,
-    DataTypes,
-    DATE,
-    NOW,
-} = require("sequelize")
+const { INTEGER, STRING, DATE, NOW } = require("sequelize")
 const sequelize = require("../db")
 const { User } = require("./user-model")
 

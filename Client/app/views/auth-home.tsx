@@ -1,14 +1,12 @@
-import React, {FC} from "react"
+import React from "react"
 import styled from "styled-components"
 import Image from "next/image"
 import {Rem} from "../../styles/functions/mixins"
 import {useRouter} from "next/router"
 import Link from "next/link"
 
-interface AuthHomeType {
-}
 
-const AuthHome: FC<AuthHomeType> = () => {
+const AuthHome = () => {
 	const router = useRouter()
 
 	return <AuthHomeWrapper className="authHome__wrapper">
