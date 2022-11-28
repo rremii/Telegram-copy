@@ -15,14 +15,15 @@ const SearchMenu = () => {
 	const {groups} = useTypedSelector(state => state.Search)
 
 
-	const {isSearchOn} = useContext(SideBarContext)
+	const {isSearchOn, isDarkMode} = useContext(SideBarContext)
 	const {language} = useContext(GlobalContext)
 
 
 	const [searchFilter, setSearchFilter] = useState<searchingFilter>("people")
 
 
-	return <SearchMenuWrapper searchingFilter={searchFilter} isSearchOn={isSearchOn} className="searchMenu__wrapper">
+	return <SearchMenuWrapper isDarkMode={isDarkMode} searchingFilter={searchFilter} isSearchOn={isSearchOn}
+							  className="searchMenu__wrapper">
 		<nav>
 			<button onClick={() => setSearchFilter("people")} className={searchFilter === "people" ? "btn-active" : ""}>
 				<span>{language === "English" ? "People" : "Люди"}</span>
@@ -45,13 +46,15 @@ export default SearchMenu
 const SearchMenuWrapper = styled.div<{
 	isSearchOn: boolean
 	searchingFilter: searchingFilter
+	isDarkMode: boolean
 }>`
   width: 100%;
   height: calc(100% - 60px);
   position: absolute;
   top: 60px;
   left: 0;
-  background-color: rgb(33, 33, 33);
+  background-color: ${({isDarkMode}) => isDarkMode ? "rgb(33, 33, 33)" : "white"};
+  //background-color: rgb(33, 33, 33);
   transition: 0.4s;
   transform: ${({isSearchOn}) => isSearchOn ? "scale(1)" : "scale(0.95)"};
   opacity: ${({isSearchOn}) => isSearchOn ? 1 : 0};

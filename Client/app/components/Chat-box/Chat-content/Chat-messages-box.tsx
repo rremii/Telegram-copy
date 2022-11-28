@@ -10,6 +10,7 @@ import {getMessageTime} from "../../../utils/getMessageTime"
 import {message} from "../../../store/types"
 import {getMessageDate} from "../../../utils/getMessageDate"
 import {useGetAllMessagesQuery} from "../../../api/rtk/ChatApi"
+import {SideBarContext} from "../../../hooks/useSideBarContext"
 
 
 const IsPrevMessageFromSameSender = (messages: message[], index: number) => {
@@ -50,6 +51,7 @@ const ChatMessagesBox = () => {
 
 
 	const {messageFontSize, SetMessageSettings, isMessageSettings} = useContext(GlobalContext)
+	const {isDarkMode} = useContext(SideBarContext)
 
 
 	useEffect(() => {
@@ -114,6 +116,7 @@ const ChatMessagesBox = () => {
 			const delayNum = messages.length - i + 1 //as farther el as less the delay
 
 			return <MessageWrapper
+				isDarkMode={isDarkMode}
 				isNextMessageFromSameSender={isNextMessageFromSameSender}
 				isPrevMessageFromSameSender={messageDate ? true : isPrevMessageFromSameSender}
 				fontSize={messageFontSize ? messageFontSize : localStorage.getItem("message-font-size")}
@@ -151,7 +154,6 @@ const ChatMessagesBox = () => {
 export default ChatMessagesBox
 const ChatMessagesBoxWrapper = styled.div<{
 	length: number
-
 }>`
   width: 100%;
   flex: 1 1 auto;
@@ -186,6 +188,7 @@ const MessageWrapper = styled.div<{
 	fontSize: string | null
 	isPrevMessageFromSameSender: boolean | null
 	isNextMessageFromSameSender: boolean | null
+	isDarkMode: boolean
 }>`
   width: 100%;
   display: grid;
@@ -222,14 +225,14 @@ const MessageWrapper = styled.div<{
       background-color: hsla(196, 32.0886%, 10.0686%, 0.4);
       font-family: Roboto, sans-serif;
       font-size: ${Rem(15)};
-      color: white;
+      color: ${({isDarkMode}) => isDarkMode ? "white" : "black"};
+
     }
   }
 
   .message {
     min-width: min-content;
     max-width: min(80vw, 350px);
-    color: white;
     font-size: ${({fontSize}) => fontSize ? fontSize + "px" : "16px"};
     font-family: Roboto, sans-serif;
     padding: 8px 10px 8px 10px;
@@ -239,6 +242,7 @@ const MessageWrapper = styled.div<{
     opacity: 0;
     animation-delay: 0.5s;
     height: min-content;
+    color: ${({isDarkMode}) => isDarkMode ? "white" : "black"};
 
 
     .extra-info {
@@ -252,7 +256,7 @@ const MessageWrapper = styled.div<{
       gap: 5px;
 
       .created-at {
-        color: rgba(255, 255, 255, 0.6);
+        color: ${({isDarkMode}) => isDarkMode ? "rgba(255, 255, 255, 0.6)" : "black"};
         font-size: ${Rem(12)};
         font-family: Roboto, sans-serif;
       }
@@ -284,10 +288,12 @@ const MessageWrapper = styled.div<{
 
   .your-message {
     justify-self: end;
-    background-color: rgb(135, 116, 225);
+    background-color: ${({isDarkMode}) => isDarkMode ? "rgb(135, 116, 225)" : "rgb(238,255,222)"};
+
     position: relative;
     cursor: pointer;
     border-radius: ${({isNextMessageFromSameSender}) => isNextMessageFromSameSender ? "12px 12px 7px 12px" : "12px 7px 0 12px"} !important;
+    color: ${({isDarkMode}) => isDarkMode ? "white" : "black"};
 
     img {
       bottom: 0;
@@ -298,8 +304,9 @@ const MessageWrapper = styled.div<{
 
   .other-message {
     justify-self: start;
-    background-color: rgb(33, 33, 33);
+    background-color: ${({isDarkMode}) => isDarkMode ? "rgb(33, 33, 33)" : "white"};
     border-radius: ${({isNextMessageFromSameSender}) => isNextMessageFromSameSender ? "12px 12px 12px 7px" : "7px 12px 12px 0"} !important;
+    color: ${({isDarkMode}) => isDarkMode ? "white" : "black"};
 
     img {
       bottom: 0;

@@ -24,8 +24,8 @@ const Header = () => {
 		isSearchOn,
 		isSearchLayout,
 		SetIsSearchLayout,
+		isDarkMode
 	} = useContext(SideBarContext)
-
 
 	const {X, Y, isRipple, SetIsRipple} = useRipple()
 	const [searchString, setSearchString] = useState<string>("")
@@ -57,7 +57,7 @@ const Header = () => {
 		SetIsSearch(false)
 	}
 
-	return <HeaderWrapper isSearchOn={isSearchOn} isSearchLayout={isSearchLayout}>
+	return <HeaderWrapper isDarkMode={isDarkMode} isSearchOn={isSearchOn} isSearchLayout={isSearchLayout}>
 		<div className="burger">
 			<Burger/>
 		</div>
@@ -83,6 +83,7 @@ export default Header
 const HeaderWrapper = styled.div<{
 	isSearchLayout: boolean
 	isSearchOn: boolean
+	isDarkMode: boolean
 }>`
 
   height: 60px;
@@ -106,7 +107,8 @@ const HeaderWrapper = styled.div<{
     transform: ${({isSearchOn}) => isSearchOn ? "rotate(-180deg)" : ""};
 
     &:hover {
-      background-color: rgb(43, 43, 43);
+      background-color: ${({isDarkMode}) => isDarkMode ? "rgb(43, 43, 43)" : "rgba(81,81,81,0.11)"};
+
     }
 
     .arrow {
@@ -159,7 +161,7 @@ const HeaderWrapper = styled.div<{
     align-items: center;
     justify-content: center;
     margin: 0 7px;
-    background-color: rgb(24, 24, 24);
+    color: ${({isDarkMode}) => isDarkMode ? "rgb(24, 24, 24)" : "transparent"};
 
     .search-icon {
       pointer-events: none;
@@ -195,7 +197,7 @@ const HeaderWrapper = styled.div<{
       font-family: Roboto, sans-serif;
       font-size: ${Rem(18)};
       line-height: 42px;
-      color: white;
+      color: ${({isDarkMode}) => isDarkMode ? "white" : "black"};
       font-weight: 500;
       transition: 0.4s;
       border: rgb(47, 47, 47) 1px solid;
@@ -206,7 +208,9 @@ const HeaderWrapper = styled.div<{
 
       &:hover {
         border: rgb(112, 117, 121) 1px solid;
-        background-color: rgb(29, 29, 29);
+
+        background-color: ${({isDarkMode}) => isDarkMode ? "rgb(29, 29, 29)" : "rgba(29,29,29,0.1)"};
+
       }
 
       &:focus {

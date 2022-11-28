@@ -9,14 +9,16 @@ import BackgroundSettings from "./Background-settings/Background-settings"
 import GeneralSettings from "./General-settings/General-settings"
 import EditProfileMenu from "./EditProfile-menu/EditProfile-menu"
 import LanguageSettings from "./Language-settings/Language-settings"
+import {SideBarContext} from "../../hooks/useSideBarContext"
 
 
 const SideBar = () => {
 
 	const {screenMode} = useContext(GlobalContext)
+	const {isDarkMode} = useContext(SideBarContext)
 
 
-	return <SideBarWrapper screenMode={screenMode}>
+	return <SideBarWrapper isDarkMode={isDarkMode} screenMode={screenMode}>
 
 		<ProfileMenu/>
 		<GeneralSettings/>
@@ -33,11 +35,13 @@ const SideBar = () => {
 export default SideBar
 const SideBarWrapper = styled.div<{
 	screenMode: string
+	isDarkMode: boolean
 }>`
   //overflow: hidden;
   height: 100%;
   padding: 0;
-  background-color: rgb(33, 33, 33);
+  transition: 0.5s;
+  background-color: ${({isDarkMode}) => isDarkMode ? "rgb(33, 33, 33)" : "white"};
   flex: 0 0 420px;
   color: white;
   position: relative;

@@ -12,6 +12,7 @@ import {API_URL_STATIC} from "../../../api/config"
 import {getMessageTime} from "../../../utils/getMessageTime"
 import {getStatusByLastOnline} from "../../../utils/getStatusByLastOnline"
 import useMessageSound from "../../../hooks/useMessageSound"
+import {SideBarContext} from "../../../hooks/useSideBarContext"
 
 
 interface IChatList extends Chat {
@@ -33,6 +34,7 @@ const ChatCell: FC<IChatList> = ({
 
 
 	const {SetScreenMode} = useContext(GlobalContext)
+	const {isDarkMode} = useContext(SideBarContext)
 
 	useMessageSound(unSeenMessages)
 
@@ -47,7 +49,7 @@ const ChatCell: FC<IChatList> = ({
 	}
 
 	const title = firstName + " " + (lastName ? lastName : "")
-	return <ChatCellWrapper onClick={HandleCellClick} className="cell">
+	return <ChatCellWrapper isDarkMode={isDarkMode} onClick={HandleCellClick} className="cell">
 		<div className="avatar">
 			<Image width={54} height={54} src={avatar ? API_URL_STATIC + avatar : "/no-avatar.svg"}/>
 
@@ -75,7 +77,9 @@ const ChatCell: FC<IChatList> = ({
 	</ChatCellWrapper>
 }
 export default ChatCell
-const ChatCellWrapper = styled.div`
+const ChatCellWrapper = styled.div<{
+	isDarkMode: boolean
+}>`
   border-radius: 10px;
   width: 100%;
   flex: 0 0 72px;
@@ -85,6 +89,7 @@ const ChatCellWrapper = styled.div`
   justify-content: space-between;
   gap: 9px;
   cursor: pointer;
+  color: ${({isDarkMode}) => isDarkMode ? "rgba(255, 255, 255, 0.6)" : "black"};
 
   &:hover {
     background-color: rgba(64, 64, 64, 0.3);

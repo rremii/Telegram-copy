@@ -24,7 +24,7 @@ const SearchCell: FC<userInfo> = (userInfo) => {
 
 	const [findOrCreateChat, {data: chat}] = useFindOrCreateChatMutation()
 	// const {data: memberInfo} = useGetChatsByUserIdQuery(user_id)
-	const {SetIsSearch} = useContext(SideBarContext)
+	const {SetIsSearch, isDarkMode} = useContext(SideBarContext)
 	const {SetScreenMode} = useContext(GlobalContext)
 
 
@@ -51,7 +51,7 @@ const SearchCell: FC<userInfo> = (userInfo) => {
 	}, [chat])
 
 
-	return <CellWrapper onClick={FindOrCreateChat}>
+	return <CellWrapper isDarkMode={isDarkMode} onClick={FindOrCreateChat}>
 		<div className="avatar">
 			<Image layout="fill" src={avatar ? API_URL_STATIC + avatar : "/no-avatar.svg"}/>
 		</div>
@@ -63,7 +63,9 @@ const SearchCell: FC<userInfo> = (userInfo) => {
 	</CellWrapper>
 }
 export default SearchCell
-const CellWrapper = styled.div`
+const CellWrapper = styled.div<{
+	isDarkMode: boolean
+}>`
   cursor: pointer;
   flex: 0 0 72px;
   display: flex;
@@ -72,6 +74,7 @@ const CellWrapper = styled.div`
   justify-content: space-between;
   gap: 7px;
   padding: 9px;
+  color: ${({isDarkMode}) => isDarkMode ? "white" : "black"};
 
   &:hover {
     background-color: rgba(64, 64, 64, 0.3);

@@ -34,7 +34,7 @@ const Burger = () => {
 		SetDarkMode(!isDarkMode)
 	}
 
-	return <BurgerWrapper onMouseLeave={() => SetIsBurger(false)} isBurger={isBurger}>
+	return <BurgerWrapper isDarkMode={isDarkMode} onMouseLeave={() => SetIsBurger(false)} isBurger={isBurger}>
 		<div className="burger-overlay" onClick={() => SetIsBurger(false)}/>
 
 		{/*<div className="row">*/}
@@ -78,6 +78,7 @@ const Burger = () => {
 export default Burger
 const BurgerWrapper = styled.div<{
 	isBurger: boolean
+	isDarkMode: boolean
 }>`
   position: absolute;
   top: 100%;
@@ -96,13 +97,15 @@ const BurgerWrapper = styled.div<{
   gap: 10px;
   box-shadow: 5px 0 3px 0 rgba(0, 0, 0, 0.05);
   background: hsla(168, 6%, 16%, 1);
+  color: ${({isDarkMode}) => isDarkMode ? "rgba(255, 255, 255, 0.65)" : "black"};
 
-  background: linear-gradient(45deg, hsla(168, 6%, 16%, 1) 0%, hsla(0, 0%, 15%, 1) 54%, hsla(0, 0%, 14%, 1) 100%);
+  //background: linear-gradient(45deg, hsla(168, 6%, 16%, 1) 0%, hsla(0, 0%, 15%, 1) 54%, hsla(0, 0%, 14%, 1) 100%);
 
   background: -moz-linear-gradient(45deg, hsla(168, 6%, 16%, 1) 0%, hsla(0, 0%, 15%, 1) 54%, hsla(0, 0%, 14%, 1) 100%);
 
   background: -webkit-linear-gradient(45deg, hsla(168, 6%, 16%, 1) 0%, hsla(0, 0%, 15%, 1) 54%, hsla(0, 0%, 14%, 1) 100%);
-
+  background: ${({isDarkMode}) => isDarkMode ? "linear-gradient(45deg, hsla(168, 6%, 16%, 1) 0%, hsla(0, 0%, 15%, 1) 54%, hsla(0, 0%, 14%, 1) 100%)" : "rgb(255,255,255)"};
+  border: 1px solid ${({isDarkMode}) => isDarkMode ? "none" : "rgb(230,230,230)"};
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#272C2B", endColorstr="#272727", GradientType=1);
 
 
@@ -161,6 +164,7 @@ const BurgerWrapper = styled.div<{
     justify-content: center;
     margin-top: 5px;
     font-family: Roboto, sans-serif;
-    color: rgba(255, 255, 255, 0.65);
+    color: ${({isDarkMode}) => isDarkMode ? "rgba(255, 255, 255, 0.65)" : "black"};
+
   }
 `
