@@ -6,10 +6,10 @@ import {SideBarContext} from "../../../hooks/useSideBarContext"
 
 const LanguageSettings = () => {
 
-	const {isLanguageSettings} = useContext(SideBarContext)
+	const {isLanguageSettings, isDarkMode} = useContext(SideBarContext)
 
 
-	return <LanguageSettingsWrapper isSettings={isLanguageSettings}>
+	return <LanguageSettingsWrapper isDarkMode={isDarkMode} isSettings={isLanguageSettings}>
 		<div className="LanguageSettings-cont">
 			<Header/>
 			<SettingsBox/>
@@ -19,6 +19,7 @@ const LanguageSettings = () => {
 export default LanguageSettings
 const LanguageSettingsWrapper = styled.div<{
 	isSettings: boolean
+	isDarkMode: boolean
 }>`
 
   position: absolute;
@@ -41,7 +42,7 @@ const LanguageSettingsWrapper = styled.div<{
     transform: ${({isSettings}) => isSettings ? "translateX(-100%)" : "translateX(0)"};
     width: 100%;
     height: 100%;
-    background-color: rgb(22, 22, 22);
+    background-color: ${({isDarkMode}) => isDarkMode ? "rgb(22, 22, 22)" : "rgb(170,170,170)"};
     gap: 1px;
     display: flex;
     flex-direction: column;

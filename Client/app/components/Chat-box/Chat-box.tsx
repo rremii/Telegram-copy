@@ -4,6 +4,7 @@ import Header from "./Header/Header"
 import ChatContent from "./Chat-content/Chat-content"
 import {GlobalContext} from "../../hooks/useGlobalContext"
 import {useTypedSelector} from "../../store/ReduxStore"
+import {SideBarContext} from "../../hooks/useSideBarContext"
 
 
 const ChatBox = () => {
@@ -11,9 +12,11 @@ const ChatBox = () => {
 
 
 	const {screenMode, background, isBackgroundBlur} = useContext(GlobalContext)
+	const {isDarkMode} = useContext(SideBarContext)
 
 
-	return <ChatBoxWrapper isBackgroundBlur={isBackgroundBlur === "true"} background={background}
+	return <ChatBoxWrapper isDarkMode={isDarkMode} isBackgroundBlur={isBackgroundBlur === "true"}
+						   background={background}
 						   currentChatId={currentChatId} screenMode={screenMode}>
 		<div className="chat-box-content">
 
@@ -31,10 +34,11 @@ const ChatBoxWrapper = styled.div<{
 	currentChatId: number | null
 	background: string
 	isBackgroundBlur: boolean
+	isDarkMode: boolean
 }>`
   height: 100%;
   padding: 0;
-  background-color: rgb(33, 33, 33);
+  background-color: ${({isDarkMode}) => isDarkMode ? "rgb(33, 33, 33)" : "white"};
   background-image: ${({background}) => ("url(/backgrounds/" + background + ")")};
   background-size: cover;
   flex: 1 1 auto;

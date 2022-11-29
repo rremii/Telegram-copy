@@ -2,6 +2,7 @@ import styled from "styled-components"
 import {Rem} from "../../../../styles/functions/mixins"
 import {useContext} from "react"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
+import {SideBarContext} from "../../../hooks/useSideBarContext"
 
 
 const Languages = [
@@ -12,12 +13,13 @@ const Languages = [
 const SettingsBox = () => {
 
 	const {language, SetLanguage} = useContext(GlobalContext)
+	const {isDarkMode} = useContext(SideBarContext)
 
 	const ChangeLanguage = (newLanguage: string) => {
 		SetLanguage(newLanguage)
 	}
 
-	return <SettingsBoxWrapper>
+	return <SettingsBoxWrapper isDarkMode={isDarkMode}>
 		{Languages.map(({engName, nativeName}, i) => {
 			return <div onClick={() => ChangeLanguage(engName)} key={i}
 						className={`cell ${language === engName ? "active" : ""}`}>
@@ -35,9 +37,11 @@ const SettingsBox = () => {
 }
 export default SettingsBox
 const SettingsBoxWrapper = styled.div<{
-	// fontSize: number
+	isDarkMode: boolean
 }>`
-  background-color: rgb(33, 33, 33);
+  background-color: ${({isDarkMode}) => isDarkMode ? "rgb(33, 33, 33)" : "white"};
+  color: ${({isDarkMode}) => isDarkMode ? "white" : "rgb(47,47,47)"};
+
   padding: 8px 6px 20px;
 
   .cell {
@@ -50,7 +54,8 @@ const SettingsBoxWrapper = styled.div<{
     cursor: pointer;
 
     &:hover {
-      background-color: rgb(43, 43, 43);
+      background-color: ${({isDarkMode}) => isDarkMode ? "rgb(43, 43, 43)" : "rgba(178,178,178,0.19)"};
+
     }
 
     .radio {

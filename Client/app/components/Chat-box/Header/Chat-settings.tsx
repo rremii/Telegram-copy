@@ -3,6 +3,7 @@ import {useContext} from "react"
 import Image from "next/image"
 import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
+import {SideBarContext} from "../../../hooks/useSideBarContext"
 
 
 const ChatSettings = () => {
@@ -14,6 +15,7 @@ const ChatSettings = () => {
 		SetChatDeletePopUp,
 		language
 	} = useContext(GlobalContext)
+	const {isDarkMode} = useContext(SideBarContext)
 
 
 	const HandleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -34,7 +36,7 @@ const ChatSettings = () => {
 
 	return <>
 		<Overlay isChatSettings={isChatSettings} onClick={HandleOverlayClick}/>
-		<ChatSettingsWrapper onMouseLeave={HandleMouseLeave}
+		<ChatSettingsWrapper isDarkMode={isDarkMode} onMouseLeave={HandleMouseLeave}
 							 isChatSettings={isChatSettings}>
 			<div className="content-cont">
 				<div onClick={DeleteChat} className="option">
@@ -47,7 +49,7 @@ const ChatSettings = () => {
 }
 export default ChatSettings
 const ChatSettingsWrapper = styled.div<{
-
+	isDarkMode: boolean
 	isChatSettings: boolean
 }>`
   //background-color: red;
@@ -76,6 +78,7 @@ const ChatSettingsWrapper = styled.div<{
     width: ${AdaptiveValue(180, 150)};
     //height: 230px;
     background-color: rgba(33, 33, 33, 0.5);
+
     border-radius: 10px;
     padding: 5px;
     transition: .3s;

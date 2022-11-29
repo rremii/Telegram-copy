@@ -1,10 +1,10 @@
-import React, {FC, useContext, useEffect} from "react"
+import React, {FC, useContext} from "react"
 import styled from "styled-components"
 import Image from "next/image"
 import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
 import {cutStringToLength} from "../../../utils/cutStringToLength"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
-import {useAppDispatch} from "../../../store/ReduxStore"
+import {useAppDispatch, useTypedSelector} from "../../../store/ReduxStore"
 import {useRouter} from "next/router"
 import {setCurrentChatId, setCurrentMemberInfo, setCurrentMemberOnline} from "../../../store/ChatSlice"
 import {Chat} from "../../../store/types"
@@ -25,12 +25,12 @@ const ChatCell: FC<IChatList> = ({
 	unSeenMessages, lastMessage,
 	memberInfo
 }) => {
-
-
 	const {lastName, firstName, profilePic: avatar} = memberInfo
 
 	const dispatch = useAppDispatch()
 	const router = useRouter()
+
+	const {currentChatId} = useTypedSelector(state => state.Chats)
 
 
 	const {SetScreenMode} = useContext(GlobalContext)
@@ -49,7 +49,8 @@ const ChatCell: FC<IChatList> = ({
 	}
 
 	const title = firstName + " " + (lastName ? lastName : "")
-	return <ChatCellWrapper isDarkMode={isDarkMode} onClick={HandleCellClick} className="cell">
+	return <ChatCellWrapper isActive={chatId === currentChatId} isDarkMode={isDarkMode} onClick={HandleCellClick}
+							className="cell">
 		<div className="avatar">
 			<Image width={54} height={54} src={avatar ? API_URL_STATIC + avatar : "/no-avatar.svg"}/>
 
@@ -79,6 +80,7 @@ const ChatCell: FC<IChatList> = ({
 export default ChatCell
 const ChatCellWrapper = styled.div<{
 	isDarkMode: boolean
+	isActive: boolean
 }>`
   border-radius: 10px;
   width: 100%;
@@ -89,11 +91,12 @@ const ChatCellWrapper = styled.div<{
   justify-content: space-between;
   gap: 9px;
   cursor: pointer;
-  color: ${({isDarkMode}) => isDarkMode ? "rgba(255, 255, 255, 0.6)" : "black"};
 
   &:hover {
-    background-color: rgba(64, 64, 64, 0.3);
+    background-color: ${({isActive}) => isActive ? "rgb(135, 116, 225)" : "rgba(64, 64, 64, 0.3)"};
   }
+
+  background-color: ${({isActive}) => isActive ? "rgb(135, 116, 225)" : "transparent"};
 
   .avatar {
     border-radius: 50%;
@@ -133,6 +136,8 @@ const ChatCellWrapper = styled.div<{
         font-weight: 600;
         letter-spacing: 1px;
         line-height: ${AdaptiveValue(27, 15)};
+        color: ${({isDarkMode}) => isDarkMode ? "rgba(255, 255, 255, 1)" : "black"};
+
       }
 
       .message-info-cont {
@@ -148,6 +153,8 @@ const ChatCellWrapper = styled.div<{
           font-weight: 500;
           font-size: ${Rem(14)};
           font-family: Roboto, sans-serif;
+          color: ${({isDarkMode}) => isDarkMode ? "rgba(255, 255, 255, 0.8)" : "black"};
+
         }
       }
     }
@@ -156,6 +163,7 @@ const ChatCellWrapper = styled.div<{
       display: flex;
       align-items: center;
       justify-content: space-between;
+      color: ${({isDarkMode}) => isDarkMode ? "rgba(255, 255, 255, 0.8)" : "black"};
 
 
       h2 {

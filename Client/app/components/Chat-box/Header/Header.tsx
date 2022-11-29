@@ -9,6 +9,7 @@ import {useTypedSelector} from "../../../store/ReduxStore"
 import {API_URL_STATIC} from "../../../api/config"
 import {getStatusByLastOnline} from "../../../utils/getStatusByLastOnline"
 import ChatSettings from "./Chat-settings"
+import {SideBarContext} from "../../../hooks/useSideBarContext"
 
 const Header = () => {
 
@@ -16,6 +17,7 @@ const Header = () => {
 	const {memberInfo} = useTypedSelector(state => state.Chats.currentChat)
 
 	const {screenMode, SetScreenMode, SetChatSettings} = useContext(GlobalContext)
+	const {isDarkMode} = useContext(SideBarContext)
 	const {X: XMore, Y: YMore, isRipple: isRippleMore, SetIsRipple: SetIsRippleMore} = useRipple()
 
 
@@ -31,7 +33,7 @@ const Header = () => {
 	}
 
 
-	return <HeaderWrapper screenMode={screenMode}>
+	return <HeaderWrapper isDarkMode={isDarkMode} screenMode={screenMode}>
 		<ChatSettings/>
 		<section className="chat-info">
 			<button onClick={HandleArrowClick} className="arrow">
@@ -61,8 +63,9 @@ const Header = () => {
 export default Header
 const HeaderWrapper = styled.div<{
 	screenMode: "sideBar" | "chat" | "info"
+	isDarkMode: boolean
 }>`
-  background-color: rgb(33, 33, 33);
+  background-color: ${({isDarkMode}) => isDarkMode ? "rgb(33, 33, 33)" : "white"};
   flex: 0 0 60px;
   width: 100%;
   display: flex;
@@ -101,7 +104,7 @@ const HeaderWrapper = styled.div<{
       margin-right: 10px;
 
       &:hover {
-        background-color: rgb(43, 43, 43);
+        background-color: ${({isDarkMode}) => isDarkMode ? "rgb(43, 43, 43)" : "rgba(178,178,178,0.19)"};
       }
 
       @media screen and (min-width: 920px) {
@@ -128,7 +131,7 @@ const HeaderWrapper = styled.div<{
         font-size: ${AdaptiveValue(16, 14)};
         font-weight: 600;
         font-family: Roboto, sans-serif;
-        color: white;
+        color: ${({isDarkMode}) => isDarkMode ? "white" : "rgb(47,47,47)"};
         margin-bottom: 5px;
       }
 
@@ -157,7 +160,7 @@ const HeaderWrapper = styled.div<{
       gap: 3px;
 
       &:hover {
-        background-color: rgb(43, 43, 43);
+        background-color: ${({isDarkMode}) => isDarkMode ? "rgb(43, 43, 43)" : "rgba(178,178,178,0.19)"};
       }
 
       span {

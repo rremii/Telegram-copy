@@ -10,6 +10,8 @@ import useScrollArrow from "../../../hooks/useScrollArrow"
 import {ScrollChatToBottom} from "../../../utils/ScrollToChatBottom"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
 import {useAddMessageMutation, useEditMessageMutation} from "../../../api/rtk/ChatApi"
+import {SideBarContext} from "../../../hooks/useSideBarContext"
+import {b} from "msw/lib/glossary-297d38ba"
 
 
 const validSchema = Yup.object().shape({
@@ -30,6 +32,7 @@ const ChatInputBox = () => {
 	const [addMessage] = useAddMessageMutation()
 
 	const {isEditingMode, SetEditingMode, language} = useContext(GlobalContext)
+	const {isDarkMode} = useContext(SideBarContext)
 
 	const {isScrollArrow} = useScrollArrow()
 
@@ -39,7 +42,7 @@ const ChatInputBox = () => {
 		dispatch(resetEditingMessage())
 	}
 
-	return <ChatInputBoxWrapper isEditingMode={isEditingMode}>
+	return <ChatInputBoxWrapper isDarkMode={isDarkMode} isEditingMode={isEditingMode}>
 		<div onClick={ScrollChatToBottom} className={`scroll-down-btn ${isScrollArrow ? "active" : ""} `}>
 			<div className="arrow-cont">
 				<Image layout="fill" src="/arrow-left-icon.svg"/>
@@ -72,7 +75,7 @@ const ChatInputBox = () => {
 				<Form>
 					<div className="input-box">
 
-						<EditingBox isEditingMode={isEditingMode}>
+						<EditingBox isDarkMode={isDarkMode} isEditingMode={isEditingMode}>
 							<div className="pencil-box">
 								<Image width={22} height={22} src="/pencil-icon-purple.svg"/>
 							</div>
@@ -107,6 +110,7 @@ const ChatInputBox = () => {
 export default ChatInputBox
 const ChatInputBoxWrapper = styled.div<{
 	isEditingMode: boolean
+	isDarkMode: boolean
 }>`
   flex: 0 0 ${AdaptiveValue(54, 46)};
   display: flex;
@@ -121,7 +125,7 @@ const ChatInputBoxWrapper = styled.div<{
 
   .scroll-down-btn {
     position: absolute;
-    background-color: rgb(33, 33, 33);
+    background-color: ${({isDarkMode}) => isDarkMode ? "rgb(33, 33, 33)" : "white"};
     width: ${AdaptiveValue(54, 45)};
     height: ${AdaptiveValue(54, 45)};
     top: -65px;
@@ -167,7 +171,8 @@ const ChatInputBoxWrapper = styled.div<{
   .input-box {
     border-radius: inherit;
     //padding-left: 50px;
-    background-color: rgb(33, 33, 33);
+    background-color: ${({isDarkMode}) => isDarkMode ? "rgb(33, 33, 33)" : "white"};
+
     position: relative;
     width: 100%;
     height: 100%;
@@ -187,7 +192,7 @@ const ChatInputBoxWrapper = styled.div<{
         height: 100%;
         background-color: transparent;
         caret-color: rgb(135, 116, 225);
-        color: white;
+        color: ${({isDarkMode}) => isDarkMode ? "white" : "rgb(47,47,47)"};
         font-size: ${Rem(18)};
         word-wrap: anywhere;
 
@@ -237,9 +242,11 @@ const ChatInputBoxWrapper = styled.div<{
 `
 const EditingBox = styled.div<{
 	isEditingMode: boolean
+	isDarkMode: boolean
 }>`
   border-radius: 12px 12px 0 0;
-  background-color: rgb(33, 33, 33);
+  background-color: ${({isDarkMode}) => isDarkMode ? "rgb(33, 33, 33)" : "white"};
+
   position: absolute;
   width: 100%;
   height: ${AdaptiveValue(50, 46)};
@@ -282,12 +289,13 @@ const EditingBox = styled.div<{
       top: 0;
       height: 100%;
       width: 20px;
-      background-color: rgb(33, 33, 33);
-      box-shadow: rgb(33, 33, 33) 0 0 50px 50px;
+      background-color: ${({isDarkMode}) => isDarkMode ? "rgb(33, 33, 33)" : "white"};
+      box-shadow: ${({isDarkMode}) => isDarkMode ? "rgb(33, 33, 33)" : "white"} 0 0 50px 50px;
     }
 
     h1 {
-      color: white;
+      color: ${({isDarkMode}) => isDarkMode ? "white" : "rgb(47,47,47)"};
+
       font-family: Roboto, sans-serif;
       font-size: ${Rem(14)};
     }

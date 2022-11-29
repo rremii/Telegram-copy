@@ -8,7 +8,7 @@ import {GlobalContext} from "../../../hooks/useGlobalContext"
 const Header = () => {
 
 
-	const {SetBackgroundSettings} = useContext(SideBarContext)
+	const {SetBackgroundSettings, isDarkMode} = useContext(SideBarContext)
 	const {language} = useContext(GlobalContext)
 
 
@@ -16,7 +16,7 @@ const Header = () => {
 		SetBackgroundSettings(false)
 	}
 
-	return <HeaderWrapper>
+	return <HeaderWrapper isDarkMode={isDarkMode}>
 		<button onClick={HandleArrowClick} className="arrow">
 			<Image width={24} height={24} src="/arrow-left-icon.svg"/>
 		</button>
@@ -24,15 +24,18 @@ const Header = () => {
 	</HeaderWrapper>
 }
 export default Header
-const HeaderWrapper = styled.div`
+const HeaderWrapper = styled.div<{
+	isDarkMode: boolean
+}>`
   display: flex;
   align-items: center;
   gap: 25px;
   height: 60px;
-  background-color: rgb(33, 33, 33);
+  background-color: ${({isDarkMode}) => isDarkMode ? "rgb(33, 33, 33)" : "white"};
   //justify-content: space-between;
   padding: 0 16px;
   position: relative;
+  color: ${({isDarkMode}) => isDarkMode ? "white" : "rgb(47,47,47)"};
 
   .arrow {
     width: 45px;
@@ -47,7 +50,8 @@ const HeaderWrapper = styled.div`
     z-index: 1;
 
     &:hover {
-      background-color: rgb(43, 43, 43);
+      background-color: ${({isDarkMode}) => isDarkMode ? "rgb(43, 43, 43)" : "rgba(178,178,178,0.19)"};
+
     }
   }
 

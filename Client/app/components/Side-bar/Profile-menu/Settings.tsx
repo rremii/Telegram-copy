@@ -7,11 +7,11 @@ import {GlobalContext} from "../../../hooks/useGlobalContext"
 
 const Settings = () => {
 
-	const {SetIsSettings, SetLanguageSettings} = useContext(SideBarContext)
+	const {SetIsSettings, SetLanguageSettings, isDarkMode} = useContext(SideBarContext)
 	const {language} = useContext(GlobalContext)
 
 
-	return <SettingsWrapper>
+	return <SettingsWrapper isDarkMode={isDarkMode}>
 		<div onClick={() => SetIsSettings(true)} className="cell">
 			<div className="icon">
 				<Image width={35} height={35} src="/setting-gray.svg"/>
@@ -31,14 +31,17 @@ const Settings = () => {
 	</SettingsWrapper>
 }
 export default Settings
-const SettingsWrapper = styled.div`
+const SettingsWrapper = styled.div<{
+	isDarkMode: boolean
+}>`
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 10px;
   margin: 12px 0;
-  background-color: rgb(33, 33, 33);
+  background-color: ${({isDarkMode}) => isDarkMode ? "rgb(33, 33, 33)" : "rgb(255,255,255)"};
+  color: ${({isDarkMode}) => isDarkMode ? "white" : "black"};
 
   .cell {
     width: 100%;
@@ -50,7 +53,8 @@ const SettingsWrapper = styled.div`
     align-items: center;
 
     &:hover {
-      background-color: rgb(43, 43, 43);
+      background-color: ${({isDarkMode}) => isDarkMode ? "rgb(43, 43, 43)" : "rgb(226,226,226)"};
+
     }
 
     .icon {

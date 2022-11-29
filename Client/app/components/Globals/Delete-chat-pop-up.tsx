@@ -7,6 +7,7 @@ import {resetCurrentChat} from "../../store/ChatSlice"
 import {useRouter} from "next/router"
 import {useGetMeQuery} from "../../api/rtk/MeApi"
 import {useDeleteChatMutation} from "../../api/rtk/ChatApi"
+import {SideBarContext} from "../../hooks/useSideBarContext"
 
 
 const DeleteChatPopUp = () => {
@@ -26,9 +27,9 @@ const DeleteChatPopUp = () => {
 		isChatDeletePopUp,
 		SetChatDeletePopUp,
 		SetScreenMode,
-		language
+		language,
 	} = useContext(GlobalContext)
-
+	const {isDarkMode} = useContext(SideBarContext)
 
 	const DeleteChat = () => {
 		if (!userData) return
@@ -39,7 +40,7 @@ const DeleteChatPopUp = () => {
 		SetScreenMode("sideBar")
 	}
 
-	return <DeleteChatPopUpWrapper isActive={isChatDeletePopUp}>
+	return <DeleteChatPopUpWrapper isDarkMode={isDarkMode} isActive={isChatDeletePopUp}>
 		<div className="pop-up-cont">
 			<h1>{language === "English" ? "Delete chat" : "Удалить чат"}</h1>
 			<span>{language === "English" ?
@@ -47,7 +48,7 @@ const DeleteChatPopUp = () => {
 				`Навсегда удалить чат с ${firstName}`}</span>
 			<div className="btn-cont">
 				<button onClick={() => SetChatDeletePopUp(false)} className="cancel">CANCEL</button>
-				<button onClick={DeleteChat} className="logout">DELETE</button>
+				<button onClick={DeleteChat} className="delete">DELETE</button>
 			</div>
 		</div>
 	</DeleteChatPopUpWrapper>
@@ -56,8 +57,9 @@ export default DeleteChatPopUp
 // const DeleteChatPopUpWrapper = styled.div(LogoutPopUpWrapper)
 const DeleteChatPopUpWrapper = styled.div<{
 	isActive: boolean
+	isDarkMode: boolean
 }>`
-  color: white;
+  color: ${({isDarkMode}) => isDarkMode ? "white" : "rgb(47,47,47)"};
   position: fixed;
   width: 100vw;
   height: 100vh;
@@ -76,7 +78,7 @@ const DeleteChatPopUpWrapper = styled.div<{
     height: 200px;
     //padding: 12px 8px;
     box-shadow: 0 2px 2px 0, rgba(0, 0, 0, 0.14);
-    background-color: rgb(33, 33, 33);
+    background-color: ${({isDarkMode}) => isDarkMode ? "rgb(33, 33, 33)" : "white"};
     padding: 16px 25px;
     display: flex;
     flex-direction: column;
@@ -126,7 +128,7 @@ const DeleteChatPopUpWrapper = styled.div<{
         }
       }
 
-      .logout {
+      .delete {
         &:hover {
           background-color: rgba(255, 89, 90, 0.1);
         }

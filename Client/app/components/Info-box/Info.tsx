@@ -2,9 +2,10 @@ import styled from "styled-components"
 import Image from "next/image"
 import {Rem} from "../../../styles/functions/mixins"
 import {useTypedSelector} from "../../store/ReduxStore"
-import React from "react"
+import React, {useContext} from "react"
 import {API_URL_STATIC} from "../../api/config"
 import {getStatusByLastOnline} from "../../utils/getStatusByLastOnline"
+import {SideBarContext} from "../../hooks/useSideBarContext"
 
 const Info = () => {
 
@@ -16,11 +17,14 @@ const Info = () => {
 	const {lastOnline} = useTypedSelector(state => state.Chats.currentChat.memberInfo)
 
 
+	const {isDarkMode} = useContext(SideBarContext)
+
+
 	const HandleEmailClick = (email: string) => {
 		navigator.clipboard.writeText(email)
 	}
 
-	return <InfoWrapper>
+	return <InfoWrapper isDarkMode={isDarkMode}>
 		<div className="avatar">
 
 			<Image layout="fill" src={profilePic ? API_URL_STATIC + profilePic : "/no-avatar.svg"}/>
@@ -42,7 +46,9 @@ const Info = () => {
 
 }
 export default Info
-const InfoWrapper = styled.div`
+const InfoWrapper = styled.div<{
+	isDarkMode: boolean
+}>`
 
 
   .avatar {
@@ -60,6 +66,7 @@ const InfoWrapper = styled.div`
 
       h1 {
         color: white;
+
         font-size: ${Rem(24)};
         font-family: Roboto, sans-serif;
         font-weight: 500;
@@ -88,7 +95,8 @@ const InfoWrapper = styled.div`
       border-radius: 10px;
 
       &:hover {
-        background: rgb(43, 43, 43);
+        background-color: ${({isDarkMode}) => isDarkMode ? "rgb(43, 43, 43)" : "rgba(178,178,178,0.19)"};
+
       }
 
       img {
@@ -104,7 +112,8 @@ const InfoWrapper = styled.div`
         h1 {
           font-size: ${Rem(17)};
           font-family: Roboto, sans-serif;
-          color: white;
+          color: ${({isDarkMode}) => isDarkMode ? "white" : "rgb(47,47,47)"};
+
         }
 
         h2 {

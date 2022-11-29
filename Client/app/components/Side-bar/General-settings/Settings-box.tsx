@@ -4,6 +4,7 @@ import {Rem} from "../../../../styles/functions/mixins"
 import {ChangeEvent, useContext} from "react"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
 import {SideBarContext} from "../../../hooks/useSideBarContext"
+import {b} from "msw/lib/glossary-297d38ba"
 
 const maxFontSize = 20
 const minFontSize = 12
@@ -16,7 +17,7 @@ const SettingsBox = () => {
 
 
 	const {messageFontSize, SetMessageFontSize, language} = useContext(GlobalContext)
-	const {SetBackgroundSettings} = useContext(SideBarContext)
+	const {SetBackgroundSettings, isDarkMode} = useContext(SideBarContext)
 
 
 	const HandleOnRangeChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -24,7 +25,7 @@ const SettingsBox = () => {
 	}
 
 
-	return <SettingsBoxWrapper fontSize={CalcPercentOfRange(+messageFontSize)}>
+	return <SettingsBoxWrapper isDarkMode={isDarkMode} fontSize={CalcPercentOfRange(+messageFontSize)}>
 
 		<h1 className="title">{language === "English" ? "Settings" : "Настройки"}</h1>
 		<div className="text-size-box">
@@ -44,8 +45,11 @@ const SettingsBox = () => {
 export default SettingsBox
 const SettingsBoxWrapper = styled.div<{
 	fontSize: number
+	isDarkMode: boolean
 }>`
-  background-color: rgb(33, 33, 33);
+  background-color: ${({isDarkMode}) => isDarkMode ? "rgb(33, 33, 33)" : "white"};
+  color: ${({isDarkMode}) => isDarkMode ? "white" : "rgb(47,47,47)"};
+
   padding: 8px 6px 20px;
 
 
@@ -65,7 +69,7 @@ const SettingsBoxWrapper = styled.div<{
     gap: 16px;
 
     .sub-title {
-      color: white;
+
       font-family: Roboto, sans-serif;
       font-size: ${Rem(16)};
       font-weight: 400;

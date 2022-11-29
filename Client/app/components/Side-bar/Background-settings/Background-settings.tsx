@@ -6,10 +6,10 @@ import {SideBarContext} from "../../../hooks/useSideBarContext"
 
 const BackgroundSettings = () => {
 
-	const {isBackgroundSettings} = useContext(SideBarContext)
+	const {isBackgroundSettings, isDarkMode} = useContext(SideBarContext)
 
 
-	return <BackgroundSettingsWrapper isBackground={isBackgroundSettings}>
+	return <BackgroundSettingsWrapper isDarkMode={isDarkMode} isBackground={isBackgroundSettings}>
 		<div className="BackgroundSettings-cont">
 			<Header/>
 			<GridBox/>
@@ -19,6 +19,7 @@ const BackgroundSettings = () => {
 export default BackgroundSettings
 const BackgroundSettingsWrapper = styled.div<{
 	isBackground: boolean
+	isDarkMode: boolean
 }>`
 
   position: absolute;
@@ -40,7 +41,7 @@ const BackgroundSettingsWrapper = styled.div<{
     transform: ${({isBackground}) => isBackground ? "translateX(-100%)" : "translateX(0)"};
     width: 100%;
     height: 100%;
-    background-color: rgb(22, 22, 22);
+    background-color: ${({isDarkMode}) => isDarkMode ? "rgb(22, 22, 22)" : "rgb(170,170,170)"};
     gap: 1px;
     display: flex;
     flex-direction: column;

@@ -1,10 +1,11 @@
-import React, {ChangeEvent} from "react"
+import React, {ChangeEvent, useContext} from "react"
 import styled from "styled-components"
 import Image from "next/image"
 import {Rem} from "../../../../styles/functions/mixins"
 import {useTypedSelector} from "../../../store/ReduxStore"
 import {API_URL_STATIC} from "../../../api/config"
 import {useChangeAvatarMutation, useGetMeQuery} from "../../../api/rtk/MeApi"
+import {SideBarContext} from "../../../hooks/useSideBarContext"
 
 
 const Info = () => {
@@ -15,6 +16,10 @@ const Info = () => {
 
 	const {data: user} = useGetMeQuery()
 	const [changeAvatar] = useChangeAvatarMutation()
+
+
+	const {isDarkMode} = useContext(SideBarContext)
+
 
 	const profilePic = user?.profilePic
 	const firstName = user?.firstName
@@ -31,7 +36,7 @@ const Info = () => {
 		navigator.clipboard.writeText(email)
 	}
 
-	return <InfoWrapper>
+	return <InfoWrapper isDarkMode={isDarkMode}>
 		<div className="avatar-cont">
 			<div className="bio">
 				<h1>{firstName} {lastName}</h1>
@@ -58,10 +63,12 @@ const Info = () => {
 	</InfoWrapper>
 }
 export default Info
-const InfoWrapper = styled.div`
+const InfoWrapper = styled.div<{
+	isDarkMode: boolean
+}>`
   display: flex;
   flex-direction: column;
-  background-color: rgb(33, 33, 33);
+  background-color: ${({isDarkMode}) => isDarkMode ? "rgb(33, 33, 33)" : "rgb(255,255,255)"};
 
   .avatar-cont {
     flex: 0 0 240px;
@@ -194,7 +201,8 @@ const InfoWrapper = styled.div`
       cursor: pointer;
 
       &:hover {
-        background-color: rgb(43, 43, 43);
+        background-color: ${({isDarkMode}) => isDarkMode ? "rgb(43, 43, 43)" : "rgb(226,226,226)"};
+
       }
 
       .icon {
@@ -211,6 +219,9 @@ const InfoWrapper = styled.div`
           font-size: ${Rem(17)};
           font-family: Roboto, sans-serif;
           font-weight: 400;
+          color: ${({isDarkMode}) => isDarkMode ? "white" : "black"};
+
+
         }
 
         h2 {

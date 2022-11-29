@@ -3,6 +3,7 @@ import Image from "next/image"
 import React, {useContext} from "react"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
 import {AdaptiveValue, Rem} from "../../../../styles/functions/mixins"
+import {SideBarContext} from "../../../hooks/useSideBarContext"
 
 const backgrounds = ["forest.png",
 	"misty-forest.png",
@@ -23,7 +24,7 @@ const GridBox = () => {
 
 
 	const {background, SetBackground, isBackgroundBlur, SetBackgroundBlur, language} = useContext(GlobalContext)
-
+	const {isDarkMode} = useContext(SideBarContext)
 
 	const ChangeBackground = (src: string) => {
 		SetBackground(src)
@@ -32,7 +33,7 @@ const GridBox = () => {
 		SetBackgroundBlur(isBackgroundBlur !== "true" ? "true" : "false")
 	}
 
-	return <GridBoxWrapper isBlur={isBackgroundBlur === "true"}>
+	return <GridBoxWrapper isDarkMode={isDarkMode} isBlur={isBackgroundBlur === "true"}>
 		<div className="utils">
 
 			<div onClick={ChangeBackgroundBlur} className="blur-setting">
@@ -58,8 +59,11 @@ const GridBox = () => {
 export default GridBox
 const GridBoxWrapper = styled.div<{
 	isBlur: boolean | null
+	isDarkMode: boolean
 }>`
-  background-color: rgb(24, 24, 24);
+  background-color: ${({isDarkMode}) => isDarkMode ? "rgb(22, 22, 22)" : "rgb(170,170,170)"};
+  color: ${({isDarkMode}) => isDarkMode ? "white" : "rgb(47,47,47)"};
+
   padding-bottom: 20px;
   width: 100%;
   display: flex;
@@ -80,7 +84,8 @@ const GridBoxWrapper = styled.div<{
   }
 
   .utils {
-    background-color: rgb(34, 34, 34);
+    background-color: ${({isDarkMode}) => isDarkMode ? "rgb(33, 33, 33)" : "white"};
+
     padding: 8px;
 
     .blur-setting {
@@ -92,7 +97,8 @@ const GridBoxWrapper = styled.div<{
       cursor: pointer;
 
       &:hover {
-        background-color: rgb(43, 43, 43);
+        background-color: ${({isDarkMode}) => isDarkMode ? "rgb(43, 43, 43)" : "rgba(178,178,178,0.19)"};
+
       }
 
       .check-box {
@@ -157,7 +163,8 @@ const GridBoxWrapper = styled.div<{
   }
 
   .grid {
-    background-color: rgb(34, 34, 34);
+    background-color: ${({isDarkMode}) => isDarkMode ? "rgb(33, 33, 33)" : "white"};
+
     padding: 5px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;

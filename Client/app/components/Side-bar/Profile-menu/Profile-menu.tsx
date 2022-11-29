@@ -8,10 +8,10 @@ import Settings from "./Settings"
 
 const ProfileMenu = () => {
 
-	const {isProfile, SetLogout} = useContext(SideBarContext)
+	const {isProfile, SetLogout, isDarkMode} = useContext(SideBarContext)
 
 
-	return <ProfileMenuWrapper isProfile={isProfile}>
+	return <ProfileMenuWrapper isDarkMode={isDarkMode} isProfile={isProfile}>
 		<div onMouseLeave={() => SetLogout(false)} className="profileMenu-cont">
 			<Header/>
 			<Info/>
@@ -22,6 +22,7 @@ const ProfileMenu = () => {
 export default ProfileMenu
 const ProfileMenuWrapper = styled.div<{
 	isProfile: boolean
+	isDarkMode: boolean
 }>`
   position: absolute;
   left: 0;
@@ -42,7 +43,7 @@ const ProfileMenuWrapper = styled.div<{
     transform: ${({isProfile}) => isProfile ? "translateX(-100%)" : "translateX(0)"};
     width: 100%;
     height: 100%;
-    background-color: rgb(22, 22, 22);
+    background-color: ${({isDarkMode}) => isDarkMode ? "rgb(22, 22, 22)" : "rgb(170,170,170)"};
 
     display: flex;
     flex-direction: column;

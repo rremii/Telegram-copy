@@ -1,4 +1,5 @@
 import {createContext, useState} from "react"
+import {useLocalStorage} from "./useLocalStorage"
 
 export interface ISideBarContext {
 	isProfile: boolean
@@ -70,7 +71,7 @@ const useSideBarContext = (): ISideBarContext => {
 	const [isBurger, setIsBurger] = useState(false)
 	const [isSearchOn, setIsSearch] = useState(false)
 	const [isSearchLayout, setIsSearchLayout] = useState(false)
-	const [isDarkMode, setDarkMode] = useState(true)
+	const [isDarkMode, setDarkMode] = useLocalStorage("isDarkMode", true)
 	const [isLogout, setLogout] = useState(false)
 	const [isLogoutPopUp, setLogoutPopUp] = useState(false)
 	const [isSettings, setIsSettings] = useState(false)

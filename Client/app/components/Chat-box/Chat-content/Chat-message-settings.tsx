@@ -124,6 +124,7 @@ const MessageSettings = styled.div<{
         font-family: Roboto, sans-serif;
         font-size: ${Rem(14)};
         font-weight: 500;
+        color: white;
       }
     }
   }

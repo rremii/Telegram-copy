@@ -8,6 +8,7 @@ import {API_URL_STATIC} from "../../../api/config"
 import * as Yup from "yup"
 import {useEditUserBioMutation} from "../../../api/rtk/MeApi"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
+import {SideBarContext} from "../../../hooks/useSideBarContext"
 
 interface formValues {
 	firstName: string,
@@ -26,10 +27,10 @@ const EditingForm = () => {
 	const {firstName} = useTypedSelector(state => state.Me.me)
 	const {lastName} = useTypedSelector(state => state.Me.me)
 
-
 	const [editUser] = useEditUserBioMutation()
 
 	const {language} = useContext(GlobalContext)
+	const {isDarkMode} = useContext(SideBarContext)
 
 
 	const [img, setImg] = useState<string>()
@@ -39,7 +40,7 @@ const EditingForm = () => {
 		if (e.target.files) setImg(URL.createObjectURL(e.target.files[0]))
 	}
 
-	return <EditingFormWrapper>
+	return <EditingFormWrapper isDarkMode={isDarkMode}>
 		<Formik
 			onSubmit={(values: formValues) => {
 
@@ -116,19 +117,23 @@ const EditingForm = () => {
 	</EditingFormWrapper>
 }
 export default EditingForm
-const EditingFormWrapper = styled.div`
+const EditingFormWrapper = styled.div<{
+	isDarkMode: boolean
+}>`
   width: 100%;
 
-  background-color: rgb(24, 24, 24);
+  background-color: ${({isDarkMode}) => isDarkMode ? "rgb(22, 22, 22)" : "rgb(170,170,170)"};
 
   form {
-    background-color: rgb(34, 34, 34);
+    background-color: ${({isDarkMode}) => isDarkMode ? "rgb(33, 33, 33)" : "white"};
+
     padding: 12px;
     width: 100%;
 
     .avatar-cont {
       padding: 32px 0;
-      background-color: rgb(34, 34, 34);
+      background-color: ${({isDarkMode}) => isDarkMode ? "rgb(33, 33, 33)" : "white"};
+
       display: flex;
       align-items: center;
       justify-content: center;
@@ -170,6 +175,7 @@ const EditingFormWrapper = styled.div`
           opacity: 0;
           border-radius: inherit;
           cursor: pointer;
+
         }
       }
 
@@ -185,8 +191,13 @@ const EditingFormWrapper = styled.div`
 
       &:hover input {
         border: rgb(135, 116, 225) 1px solid;
-        color: white;
+
       }
+
+      &:hover label {
+        pointer-events: none;
+      }
+
 
       label {
         top: 50%;
@@ -202,7 +213,8 @@ const EditingFormWrapper = styled.div`
         &:hover {
           top: 0;
           color: rgb(135, 116, 225);
-          background-color: rgb(33, 33, 33);
+          background-color: ${({isDarkMode}) => isDarkMode ? "rgb(33, 33, 33)" : "white"};
+
           left: 5px;
           padding: 5px;
           font-size: ${Rem(14)};
@@ -224,7 +236,8 @@ const EditingFormWrapper = styled.div`
         &:hover,
         &:focus {
           border: 1px solid rgb(135, 116, 225);
-          color: white;
+          color: ${({isDarkMode}) => isDarkMode ? "white" : "rgb(47,47,47)"};
+
 
         }
       }
@@ -232,7 +245,8 @@ const EditingFormWrapper = styled.div`
       .form-field:hover + label {
         top: 0;
         color: rgb(135, 116, 225);
-        background-color: rgb(33, 33, 33);
+        background-color: ${({isDarkMode}) => isDarkMode ? "rgb(33, 33, 33)" : "white"};
+
         left: 5px;
         padding: 5px;
         font-size: ${Rem(14)};
@@ -241,7 +255,8 @@ const EditingFormWrapper = styled.div`
       .form-field:focus + label {
         top: 0;
         color: rgb(135, 116, 225);
-        background-color: rgb(33, 33, 33);
+        background-color: ${({isDarkMode}) => isDarkMode ? "rgb(33, 33, 33)" : "white"};
+
         left: 5px;
         padding: 5px;
         font-size: ${Rem(14)};
@@ -292,7 +307,8 @@ const EditingFormWrapper = styled.div`
     width: 100%;
     padding: 0 12px;
     line-height: 1.6;
-    color: rgb(170, 170, 170);
+    color: ${({isDarkMode}) => isDarkMode ? "rgb(170, 170, 170)" : "rgb(47,47,47)"};
+
     font-size: ${Rem(14)};
   }
 

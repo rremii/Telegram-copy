@@ -7,10 +7,10 @@ import EditingForm from "./EditingForm"
 const EditProfileMenu = () => {
 
 
-	const {isEditProfile} = useContext(SideBarContext)
+	const {isEditProfile, isDarkMode} = useContext(SideBarContext)
 
 
-	return <EditProfileMenuWrapper isEditProfile={isEditProfile}>
+	return <EditProfileMenuWrapper isDarkMode={isDarkMode} isEditProfile={isEditProfile}>
 		<div className="EditProfileMenu-cont">
 			<Header/>
 			<EditingForm/>
@@ -20,6 +20,7 @@ const EditProfileMenu = () => {
 export default EditProfileMenu
 const EditProfileMenuWrapper = styled.div<{
 	isEditProfile: boolean
+	isDarkMode: boolean
 }>`
   position: absolute;
   left: 0;
@@ -40,7 +41,8 @@ const EditProfileMenuWrapper = styled.div<{
     transform: ${({isEditProfile}) => isEditProfile ? "translateX(-100%)" : "translateX(0)"};
     width: 100%;
     height: 100%;
-    background-color: rgb(22, 22, 22);
+    background-color: ${({isDarkMode}) => isDarkMode ? "rgb(22, 22, 22)" : "rgb(170,170,170)"};
+
     display: flex;
     flex-direction: column;
 

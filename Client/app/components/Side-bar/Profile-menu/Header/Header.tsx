@@ -7,10 +7,11 @@ import useRipple from "../../../../hooks/useRipple"
 import {SideBarContext} from "../../../../hooks/useSideBarContext"
 import Logout from "./Logout"
 import {GlobalContext} from "../../../../hooks/useGlobalContext"
+import {b} from "msw/lib/glossary-297d38ba"
 
 const Header = () => {
 
-	const {isProfile, SetIsProfile, SetLogout, isLogout, SetEditProfile} = useContext(SideBarContext)
+	const {isProfile, SetIsProfile, SetLogout, isLogout, SetEditProfile, isDarkMode} = useContext(SideBarContext)
 	const {language} = useContext(GlobalContext)
 
 	const {X: XEdit, Y: YEdit, isRipple: isRippleEdit, SetIsRipple: SetIsRippleEdit} = useRipple()
@@ -29,7 +30,7 @@ const Header = () => {
 	}
 
 
-	return <HeaderWrapper>
+	return <HeaderWrapper isDarkMode={isDarkMode}>
 		<section>
 			<button onClick={HandleArrowClick} className="arrow">
 				<Image width={24} height={24} src="/arrow-left-icon.svg"/>
@@ -52,10 +53,12 @@ const Header = () => {
 	</HeaderWrapper>
 }
 export default Header
-const HeaderWrapper = styled.div`
+const HeaderWrapper = styled.div<{
+	isDarkMode: boolean
+}>`
   width: 100%;
   height: 60px;
-  background-color: rgb(33, 33, 33);
+  background-color: ${({isDarkMode}) => isDarkMode ? "rgb(33, 33, 33)" : "white"};
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -81,7 +84,7 @@ const HeaderWrapper = styled.div`
       z-index: 1;
 
       &:hover {
-        background-color: rgb(43, 43, 43);
+        background-color: ${({isDarkMode}) => isDarkMode ? "rgb(43, 43, 43)" : "rgba(178,178,178,0.19)"};
       }
     }
 
@@ -90,6 +93,8 @@ const HeaderWrapper = styled.div`
       letter-spacing: 1px;
       font-family: Roboto, sans-serif;
       font-weight: 600;
+      color: ${({isDarkMode}) => isDarkMode ? "white" : "rgb(47,47,47)"};
+
     }
 
     .edit {
@@ -105,7 +110,8 @@ const HeaderWrapper = styled.div`
       justify-content: center;
 
       &:hover {
-        background-color: rgb(43, 43, 43);
+        background-color: ${({isDarkMode}) => isDarkMode ? "rgb(43, 43, 43)" : "rgba(178,178,178,0.19)"};
+
       }
 
       * {
@@ -133,7 +139,8 @@ const HeaderWrapper = styled.div`
       gap: 3px;
 
       &:hover {
-        background-color: rgb(43, 43, 43);
+        background-color: ${({isDarkMode}) => isDarkMode ? "rgb(43, 43, 43)" : "rgba(178,178,178,0.19)"};
+
       }
 
       span {

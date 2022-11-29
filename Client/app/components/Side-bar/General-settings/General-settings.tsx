@@ -6,9 +6,9 @@ import {SideBarContext} from "../../../hooks/useSideBarContext"
 
 const GeneralSettings = () => {
 
-	const {isSettings} = useContext(SideBarContext)
+	const {isSettings, isDarkMode} = useContext(SideBarContext)
 
-	return <GeneralSettingsWrapper isSettings={isSettings}>
+	return <GeneralSettingsWrapper isDarkMode={isDarkMode} isSettings={isSettings}>
 		<div className="GeneralSettings-cont">
 			<Header/>
 			<SettingsBox/>
@@ -18,6 +18,7 @@ const GeneralSettings = () => {
 export default GeneralSettings
 const GeneralSettingsWrapper = styled.div<{
 	isSettings: boolean
+	isDarkMode: boolean
 }>`
 
   position: absolute;
@@ -39,7 +40,8 @@ const GeneralSettingsWrapper = styled.div<{
     transform: ${({isSettings}) => isSettings ? "translateX(-100%)" : "translateX(0)"};
     width: 100%;
     height: 100%;
-    background-color: rgb(22, 22, 22);
+    background-color: ${({isDarkMode}) => isDarkMode ? "rgb(22, 22, 22)" : "rgb(170,170,170)"};
+
     gap: 1px;
     display: flex;
     flex-direction: column;

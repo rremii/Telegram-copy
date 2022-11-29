@@ -4,23 +4,29 @@ import {AdaptiveValue} from "../../../styles/functions/mixins"
 import {GlobalContext} from "../../hooks/useGlobalContext"
 import Info from "./Info"
 import Header from "./Header"
+import {SideBarContext} from "../../hooks/useSideBarContext"
 
 
 const InfoBox = () => {
 
 	const {screenMode} = useContext(GlobalContext)
+	const {isDarkMode} = useContext(SideBarContext)
 
 
-	return <InfoBoxWrapper isOpen={screenMode === "info"}>
+	return <InfoBoxWrapper isDarkMode={isDarkMode} isOpen={screenMode === "info"}>
 		<Header/>
 		<Info/>
 	</InfoBoxWrapper>
 }
 export default InfoBox
-const InfoBoxWrapper = styled.div<{ isOpen: boolean }>`
+const InfoBoxWrapper = styled.div<{
+	isDarkMode: boolean
+	isOpen: boolean
+}>`
   height: 100%;
   padding: 0;
-  background-color: rgb(33, 33, 33);
+  background-color: ${({isDarkMode}) => isDarkMode ? "rgb(33, 33, 33)" : "white"};
+
   flex: 0 0 ${AdaptiveValue(420, 50)};
   z-index: 150;
   display: flex;

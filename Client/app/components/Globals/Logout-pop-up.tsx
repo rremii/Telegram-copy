@@ -12,7 +12,8 @@ const LogoutPopUp = () => {
 
 	const {
 		isLogoutPopUp,
-		SetLogoutPopUp
+		SetLogoutPopUp,
+		isDarkMode
 	} = useContext(SideBarContext)
 	const {language} = useContext(GlobalContext)
 
@@ -22,7 +23,7 @@ const LogoutPopUp = () => {
 		SetLogoutPopUp(false)
 	}
 
-	return <LogoutPopUpWrapper isActive={isLogoutPopUp}>
+	return <LogoutPopUpWrapper isDarkMode={isDarkMode} isActive={isLogoutPopUp}>
 		<div className="pop-up-cont">
 			<h1>{language === "English" ? "Log out" : "Выйти"}</h1>
 			<span>{language === "English" ?
@@ -41,8 +42,10 @@ const LogoutPopUp = () => {
 export default LogoutPopUp
 export const LogoutPopUpWrapper = styled.div<{
 	isActive: boolean
+	isDarkMode: boolean
 }>`
-  color: white;
+  color: ${({isDarkMode}) => isDarkMode ? "white" : "rgb(47,47,47)"};
+
   position: fixed;
   width: 100vw;
   height: 100vh;
@@ -61,7 +64,7 @@ export const LogoutPopUpWrapper = styled.div<{
     height: 240px;
     //padding: 12px 8px;
     box-shadow: 0 2px 2px 0, rgba(0, 0, 0, 0.14);
-    background-color: rgb(33, 33, 33);
+    background-color: ${({isDarkMode}) => isDarkMode ? "rgb(33, 33, 33)" : "white"};
     padding: 16px 25px;
     display: flex;
     flex-direction: column;

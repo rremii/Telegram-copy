@@ -2,12 +2,14 @@ import styled from "styled-components"
 import {Rem} from "../../../styles/functions/mixins"
 import {useContext} from "react"
 import {GlobalContext} from "../../hooks/useGlobalContext"
+import {SideBarContext} from "../../hooks/useSideBarContext"
 
 const Header = () => {
 	const {SetScreenMode, language} = useContext(GlobalContext)
+	const {isDarkMode} = useContext(SideBarContext)
 
 
-	return <HeaderWrapper>
+	return <HeaderWrapper isDarkMode={isDarkMode}>
 		<div onClick={() => SetScreenMode("chat")}
 			 className="cross">
 			<span/>
@@ -17,10 +19,12 @@ const Header = () => {
 	</HeaderWrapper>
 }
 export default Header
-const HeaderWrapper = styled.div`
+const HeaderWrapper = styled.div<{
+	isDarkMode: boolean
+}>`
   flex: 0 0 60px;
   width: 100%;
-  color: white;
+  color: ${({isDarkMode}) => isDarkMode ? "white" : "rgb(47,47,47)"};
   display: flex;
   align-items: center;
   padding: 0 16px;
@@ -34,7 +38,8 @@ const HeaderWrapper = styled.div`
     cursor: pointer;
 
     &:hover {
-      background: rgb(47, 47, 47);
+      background-color: ${({isDarkMode}) => isDarkMode ? "rgb(43, 43, 43)" : "rgba(178,178,178,0.19)"};
+
     }
 
     span {

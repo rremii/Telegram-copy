@@ -12,11 +12,12 @@ const Logout = () => {
 		isLogout,
 		SetLogout,
 		SetLogoutPopUp,
+		isDarkMode
 	} = useContext(SideBarContext)
 	const {language} = useContext(GlobalContext)
 
 
-	return <LogoutWrapper isLogout={isLogout}>
+	return <LogoutWrapper isDarkMode={isDarkMode} isLogout={isLogout}>
 		<button onClick={() => SetLogoutPopUp(true)} className="logout-cont">
 			<div className="icon">
 				<Image width={25} height={25} src="/logout.svg"/>
@@ -29,12 +30,15 @@ const Logout = () => {
 export default Logout
 const LogoutWrapper = styled.div<{
 	isLogout: boolean
+	isDarkMode: boolean
 }>`
   padding: 5px;
   position: absolute;
   top: 100%;
   right: 15px;
-  background-color: rgb(72, 72, 72);
+  background-color: ${({isDarkMode}) => isDarkMode ? "rgb(72, 72, 72)" : "rgb(227,226,226)"};
+  color: ${({isDarkMode}) => isDarkMode ? "white" : "black"};
+
   z-index: 20;
   border-radius: 10px;
   width: 180px;
@@ -74,7 +78,7 @@ const LogoutWrapper = styled.div<{
     transition: .3s;
 
     &:hover {
-      background-color: rgb(80, 80, 80);
+      background-color: ${({isDarkMode}) => isDarkMode ? "rgb(80, 80, 80)" : "rgb(197,196,196)"};
 
     }
 
