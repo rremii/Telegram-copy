@@ -92,7 +92,6 @@ const ChatMessagesBox = () => {
 
 	}
 
-
 	return <ChatMessagesBoxWrapper id="scroll-cont"
 								   length={messages?.length ? messages?.length : 0}>
 
@@ -114,6 +113,13 @@ const ChatMessagesBox = () => {
 			const isLoading = loadingMessagesIds.find(id => id === chat_message_id)
 			//calculation an animation delay
 			const delayNum = messages.length - i + 1 //as farther el as less the delay
+
+
+			let bubbleTailSrc: string
+			if (isDarkMode)
+				bubbleTailSrc = user_id === sender_id ? "/bubble-tail-left-purple.svg" : "/bubble-tail-left.svg"
+			else
+				bubbleTailSrc = user_id === sender_id ? "/bubble-tail-left-green.svg" : "/bubble-tail-left-white.svg"
 
 			return <MessageWrapper
 				isDarkMode={isDarkMode}
@@ -143,7 +149,7 @@ const ChatMessagesBox = () => {
 
 					</div>
 					{!isNextMessageFromSameSender &&
-						<img src={user_id === sender_id ? "/bubble-tail-left-purple.svg" : "/bubble-tail-left.svg"}
+						<img src={bubbleTailSrc}
 							 alt="bubble-tail"/>}
 				</div>
 			</MessageWrapper>
@@ -225,7 +231,7 @@ const MessageWrapper = styled.div<{
       background-color: hsla(196, 32.0886%, 10.0686%, 0.4);
       font-family: Roboto, sans-serif;
       font-size: ${Rem(15)};
-      color: ${({isDarkMode}) => isDarkMode ? "white" : "black"};
+      color: white;
 
     }
   }

@@ -3,19 +3,21 @@ import styled from "styled-components"
 import Image from "next/image"
 import {AdaptiveValue} from "../../../../styles/functions/mixins"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
+import {SideBarContext} from "../../../hooks/useSideBarContext"
 
 
 const Header = () => {
 
 
 	const {screenMode, SetScreenMode} = useContext(GlobalContext)
+	const {isDarkMode} = useContext(SideBarContext)
 
 	const HandleArrowClick = () => {
 		SetScreenMode(screenMode === "sideBar" ? "chat" : "sideBar")
 	}
 
 
-	return <HeaderWrapper screenMode={screenMode}>
+	return <HeaderWrapper isDarkMode={isDarkMode} screenMode={screenMode}>
 		<section className="chat-info">
 			<button onClick={HandleArrowClick} className="arrow">
 				<Image width={24} height={24} src="/arrow-left-icon.svg"/>
@@ -36,14 +38,16 @@ const Header = () => {
 export default Header
 const HeaderWrapper = styled.div<{
 	screenMode: "sideBar" | "chat" | "info"
+	isDarkMode: boolean
 }>`
-  background-color: rgb(33, 33, 33);
+  background-color: ${({isDarkMode}) => isDarkMode ? "rgb(33, 33, 33)" : "white"};
   height: 60px;
   width: 100%;
   display: flex;
   align-items: center;
   padding-left: 16px;
   padding-right: 16px;
+
   @media screen and (min-width: 1000px) {
     max-width: calc(100vw - 420px);
   }
@@ -75,7 +79,8 @@ const HeaderWrapper = styled.div<{
       margin-right: 10px;
 
       &:hover {
-        background-color: rgb(43, 43, 43);
+        background-color: ${({isDarkMode}) => isDarkMode ? "rgb(43, 43, 43)" : "rgba(81,81,81,0.11)"};
+
       }
 
       @media screen and (min-width: 920px) {
@@ -106,7 +111,8 @@ const HeaderWrapper = styled.div<{
         font-size: ${AdaptiveValue(16, 14)};
         font-weight: 600;
         font-family: Roboto, sans-serif;
-        color: white;
+        color: ${({isDarkMode}) => isDarkMode ? "white" : "rgb(47,47,47)"};
+
         margin-bottom: 5px;
       }
 
@@ -135,7 +141,9 @@ const HeaderWrapper = styled.div<{
       gap: 3px;
 
       &:hover {
-        background-color: rgb(43, 43, 43);
+        background-color: ${({isDarkMode}) => isDarkMode ? "rgb(43, 43, 43)" : "rgba(81,81,81,0.11)"};
+
+
       }
 
       span {

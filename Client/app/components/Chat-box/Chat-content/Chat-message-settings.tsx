@@ -10,7 +10,6 @@ import {useDeleteMessageMutation} from "../../../api/rtk/ChatApi"
 interface IChatMessageSettings {
 	X: number,
 	Y: number,
-
 }
 
 const ChatMessageSettings: FC<IChatMessageSettings> = ({X, Y}) => {
@@ -45,9 +44,7 @@ const ChatMessageSettings: FC<IChatMessageSettings> = ({X, Y}) => {
 	}
 
 
-	return <MessageSettings onMouseLeave={HandleMouseLeave} isMessageSettings={isMessageSettings} X={X} Y={Y}
-
-	>
+	return <MessageSettings onMouseLeave={HandleMouseLeave} isMessageSettings={isMessageSettings} X={X} Y={Y}>
 		<div className="content-cont">
 
 			<div onClick={() => SetEditingMode(true)} className="option">

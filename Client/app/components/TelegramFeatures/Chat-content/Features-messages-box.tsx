@@ -1,12 +1,18 @@
 import styled from "styled-components"
 import {Rem} from "../../../../styles/functions/mixins"
 import Image from "next/image"
+import {useContext} from "react"
+import {SideBarContext} from "../../../hooks/useSideBarContext"
 
 
 const FeaturesMessages = () => {
 
+	const {isDarkMode} = useContext(SideBarContext)
 
-	return <FeaturesMessagesWrapper id="scroll-cont">
+
+	const bubbleTailSrc = isDarkMode ? "/bubble-tail-left.svg" : "/bubble-tail-left-white.svg"
+
+	return <FeaturesMessagesWrapper isDarkMode={isDarkMode} id="scroll-cont">
 
 		<div className="message-cont">
 			<div style={{animationDelay: 0.02 + "s"}} className={`message other-message `}>
@@ -18,7 +24,7 @@ const FeaturesMessages = () => {
 					<Image width={19}
 						   height={16} src="/check.svg"/>
 				</div>
-				<img src="/bubble-tail-left.svg"
+				<img src={bubbleTailSrc}
 					 alt="bubble-tail"/>
 			</div>
 		</div>
@@ -31,7 +37,7 @@ const FeaturesMessages = () => {
 					<Image width={19}
 						   height={16} src="/check.svg"/>
 				</div>
-				<img src="/bubble-tail-left.svg"
+				<img src={bubbleTailSrc}
 					 alt="bubble-tail"/>
 			</div>
 		</div>
@@ -44,7 +50,7 @@ const FeaturesMessages = () => {
 					<Image width={19}
 						   height={16} src="/check.svg"/>
 				</div>
-				<img src="/bubble-tail-left.svg"
+				<img src={bubbleTailSrc}
 					 alt="bubble-tail"/>
 			</div>
 		</div>
@@ -53,7 +59,9 @@ const FeaturesMessages = () => {
 	</FeaturesMessagesWrapper>
 }
 export default FeaturesMessages
-const FeaturesMessagesWrapper = styled.div`
+const FeaturesMessagesWrapper = styled.div<{
+	isDarkMode: boolean
+}>`
   width: 100%;
   height: calc(100vh - 140px);
   overflow-y: auto;
@@ -77,7 +85,7 @@ const FeaturesMessagesWrapper = styled.div`
     gap: 10px;
 
     .message {
-      color: white;
+      color: ${({isDarkMode}) => isDarkMode ? "white" : "black"};
       font-size: ${Rem(16)};
       font-family: Roboto, sans-serif;
       padding: 8px 10px 8px 10px;
@@ -143,7 +151,7 @@ const FeaturesMessagesWrapper = styled.div`
     .other-message {
       justify-self: start;
       border-radius: 12px 12px 12px 0;
-      background-color: rgb(33, 33, 33);
+      background-color: ${({isDarkMode}) => isDarkMode ? "rgb(33, 33, 33)" : "white"};
 
       img {
         bottom: 0;

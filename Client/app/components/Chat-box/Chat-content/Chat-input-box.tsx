@@ -94,7 +94,8 @@ const ChatInputBox = () => {
 								   type="text"/>
 						</div>
 						<div className="tail-cont">
-							<Image layout="fill" className="tail" src={"/bubble-tail-left.svg"} alt=""/>
+							<Image layout="fill" className="tail"
+								   src={isDarkMode ? "/bubble-tail-left.svg" : "/bubble-tail-left-white.svg"} alt=""/>
 						</div>
 					</div>
 

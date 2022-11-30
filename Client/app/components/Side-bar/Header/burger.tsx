@@ -47,7 +47,7 @@ const Burger = () => {
 		{/*</div>*/}
 		<div onClick={HandleFeatures} className="row">
 			<div className="icon">
-				<Image width={21} height={21} src="/contact.svg"/>
+				<Image width={21} height={21} src={isDarkMode ? "/question-mark.svg" : "/question-mark-black.svg"}/>
 			</div>
 			<div className="setting-text">
 				<span>{language === "English" ? "Telegram Features" : "Возможности Telegram"}</span>
@@ -55,7 +55,7 @@ const Burger = () => {
 		</div>
 		<div onClick={HandleSettings} className="row">
 			<div className="icon">
-				<Image width={21} height={21} src="/setting.svg"/>
+				<Image width={21} height={21} src={isDarkMode ? "/setting.svg" : "/setting-black.svg"}/>
 			</div>
 			<div className="setting-text">
 				<span>{language === "English" ? "Settings" : "Настройки"}</span>
@@ -63,7 +63,7 @@ const Burger = () => {
 		</div>
 		<button onClick={HandleDarkMode} className="row">
 			<div className="icon">
-				<Image width={21} height={21} src="/night-mode.svg"/>
+				<Image width={21} height={21} src={isDarkMode ? "/night-mode.svg" : "/night-mode-dark.svg"}/>
 			</div>
 			<div className="setting-text with-toggle">
 				<span>{language === "English" ? "Dark mode" : "Темная тема"}</span>
