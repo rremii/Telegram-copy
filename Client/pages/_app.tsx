@@ -29,7 +29,11 @@ function MyApp({Component, pageProps}: AppPropsWithLayout) {
 					<Head>
 						<link rel="icon" href="/telegram-icon.svg"/>
 						<title>Telegram Copy</title>
+						<meta name="description"
+							  content="Small copy of telegram,created only for the learning purposes"/>
 					</Head>
+
+
 					<Component {...pageProps} />
 				</Provider>
 			)}

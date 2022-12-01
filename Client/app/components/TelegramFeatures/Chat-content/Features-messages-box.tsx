@@ -9,7 +9,6 @@ const FeaturesMessages = () => {
 
 	const {isDarkMode} = useContext(SideBarContext)
 
-
 	const bubbleTailSrc = isDarkMode ? "/bubble-tail-left.svg" : "/bubble-tail-left-white.svg"
 
 	return <FeaturesMessagesWrapper isDarkMode={isDarkMode} id="scroll-cont">

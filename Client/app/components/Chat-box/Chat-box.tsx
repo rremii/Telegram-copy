@@ -41,6 +41,8 @@ const ChatBoxWrapper = styled.div<{
   background-color: ${({isDarkMode}) => isDarkMode ? "rgb(33, 33, 33)" : "white"};
   background-image: ${({background}) => ("url(/backgrounds/" + background + ")")};
   background-size: cover;
+  background-position: 50% 50%;
+  //background-repeat: no-repeat;
   flex: 1 1 auto;
   z-index: 15;
   position: relative;

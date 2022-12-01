@@ -7,17 +7,10 @@ import {SideBarContext} from "../../../hooks/useSideBarContext"
 
 const backgrounds = ["forest.png",
 	"misty-forest.png",
-	"misty-forest.png",
-	"misty-forest.png",
-	"misty-forest.png",
-	"misty-forest.png",
-	"misty-forest.png",
-	"misty-forest.png",
-	"misty-forest.png",
-	"misty-forest.png",
-	"misty-forest.png",
-	"misty-forest.png",
-
+	"neon-arrow-left.jpg",
+	"star-night.jpg",
+	"universe.jpg",
+	"waterfall.jpg",
 ]
 
 const GridBox = () => {
