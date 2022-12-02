@@ -90,17 +90,7 @@ const ChatSlice = createSlice({
 			return initialState
 		}
 	},
-	// extraReducers: (builder) => {
-	// builder.addCase(fetchChatsByUserId.fulfilled, (state, action: PayloadAction<Chat[]>) => {
-	// 	state.chats = action.payload
-	// })
-	// builder.addCase(findOrCreateChat.fulfilled, (state, action: PayloadAction<ChatResponse>) => {
-	// 	state.currentChatId = action.payload.chatId
-	// })
-	// builder.addCase(getAllMessages.fulfilled, (state, action: PayloadAction<message[]>) => {
-	// 	state.currentChat.messages = action.payload
-	// })
-	// },
+
 })
 export const {
 	resetChatSlice,

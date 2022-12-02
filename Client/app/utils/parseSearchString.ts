@@ -11,8 +11,8 @@ export const ParseSearchString = (searchString: string) => {
 		lastName = splittedString[1]
 	}
 	return {
-		email,
-		firstName,
-		lastName
+		email: email ? email : null,
+		firstName: firstName ? firstName : null,
+		lastName: lastName ? lastName : null
 	}
 }
