@@ -50,11 +50,9 @@ const ChatSlice = createSlice({
 		},
 		setCurrentMemberOnline(state, action: PayloadAction<string>) {
 			const lastOnline = action.payload
-			const date = new Date(lastOnline)
-			const dateInMilliSec = date.getTime()
-			state.currentChat.memberInfo.lastOnline = "" + Math.round((Date.now() - dateInMilliSec) / (1000 * 60))
+			const date = new Date(lastOnline).getTime()
 
-
+			state.currentChat.memberInfo.lastOnline = "" + Math.round((Date.now() - date) / (1000 * 60))
 		},
 		setEditingMessage(state, action: PayloadAction<EditingMessage>) {
 			state.editingMessage = action.payload
