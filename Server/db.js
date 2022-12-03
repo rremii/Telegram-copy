@@ -12,15 +12,5 @@ const sequelize = new Sequelize(DB_NAME, DB_OWNER_NAME, DB_PASSWORD, {
         },
     },
 })
-// const sequelize = new Sequelize("TelegramCopy", "postgres", "19792005Artem", {
-//     host: "localhost",
-//     dialect: "postgres",
-//     dialectOptions: {
-// ssl: {
-//     require: true,
-//     rejectUnauthorized: false,
-// },
-// },
-// })
 
 module.exports = sequelize

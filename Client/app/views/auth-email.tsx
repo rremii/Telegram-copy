@@ -42,12 +42,6 @@ const AuthEmail = () => {
 		setIsPending(true)
 
 
-		//
-		// const response: any = await createCandidate({
-		// 	email,
-		// 	type: isLoginPage ? "login" : "register",
-		// })
-		//
 		const response: any = await dispatch(
 			fetchCreateCandidate({
 				email,
@@ -85,7 +79,7 @@ const AuthEmail = () => {
 					validationSchema={validSchema}
 					initialValues={
 						{
-							email: "noruto2021@gmail.com",
+							email: "",
 							isRememberMe: false,
 						} as formValues
 					}

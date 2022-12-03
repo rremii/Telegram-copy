@@ -26,9 +26,6 @@ const AuthCode = () => {
 	const {codeError} = useTypedSelector((state) => state.Auth)
 
 
-	// const [login] = useLoginMutation()
-	// const [registrate] = useRegistrationMutation()
-
 	useClearErrors()
 	const {isLoginPage, mainColor} = useIsLoginPage()
 
@@ -48,15 +45,7 @@ const AuthCode = () => {
 					profilePic,
 				})
 			)
-		// if (isLoginPage)
-		// 	response = await login(code)
-		// else
-		// 	response = await registrate({
-		// 		code,
-		// 		firstName,
-		// 		lastName,
-		// 		profilePic,
-		// 	})
+
 		if (response.error) resetForm()
 
 		if (!response.error && response) await router.push("/")
@@ -87,7 +76,7 @@ const AuthCode = () => {
 				</h2>
 				<Formik
 					initialValues={{
-						code: "11111" as string,
+						code: "" as string,
 					}}
 					onSubmit={HandleSubmit}
 				>
