@@ -14,6 +14,8 @@ type AppPropsWithLayout = AppProps & {
 	Component: NextPageWithLayout
 }
 
+//TODO add optimization, turn off dev tools in prod
+
 function MyApp({Component, pageProps}: AppPropsWithLayout) {
 	let getLayout
 

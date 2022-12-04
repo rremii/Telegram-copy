@@ -1,6 +1,6 @@
 import {BaseQueryFn, createApi} from "@reduxjs/toolkit/query/react"
-import {AxiosRequestConfig, AxiosResponse} from "axios"
-import {$api} from "./index"
+import {AxiosRequestConfig} from "axios"
+import {$api, API_URL} from "./index"
 
 
 const axiosBaseQuery =
@@ -15,13 +15,9 @@ const axiosBaseQuery =
 	},
 		unknown,
 		unknown> =>
-		async ({url, method, data, params, isDefault = false}) => {
-			let result!: AxiosResponse<any, any>
+		async ({url, method, data, params}) => {
 
-			if (!isDefault)
-				result = await $api({url: baseUrl + url, method, data, params})
-			if (isDefault)
-				result = await $api({url: baseUrl + url, method, data, params})
+			const result = await $api({url: baseUrl + url, method, data, params})
 
 			return {data: result.data}
 
@@ -31,7 +27,7 @@ const axiosBaseQuery =
 export const Api = createApi({
 		reducerPath: "chatApiRtk",
 		baseQuery: axiosBaseQuery({
-			baseUrl: "http://localhost:5000/api/",
+			baseUrl: API_URL,
 		}),
 
 		tagTypes: ["Message", "Me", "Chat"],

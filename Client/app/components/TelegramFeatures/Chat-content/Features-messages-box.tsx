@@ -42,8 +42,7 @@ const FeaturesMessages = () => {
 		</div>
 		<div className="message-cont">
 			<div style={{animationDelay: 0.02 + "s"}} className={`message other-message `}>
-				you can find me on {//TODO and media
-			}
+				you can find me on github https://github.com/rremii
 				<div className="extra-info">
 					<span className="created-at">Oct 22</span>
 					<Image width={19}
