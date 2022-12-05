@@ -23,7 +23,7 @@ const Header = () => {
 		<h1>{language === "English" ? "General" : "Основные Настройки"}</h1>
 	</HeaderWrapper>
 }
-export default Header
+export default React.memo(Header)
 const HeaderWrapper = styled.div<{
 	isDarkMode: boolean
 }>`

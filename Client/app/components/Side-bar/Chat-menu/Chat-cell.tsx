@@ -77,7 +77,7 @@ const ChatCell: FC<IChatList> = ({
 
 	</ChatCellWrapper>
 }
-export default ChatCell
+export default React.memo(ChatCell)
 const ChatCellWrapper = styled.div<{
 	isDarkMode: boolean
 	isActive: boolean

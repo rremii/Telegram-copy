@@ -49,7 +49,7 @@ const GridBox = () => {
 		</div>
 	</GridBoxWrapper>
 }
-export default GridBox
+export default React.memo(GridBox)
 const GridBoxWrapper = styled.div<{
 	isBlur: boolean | null
 	isDarkMode: boolean

@@ -62,7 +62,7 @@ const SearchCell: FC<userInfo> = (userInfo) => {
 		</div>
 	</CellWrapper>
 }
-export default SearchCell
+export default React.memo(SearchCell)
 const CellWrapper = styled.div<{
 	isDarkMode: boolean
 }>`

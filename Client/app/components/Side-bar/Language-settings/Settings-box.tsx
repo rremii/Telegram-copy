@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import {Rem} from "../../../../styles/functions/mixins"
-import {useContext} from "react"
+import React, {useContext} from "react"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
 import {SideBarContext} from "../../../hooks/useSideBarContext"
 
@@ -35,7 +35,7 @@ const SettingsBox = () => {
 
 	</SettingsBoxWrapper>
 }
-export default SettingsBox
+export default React.memo(SettingsBox)
 const SettingsBoxWrapper = styled.div<{
 	isDarkMode: boolean
 }>`

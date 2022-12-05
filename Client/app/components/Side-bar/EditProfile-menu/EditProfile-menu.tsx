@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import Header from "./Header"
-import {useContext} from "react"
+import React, {useContext} from "react"
 import {SideBarContext} from "../../../hooks/useSideBarContext"
 import EditingForm from "./EditingForm"
 
@@ -17,7 +17,7 @@ const EditProfileMenu = () => {
 		</div>
 	</EditProfileMenuWrapper>
 }
-export default EditProfileMenu
+export default React.memo(EditProfileMenu)
 const EditProfileMenuWrapper = styled.div<{
 	isEditProfile: boolean
 	isDarkMode: boolean

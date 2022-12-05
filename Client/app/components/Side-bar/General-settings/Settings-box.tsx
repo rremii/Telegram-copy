@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import Image from "next/image"
 import {Rem} from "../../../../styles/functions/mixins"
-import {ChangeEvent, useContext} from "react"
+import React, {ChangeEvent, useContext} from "react"
 import {GlobalContext} from "../../../hooks/useGlobalContext"
 import {SideBarContext} from "../../../hooks/useSideBarContext"
 import {b} from "msw/lib/glossary-297d38ba"
@@ -42,7 +42,7 @@ const SettingsBox = () => {
 		</div>
 	</SettingsBoxWrapper>
 }
-export default SettingsBox
+export default React.memo(SettingsBox)
 const SettingsBoxWrapper = styled.div<{
 	fontSize: number
 	isDarkMode: boolean

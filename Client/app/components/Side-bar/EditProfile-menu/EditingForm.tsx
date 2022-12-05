@@ -116,7 +116,7 @@ const EditingForm = () => {
 		</h3>
 	</EditingFormWrapper>
 }
-export default EditingForm
+export default React.memo(EditingForm)
 const EditingFormWrapper = styled.div<{
 	isDarkMode: boolean
 }>`

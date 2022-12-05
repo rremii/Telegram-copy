@@ -75,7 +75,7 @@ const Burger = () => {
 		</div>
 	</BurgerWrapper>
 }
-export default Burger
+export default React.memo(Burger)
 const BurgerWrapper = styled.div<{
 	isBurger: boolean
 	isDarkMode: boolean

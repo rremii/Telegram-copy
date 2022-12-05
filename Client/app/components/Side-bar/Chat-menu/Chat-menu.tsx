@@ -21,7 +21,7 @@ const ChatMenu = () => {
 		isLoading,
 		isFetching
 	} = useGetChatsByUserIdQuery({user_id: id}, {
-		pollingInterval: 2000,
+		// pollingInterval: 2000,
 		skip: !id
 	})
 
@@ -41,7 +41,7 @@ const ChatMenu = () => {
 		})}
 	</ChatMenuWrapper>
 }
-export default ChatMenu
+export default React.memo(ChatMenu)
 const ChatMenuWrapper = styled.div<{
 	isSearchOn: boolean
 }>`

@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import Header from "./Header"
 import GridBox from "./Grid-box"
-import {useContext} from "react"
+import React, {useContext} from "react"
 import {SideBarContext} from "../../../hooks/useSideBarContext"
 
 const BackgroundSettings = () => {
@@ -16,7 +16,7 @@ const BackgroundSettings = () => {
 		</div>
 	</BackgroundSettingsWrapper>
 }
-export default BackgroundSettings
+export default React.memo(BackgroundSettings)
 const BackgroundSettingsWrapper = styled.div<{
 	isBackground: boolean
 	isDarkMode: boolean

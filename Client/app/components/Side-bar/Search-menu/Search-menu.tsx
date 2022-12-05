@@ -42,7 +42,7 @@ const SearchMenu = () => {
 		</div>
 	</SearchMenuWrapper>
 }
-export default SearchMenu
+export default React.memo(SearchMenu)
 const SearchMenuWrapper = styled.div<{
 	isSearchOn: boolean
 	searchingFilter: searchingFilter

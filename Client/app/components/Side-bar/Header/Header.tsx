@@ -79,7 +79,7 @@ const Header = () => {
 		</div>
 	</HeaderWrapper>
 }
-export default Header
+export default React.memo(Header)
 const HeaderWrapper = styled.div<{
 	isSearchLayout: boolean
 	isSearchOn: boolean

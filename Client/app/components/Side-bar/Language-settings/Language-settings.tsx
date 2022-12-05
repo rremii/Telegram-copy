@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import Header from "./Header"
 import SettingsBox from "./Settings-box"
-import {useContext} from "react"
+import React, {useContext} from "react"
 import {SideBarContext} from "../../../hooks/useSideBarContext"
 
 const LanguageSettings = () => {
@@ -16,7 +16,7 @@ const LanguageSettings = () => {
 		</div>
 	</LanguageSettingsWrapper>
 }
-export default LanguageSettings
+export default React.memo(LanguageSettings)
 const LanguageSettingsWrapper = styled.div<{
 	isSettings: boolean
 	isDarkMode: boolean

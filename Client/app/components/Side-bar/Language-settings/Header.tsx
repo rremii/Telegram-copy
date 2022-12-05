@@ -23,17 +23,7 @@ const Header = () => {
 		<h1>{language === "English" ? "Language" : "Язык"}</h1>
 	</HeaderWrapper>
 }
-export default Header
-/*
-  background-color: ${({isDarkMode}) => isDarkMode ? "rgb(22, 22, 22)" : "rgb(170,170,170)"};
-  background-color: ${({isDarkMode}) => isDarkMode ? "rgb(33, 33, 33)" : "white"};
-  background-color: ${({isDarkMode}) => isDarkMode ? "rgb(43, 43, 43)" : "rgba(178,178,178,0.19)"};
-
-  color: ${({isDarkMode}) => isDarkMode ? "white" : "rgb(47,47,47)"};
-
-
-
- */
+export default React.memo(Header)
 const HeaderWrapper = styled.div<{
 	isDarkMode: boolean
 }>`

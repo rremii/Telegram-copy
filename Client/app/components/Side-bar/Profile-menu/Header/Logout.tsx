@@ -27,7 +27,7 @@ const Logout = () => {
 		<button onClick={() => SetLogout(false)} className="logout-overlay"/>
 	</LogoutWrapper>
 }
-export default Logout
+export default React.memo(Logout)
 const LogoutWrapper = styled.div<{
 	isLogout: boolean
 	isDarkMode: boolean

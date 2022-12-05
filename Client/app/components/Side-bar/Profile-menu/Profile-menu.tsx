@@ -19,7 +19,7 @@ const ProfileMenu = () => {
 		</div>
 	</ProfileMenuWrapper>
 }
-export default ProfileMenu
+export default React.memo(ProfileMenu)
 const ProfileMenuWrapper = styled.div<{
 	isProfile: boolean
 	isDarkMode: boolean

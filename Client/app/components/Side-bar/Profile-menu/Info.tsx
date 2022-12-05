@@ -43,7 +43,8 @@ const Info = () => {
 				<span>online</span>
 			</div>
 
-			<Image src={profilePic ? API_URL_STATIC + profilePic : "/no-avatar.svg"} layout="fill"/>
+			<Image
+				src={profilePic ? API_URL_STATIC + profilePic : "/no-avatar.svg"} layout="fill"/>
 		</div>
 		<div className="padding-cont">
 			<div className="change-avatar">
@@ -62,7 +63,7 @@ const Info = () => {
 		</div>
 	</InfoWrapper>
 }
-export default Info
+export default React.memo(Info)
 const InfoWrapper = styled.div<{
 	isDarkMode: boolean
 }>`

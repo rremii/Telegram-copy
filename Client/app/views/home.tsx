@@ -1,16 +1,18 @@
 import React, {useContext, useEffect} from "react"
 import styled from "styled-components"
 import SideBar from "../components/Side-bar/Side-bar"
-import ChatBox from "../components/Chat-box/Chat-box"
-import InfoBox from "../components/Info-box/Info-box"
-import LogoutPopUp from "../components/Globals/Logout-pop-up"
 import {setMe} from "../store/MeSlice"
 import {useAppDispatch} from "../store/ReduxStore"
 import {GlobalContext} from "../hooks/useGlobalContext"
 import {useRouter} from "next/router"
-import TelegramFeatures from "../components/TelegramFeatures/TelegramFeatures"
 import {useGetMeQuery} from "../api/rtk/MeApi"
-import DeleteChatPopUp from "../components/Globals/Delete-chat-pop-up"
+import dynamic from "next/dynamic"
+
+const ChatBox = dynamic(() => import("../components/Chat-box/Chat-box"), {})
+const InfoBox = dynamic(() => import("../components/Info-box/Info-box"), {})
+const LogoutPopUp = dynamic(() => import("../components/Globals/Logout-pop-up"), {})
+const DeleteChatPopUp = dynamic(() => import("../components/Globals/Delete-chat-pop-up"), {})
+const TelegramFeatures = dynamic(() => import("../components/TelegramFeatures/TelegramFeatures"), {})
 
 
 const Home = () => {
