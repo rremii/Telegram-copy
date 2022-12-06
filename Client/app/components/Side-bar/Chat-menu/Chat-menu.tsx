@@ -21,7 +21,7 @@ const ChatMenu = () => {
 		isLoading,
 		isFetching
 	} = useGetChatsByUserIdQuery({user_id: id}, {
-		// pollingInterval: 2000,
+		pollingInterval: 2000,
 		skip: !id
 	})
 

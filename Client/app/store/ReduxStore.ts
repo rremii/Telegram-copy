@@ -21,7 +21,8 @@ export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
 		reducer: rootReducer,
 		preloadedState,
 		middleware: (getDefaultMiddleware =>
-			getDefaultMiddleware().concat(Api.middleware))
+			getDefaultMiddleware().concat(Api.middleware)),
+		devTools: false
 	})
 
 }
